@@ -42,13 +42,19 @@ const server = http.createServer((req, res) => {
   }
 
   // Serve static files from dist/
-  let filePath = path.join(DIST_DIR, req.url === '/' ? 'index.html' : req.url);
+  const urlPath = req.url.split('?')[0];
+  let filePath = path.join(DIST_DIR, urlPath);
 
   // Security: prevent path traversal
   if (!filePath.startsWith(DIST_DIR)) {
     res.writeHead(403);
     res.end('Forbidden');
     return;
+  }
+
+  // If path is a directory, serve index.html inside it
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
   }
 
   const ext = path.extname(filePath);
