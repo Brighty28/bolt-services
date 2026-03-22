@@ -6,6 +6,7 @@
   "hero": {
     "headline": "Industrial Engineering Services",
     "subheadline": "Delivering quality electrical & mechanical engineering solutions across the UK",
+    "backgroundImage": "assets/hero-bg.jpg",
     "cta": {
       "text": "Get in Touch",
       "href": "#contact"

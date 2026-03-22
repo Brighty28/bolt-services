@@ -205,3 +205,154 @@ body {
   color: #fff;
   border-color: #e8611a;
 }
+
+/* Image uploader */
+.cms-image-preview {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  background: #f9f9fb;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cms-image-preview img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.cms-image-preview--empty {
+  color: #999;
+  font-size: 0.875rem;
+  padding: 1rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.cms-image-path {
+  font-size: 0.8125rem;
+  color: #666;
+  word-break: break-all;
+}
+
+.cms-image-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cms-image-select {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.cms-image-or {
+  color: #999;
+  font-size: 0.8125rem;
+}
+
+.cms-upload-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #e8611a;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.cms-upload-btn:hover { background: #c95215; }
+
+/* Upload zone (drag & drop) */
+.cms-upload-zone {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fafafa;
+}
+
+.cms-upload-zone:hover,
+.cms-upload-zone--active {
+  border-color: #e8611a;
+  background: #fff5f0;
+}
+
+.cms-upload-zone p {
+  margin: 0.25rem 0;
+  color: #555;
+}
+
+.cms-upload-zone__hint {
+  font-size: 0.8125rem;
+  color: #999 !important;
+}
+
+/* Image grid (media library) */
+.cms-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cms-image-card {
+  background: #f9f9fb;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cms-image-card__preview {
+  height: 140px;
+  overflow: hidden;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cms-image-card__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cms-image-card__info {
+  padding: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.cms-image-card__info strong {
+  font-size: 0.8125rem;
+  word-break: break-all;
+}
+
+.cms-image-card__info span {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.cms-image-card .cms-remove-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}

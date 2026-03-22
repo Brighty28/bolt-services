@@ -5,6 +5,7 @@
 
 const CONTENT_PATH = '../content/site-content.json';
 let siteContent = {};
+let siteImages = [];
 
 const ICON_OPTIONS = ['clipboard', 'zap', 'cog', 'shield', 'users', 'bar-chart'];
 
@@ -12,8 +13,15 @@ const ICON_OPTIONS = ['clipboard', 'zap', 'cog', 'shield', 'users', 'bar-chart']
 
 async function init() {
   try {
-    const res = await fetch(CONTENT_PATH);
-    siteContent = await res.json();
+    const [contentRes, imagesRes] = await Promise.all([
+      fetch(CONTENT_PATH),
+      fetch('/api/images').catch(() => null)
+    ]);
+    siteContent = await contentRes.json();
+    if (imagesRes && imagesRes.ok) {
+      const data = await imagesRes.json();
+      siteImages = data.images || [];
+    }
     renderAllSections();
     initNav();
     initSave();
@@ -49,7 +57,6 @@ async function saveContent() {
   status.textContent = 'Saving...';
   status.className = 'cms-status';
 
-  // Collect data from all forms
   collectHero();
   collectAbout();
   collectServices();
@@ -71,7 +78,6 @@ async function saveContent() {
       throw new Error('Server error');
     }
   } catch (err) {
-    // Fallback: download as file
     downloadJSON();
     status.textContent = 'Downloaded as file (no server API). Replace content/site-content.json with the downloaded file.';
     status.className = 'cms-status error';
@@ -90,6 +96,135 @@ function downloadJSON() {
   URL.revokeObjectURL(url);
 }
 
+// ---- Image Upload Helper ----
+
+async function uploadImage(file) {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const res = await fetch('/api/upload-image', {
+    method: 'POST',
+    body: formData
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || 'Upload failed');
+  }
+
+  const data = await res.json();
+  // Refresh image list
+  await refreshImageList();
+  return data;
+}
+
+async function deleteImage(filename) {
+  const res = await fetch(`/api/images/${encodeURIComponent(filename)}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || 'Delete failed');
+  }
+  await refreshImageList();
+}
+
+async function refreshImageList() {
+  try {
+    const res = await fetch('/api/images');
+    if (res.ok) {
+      const data = await res.json();
+      siteImages = data.images || [];
+    }
+  } catch (e) {
+    // ignore
+  }
+}
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+function renderImageUploader(id, label, currentValue) {
+  const preview = currentValue
+    ? `<div class="cms-image-preview">
+        <img src="../${currentValue}" alt="Preview">
+        <span class="cms-image-path">${currentValue}</span>
+      </div>`
+    : '<div class="cms-image-preview cms-image-preview--empty">No image selected</div>';
+
+  const imageOptions = siteImages
+    .filter(img => /\.(jpg|jpeg|png|webp)$/i.test(img.filename))
+    .map(img => `<option value="${img.path}" ${img.path === currentValue ? 'selected' : ''}>${img.filename}</option>`)
+    .join('');
+
+  return `
+    <div class="cms-field">
+      <label>${label}</label>
+      ${preview}
+      <div class="cms-image-controls">
+        <select id="${id}" class="cms-image-select" onchange="previewImageSelect('${id}')">
+          <option value="">-- Select an image --</option>
+          ${imageOptions}
+        </select>
+        <span class="cms-image-or">or</span>
+        <label class="cms-upload-btn" for="${id}-upload">Upload New</label>
+        <input type="file" id="${id}-upload" accept="image/*" style="display:none" onchange="handleImageUpload('${id}', this)">
+      </div>
+    </div>
+  `;
+}
+
+window.previewImageSelect = function (id) {
+  const select = document.getElementById(id);
+  const field = select.closest('.cms-field');
+  const preview = field.querySelector('.cms-image-preview');
+  if (select.value) {
+    preview.className = 'cms-image-preview';
+    preview.innerHTML = `<img src="../${select.value}" alt="Preview"><span class="cms-image-path">${select.value}</span>`;
+  } else {
+    preview.className = 'cms-image-preview cms-image-preview--empty';
+    preview.innerHTML = 'No image selected';
+  }
+};
+
+window.handleImageUpload = async function (id, input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+
+  const field = input.closest('.cms-field');
+  const preview = field.querySelector('.cms-image-preview');
+  preview.className = 'cms-image-preview';
+  preview.innerHTML = '<span class="cms-image-path">Uploading...</span>';
+
+  try {
+    const result = await uploadImage(file);
+    const select = document.getElementById(id);
+
+    // Add new option if not already present
+    const exists = Array.from(select.options).some(o => o.value === result.path);
+    if (!exists) {
+      const opt = document.createElement('option');
+      opt.value = result.path;
+      opt.textContent = result.filename;
+      select.appendChild(opt);
+    }
+    select.value = result.path;
+
+    preview.innerHTML = `<img src="../${result.path}" alt="Preview"><span class="cms-image-path">${result.path}</span>`;
+
+    // Refresh the images section if visible
+    const imagesSection = document.getElementById('section-images');
+    if (imagesSection && imagesSection.classList.contains('active')) {
+      refreshSection('images');
+    }
+  } catch (err) {
+    preview.innerHTML = `<span class="cms-image-path" style="color:red">Upload failed: ${err.message}</span>`;
+  }
+};
+
 // ---- Render All Sections ----
 
 function renderAllSections() {
@@ -101,6 +236,7 @@ function renderAllSections() {
     ${renderIndustriesSection()}
     ${renderTestimonialsSection()}
     ${renderContactSection()}
+    ${renderImagesSection()}
   `;
 }
 
@@ -111,6 +247,7 @@ function renderHeroSection() {
   return `
     <div class="cms-section active" id="section-hero">
       <h2>Hero Section</h2>
+      ${renderImageUploader('hero-bg-image', 'Background Image', h.backgroundImage || 'assets/hero-bg.jpg')}
       <div class="cms-field">
         <label>Headline</label>
         <input type="text" id="hero-headline" value="${esc(h.headline || '')}">
@@ -135,6 +272,7 @@ function collectHero() {
   siteContent.hero = {
     headline: val('hero-headline'),
     subheadline: val('hero-subheadline'),
+    backgroundImage: val('hero-bg-image'),
     cta: {
       text: val('hero-cta-text'),
       href: val('hero-cta-href')
@@ -445,6 +583,77 @@ function collectContact() {
   };
 }
 
+// ---- Images / Media Library Section ----
+
+function renderImagesSection() {
+  const cards = siteImages.map(img => {
+    const isSvg = /\.svg$/i.test(img.filename);
+    const isProtected = img.filename === 'logo.svg';
+    return `
+      <div class="cms-image-card">
+        <div class="cms-image-card__preview">
+          <img src="../${img.path}" alt="${img.filename}">
+        </div>
+        <div class="cms-image-card__info">
+          <strong>${img.filename}</strong>
+          <span>${formatFileSize(img.size)}</span>
+        </div>
+        ${isProtected ? '' : `<button class="cms-remove-btn" onclick="handleDeleteImage('${img.filename}')" title="Delete">&times;</button>`}
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="cms-section" id="section-images">
+      <h2>Media Library</h2>
+      <div class="cms-field">
+        <label>Upload New Image</label>
+        <div class="cms-upload-zone" id="upload-zone">
+          <p>Drag & drop an image here, or click to browse</p>
+          <p class="cms-upload-zone__hint">JPG, PNG, SVG, WebP, GIF — max 10MB</p>
+          <input type="file" id="media-upload" accept="image/*" style="display:none" onchange="handleMediaUpload(this)">
+        </div>
+      </div>
+      <div class="cms-image-grid" id="image-grid">
+        ${cards || '<p style="color:#999">No images uploaded yet.</p>'}
+      </div>
+    </div>
+  `;
+}
+
+window.handleMediaUpload = async function (input) {
+  if (!input.files || !input.files[0]) return;
+  const status = document.getElementById('save-status');
+  status.textContent = 'Uploading...';
+  status.className = 'cms-status';
+
+  try {
+    await uploadImage(input.files[0]);
+    status.textContent = 'Image uploaded!';
+    status.className = 'cms-status success';
+    refreshSection('images');
+  } catch (err) {
+    status.textContent = `Upload failed: ${err.message}`;
+    status.className = 'cms-status error';
+  }
+  setTimeout(() => { status.textContent = ''; }, 3000);
+};
+
+window.handleDeleteImage = async function (filename) {
+  if (!confirm(`Delete "${filename}"?`)) return;
+  const status = document.getElementById('save-status');
+  try {
+    await deleteImage(filename);
+    status.textContent = 'Image deleted.';
+    status.className = 'cms-status success';
+    refreshSection('images');
+  } catch (err) {
+    status.textContent = `Delete failed: ${err.message}`;
+    status.className = 'cms-status error';
+  }
+  setTimeout(() => { status.textContent = ''; }, 3000);
+};
+
 // ---- Helpers ----
 
 function val(id) {
@@ -468,7 +677,8 @@ function refreshSection(sectionName) {
     services: renderServicesSection,
     industries: renderIndustriesSection,
     testimonials: renderTestimonialsSection,
-    contact: renderContactSection
+    contact: renderContactSection,
+    images: renderImagesSection
   };
 
   const tempDiv = document.createElement('div');
@@ -476,23 +686,45 @@ function refreshSection(sectionName) {
   const newSection = tempDiv.firstElementChild;
   newSection.classList.add('active');
   sectionEl.replaceWith(newSection);
+
+  // Re-init drag-drop if images section
+  if (sectionName === 'images') initUploadZone();
 }
 
-// ---- Server API (optional Express middleware) ----
-// If you want server-side saving, add this to a Node server:
-//
-// const express = require('express');
-// const fs = require('fs');
-// const app = express();
-// app.use(express.json());
-// app.use(express.static('dist'));
-//
-// app.post('/api/save-content', (req, res) => {
-//   fs.writeFileSync('content/site-content.json', JSON.stringify(req.body, null, 2));
-//   res.json({ success: true });
-// });
-//
-// app.listen(3000);
+// ---- Drag & Drop Upload ----
+
+function initUploadZone() {
+  const zone = document.getElementById('upload-zone');
+  const input = document.getElementById('media-upload');
+  if (!zone || !input) return;
+
+  zone.addEventListener('click', () => input.click());
+
+  zone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    zone.classList.add('cms-upload-zone--active');
+  });
+
+  zone.addEventListener('dragleave', () => {
+    zone.classList.remove('cms-upload-zone--active');
+  });
+
+  zone.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    zone.classList.remove('cms-upload-zone--active');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      // Reuse the media upload handler
+      const fakeInput = { files: [file] };
+      await window.handleMediaUpload(fakeInput);
+    }
+  });
+}
 
 // ---- Boot ----
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  init().then(() => {
+    // Init drag-drop after render
+    setTimeout(initUploadZone, 100);
+  });
+});

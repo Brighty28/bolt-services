@@ -43,9 +43,15 @@
   // ---- Renderers ----
 
   function renderHero(data) {
+    const hero = document.getElementById('hero');
     const heading = document.getElementById('hero-heading');
     const subheading = document.getElementById('hero-subheading');
     const actions = document.getElementById('hero-actions');
+
+    // Set background image from CMS content
+    if (hero && data.backgroundImage) {
+      hero.style.backgroundImage = `url('${data.backgroundImage}')`;
+    }
 
     if (heading) {
       heading.innerHTML = data.headline.replace(
