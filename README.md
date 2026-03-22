@@ -86,6 +86,7 @@ See `.env.example` for all available environment variables.
 | `POST` | `/api/upload-image` | Upload an image (multipart form-data) |
 | `GET` | `/api/images` | List all uploaded images |
 | `DELETE` | `/api/images/:filename` | Delete an image |
+| `POST` | `/api/contact` | Send a contact form email via SMTP |
 
 ## Project Structure
 
@@ -144,6 +145,12 @@ bolt-services/
 5. **Set environment variables** — In the Node.js settings:
    - `CMS_ADMIN_USER` = your chosen username
    - `CMS_ADMIN_PASS` = a strong password
+   - `SMTP_HOST` = `send.one.com`
+   - `SMTP_PORT` = `587`
+   - `SMTP_USER` = `assist@boltservices.co.uk`
+   - `SMTP_PASS` = your SMTP password
+   - `SMTP_FROM` = `assist@boltservices.co.uk`
+   - `SMTP_TO` = `info@boltservices.co.uk` (or wherever you want enquiries delivered)
 
 6. **Post-deploy actions** — In Git > Repository Settings > Enable additional deploy actions:
    ```bash

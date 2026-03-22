@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 const PORT = process.env.PORT || 3000;
 const DIST_DIR = path.join(__dirname, 'dist');
@@ -39,6 +40,19 @@ function sendAuthChallenge(res) {
     'Content-Type': 'text/html'
   });
   res.end('<h1>401 Unauthorised</h1><p>Valid credentials required to access the CMS.</p>');
+}
+
+// ---- SMTP Configuration ----
+// Set these environment variables in production (Plesk Node.js settings)
+const SMTP_HOST = process.env.SMTP_HOST || '';
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
+const SMTP_FROM = process.env.SMTP_FROM || '';
+const SMTP_TO = process.env.SMTP_TO || ''; // Where contact form emails are delivered
+
+function isSmtpConfigured() {
+  return SMTP_HOST && SMTP_USER && SMTP_PASS && SMTP_FROM && SMTP_TO;
 }
 
 const MIME_TYPES = {
@@ -190,6 +204,56 @@ const server = http.createServer((req, res) => {
     } catch (err) {
       jsonResponse(500, { error: err.message });
     }
+    return;
+  }
+
+  // Handle contact form submission
+  if (req.method === 'POST' && req.url === '/api/contact') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', async () => {
+      try {
+        const { name, email, subject, message } = JSON.parse(body);
+
+        // Basic validation
+        if (!name || !email || !message) {
+          jsonResponse(400, { error: 'Name, email, and message are required' });
+          return;
+        }
+
+        if (!isSmtpConfigured()) {
+          jsonResponse(500, { error: 'Email is not configured on this server' });
+          return;
+        }
+
+        const transporter = nodemailer.createTransport({
+          host: SMTP_HOST,
+          port: SMTP_PORT,
+          secure: SMTP_PORT === 465,
+          auth: { user: SMTP_USER, pass: SMTP_PASS }
+        });
+
+        await transporter.sendMail({
+          from: SMTP_FROM,
+          to: SMTP_TO,
+          replyTo: email,
+          subject: `[Bolt Services] ${subject || 'Contact Form Enquiry'} — from ${name}`,
+          text: `Name: ${name}\nEmail: ${email}\nSubject: ${subject || 'N/A'}\n\nMessage:\n${message}`,
+          html: `
+            <h2>New Contact Form Enquiry</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
+            <hr>
+            <p>${message.replace(/\n/g, '<br>')}</p>
+          `
+        });
+
+        jsonResponse(200, { success: true });
+      } catch (err) {
+        jsonResponse(500, { error: 'Failed to send email' });
+      }
+    });
     return;
   }
 
