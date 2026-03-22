@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 70" fill="none">
+  <!-- B -->
+  <path d="M0 5h22c12 0 19 5 19 14.5 0 6-3.5 10-8.5 12 6 1.8 10 6.5 10 13 0 10.5-7.5 16-20 16H0V5zm21 22c5.5 0 8.5-2.8 8.5-7.5S26.5 12 21 12H11.5v15H21zm1 24c6 0 9.5-3 9.5-8s-3.5-8-9.5-8H11.5v16H22z" fill="#E8611A"/>
+
+  <!-- O as hexagonal bolt/nut -->
+  <g transform="translate(80, 30)">
+    <!-- Outer hexagon (bolt nut shape) -->
+    <polygon points="0,-28 24.25,-14 24.25,14 0,28 -24.25,14 -24.25,-14" fill="none" stroke="#E8611A" stroke-width="8" stroke-linejoin="round"/>
+    <!-- Inner circle (bolt hole) - subtle -->
+    <!-- Lightning bolt inside -->
+    <path d="M4,-14 L-6,2 L2,2 L-4,14 L8,-3 L1,-3 Z" fill="#E8611A"/>
+  </g>
+
+  <!-- L -->
+  <path d="M118 5h11.5v46H158v9.5h-40V5z" fill="#E8611A"/>
+
+  <!-- T -->
+  <path d="M160 5h45v9.5h-16.7v46H177V14.5h-17V5z" fill="#E8611A"/>
+
+  <!-- INDUSTRIAL ENGINEERING SERVICES -->
+  <text x="0" y="67" font-family="Arial, Helvetica, sans-serif" font-size="10.5" font-weight="500" letter-spacing="3.5" fill="#58595B">INDUSTRIAL ENGINEERING SERVICES</text>
+</svg>

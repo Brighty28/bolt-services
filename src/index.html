@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolt Industrial Engineering Services</title>
+  <meta name="description" content="Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container">
+      <a href="#" class="header__logo">
+        <img src="assets/logo.svg" alt="Bolt Industrial Engineering Services" class="header__logo-img">
+      </a>
+
+      <nav class="header__nav">
+        <a href="#about" class="header__nav-link">About</a>
+        <a href="#services" class="header__nav-link">Services</a>
+        <a href="#industries" class="header__nav-link">Industries</a>
+        <a href="#testimonials" class="header__nav-link">Testimonials</a>
+        <a href="#contact" class="btn btn--primary">Contact Us</a>
+      </nav>
+
+      <button class="header__toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <nav class="mobile-nav" id="mobile-nav">
+    <button class="mobile-nav__close" id="mobile-close" aria-label="Close menu">&times;</button>
+    <a href="#about" class="mobile-nav__link">About</a>
+    <a href="#services" class="mobile-nav__link">Services</a>
+    <a href="#industries" class="mobile-nav__link">Industries</a>
+    <a href="#testimonials" class="mobile-nav__link">Testimonials</a>
+    <a href="#contact" class="mobile-nav__link">Contact Us</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero__content">
+      <div class="hero__badge">Engineering Excellence</div>
+      <h1 class="hero__heading" id="hero-heading"></h1>
+      <p class="hero__subheading" id="hero-subheading"></p>
+      <div class="hero__actions" id="hero-actions"></div>
+    </div>
+    <div class="hero__scroll-indicator">
+      <span>Scroll</span>
+      <div class="hero__scroll-indicator-line"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-content">
+        <div>
+          <div class="section__header" style="text-align: left;">
+            <h2 class="section__heading" id="about-heading"></h2>
+          </div>
+          <div class="about-text" id="about-text"></div>
+        </div>
+        <div class="highlights" id="about-highlights"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section section--dark" id="services">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__heading" id="services-heading"></h2>
+        <p class="section__subheading" id="services-subheading"></p>
+      </div>
+      <div class="grid grid--3" id="services-grid"></div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="section" id="industries">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__heading" id="industries-heading"></h2>
+      </div>
+      <div class="industry-grid" id="industries-grid"></div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section section--grey" id="testimonials">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__heading" id="testimonials-heading"></h2>
+      </div>
+      <div class="testimonials-grid" id="testimonials-grid"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__heading" id="contact-heading"></h2>
+        <p class="section__subheading" id="contact-subheading"></p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" id="contact-info"></div>
+        <form class="contact-form" id="contact-form">
+          <input type="text" class="contact-form__input" placeholder="Your Name" required>
+          <input type="email" class="contact-form__input" placeholder="Your Email" required>
+          <input type="text" class="contact-form__input" placeholder="Subject">
+          <textarea class="contact-form__textarea" placeholder="Tell us about your project..." required></textarea>
+          <button type="submit" class="btn btn--primary btn--lg">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">&copy; <span id="footer-year"></span> Bolt Industrial Engineering Services Ltd. All rights reserved.</p>
+      <div class="footer__links">
+        <a href="mailto:info@boltservices.co.uk" class="footer__link">info@boltservices.co.uk</a>
+        <a href="tel:07885729188" class="footer__link">07885 729188</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

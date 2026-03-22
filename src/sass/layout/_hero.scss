@@ -1,0 +1,137 @@
+@use '../abstracts' as *;
+// ======================
+// Hero Section
+// ======================
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  @include flex-center;
+  background-color: $color-secondary;
+  background-image: url('../assets/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  // Dark overlay for text readability
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+    padding: $spacing-5xl $container-padding;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background-color: rgba($color-primary, 0.2);
+    color: $color-primary;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius-xl;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-xl;
+    border: 1px solid rgba($color-primary, 0.3);
+    backdrop-filter: blur(4px);
+
+    &::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: $color-primary;
+      border-radius: $border-radius-full;
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+
+  &__heading {
+    color: $color-white;
+    margin-bottom: $spacing-lg;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    span {
+      color: $color-primary;
+    }
+  }
+
+  &__subheading {
+    font-size: $font-size-lg;
+    color: rgba($color-white, 0.85);
+    margin-bottom: $spacing-2xl;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+    @include respond-to('md') {
+      font-size: $font-size-xl;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__scroll-indicator {
+    position: absolute;
+    bottom: $spacing-2xl;
+    left: 50%;
+    transform: translateX(-50%);
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm;
+    color: rgba($color-white, 0.5);
+    font-size: $font-size-sm;
+    animation: bounce 2s ease-in-out infinite;
+    z-index: 1;
+
+    &-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba($color-white, 0.5), transparent);
+    }
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+  }
+}

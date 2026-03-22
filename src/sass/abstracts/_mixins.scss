@@ -1,0 +1,115 @@
+@use 'variables' as *;
+// ======================
+// Mixins
+// ======================
+
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: $breakpoint-sm) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: $breakpoint-md) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: $breakpoint-lg) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+}
+
+@mixin respond-below($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: ($breakpoint-sm - 1)) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: ($breakpoint-md - 1)) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: ($breakpoint-lg - 1)) { @content; }
+  }
+}
+
+// Flexbox
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Container
+@mixin container {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+@mixin container-narrow {
+  width: 100%;
+  max-width: $max-width-narrow;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+// Section padding
+@mixin section-padding {
+  padding-top: $spacing-4xl;
+  padding-bottom: $spacing-4xl;
+
+  @include respond-to('md') {
+    padding-top: $spacing-5xl;
+    padding-bottom: $spacing-5xl;
+  }
+}
+
+// Truncation
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Overlay
+@mixin overlay($opacity: 0.6) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color-secondary, $opacity);
+}
+
+// Section heading style
+@mixin section-heading {
+  font-family: $font-heading;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-heading;
+  margin-bottom: $spacing-md;
+
+  @include respond-to('md') {
+    font-size: $font-size-4xl;
+  }
+}
+
+// Hover lift effect
+@mixin hover-lift {
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "title": "Bolt Industrial Engineering Services",
+    "description": "Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach."
+  },
+  "hero": {
+    "headline": "Industrial Engineering Services",
+    "subheadline": "Delivering quality electrical & mechanical engineering solutions across the UK",
+    "backgroundImage": "assets/hero-bg.jpg",
+    "cta": {
+      "text": "Get in Touch",
+      "href": "#contact"
+    }
+  },
+  "about": {
+    "heading": "About Bolt",
+    "intro": "Bolt Industrial Engineering Services Limited was formed to supply Electrical and Mechanical Services to Industry.",
+    "description": "We specialise in quality workmanship and adopt a Continuous Improvement approach to support the demands of our clients. Our Site Managers are responsible for the welfare and work quality of all personnel, ensuring works are carried out on schedule in line with time constraints.",
+    "highlights": [
+      {
+        "stat": "UK Wide",
+        "label": "Project Coverage"
+      },
+      {
+        "stat": "24/7",
+        "label": "Support Available"
+      },
+      {
+        "stat": "100%",
+        "label": "Safety Focused"
+      }
+    ]
+  },
+  "services": {
+    "heading": "Our Services",
+    "intro": "We supply labour fully qualified and experienced in leading teams of Engineers and delivering Projects on time and within budget.",
+    "items": [
+      {
+        "icon": "clipboard",
+        "title": "Project & Site Management",
+        "description": "Full project and site management across the UK for short or long-term contracts. CDM Project Management, risk assessments, and programme delivery."
+      },
+      {
+        "icon": "zap",
+        "title": "Electrical Engineering",
+        "description": "Comprehensive electrical engineering services including installation, maintenance, and commissioning for industrial facilities."
+      },
+      {
+        "icon": "cog",
+        "title": "Mechanical Engineering",
+        "description": "Expert mechanical engineering services covering installation, fabrication, pipework, and plant maintenance."
+      },
+      {
+        "icon": "shield",
+        "title": "Health & Safety Management",
+        "description": "SMSTS and SSSTS qualified managers ensuring full compliance with Health and Safety legislation on every project."
+      },
+      {
+        "icon": "users",
+        "title": "Labour Supply",
+        "description": "Supplying skilled engineers, supervisors, and operatives. Interim Engineering Supervisor and Manager positions available."
+      },
+      {
+        "icon": "bar-chart",
+        "title": "Lean Manufacturing",
+        "description": "Implementing lean manufacturing techniques and continuous improvement methodologies to optimise operational efficiency."
+      }
+    ]
+  },
+  "industries": {
+    "heading": "Industries We Serve",
+    "items": [
+      "FMCG",
+      "Food Industry",
+      "Cement",
+      "Building Aggregates",
+      "Industrial Refrigeration",
+      "Agricultural & Farming",
+      "Print & Packaging",
+      "Data Shredding",
+      "Recycling & Waste to Energy",
+      "Warehousing",
+      "General Industry"
+    ]
+  },
+  "testimonials": {
+    "heading": "What Our Clients Say",
+    "items": [
+      {
+        "quote": "We have been impressed with the response along with the quality of the staff provided. Excellent safety performance, quality trained staff, and an excellent standard of work.",
+        "author": "Malcolm Brown",
+        "company": "Omya UK"
+      },
+      {
+        "quote": "Your input on the Morrison's, Lidl, and Muller Projects has been invaluable to us, and you have become a real key part of the team.",
+        "author": "Dave",
+        "company": "Integral Refrigeration"
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Get In Touch",
+    "intro": "Ready to discuss your next project? Contact us today.",
+    "phone": "07885 729188",
+    "email": "info@boltservices.co.uk",
+    "address": "4 Hawthorn Way, St. Ives, Cambridgeshire, PE27 3YP"
+  }
+}

@@ -1,0 +1,65 @@
+@use '../abstracts' as *;
+// ======================
+// Base styles
+// ======================
+
+body {
+  background-color: $color-white;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: $color-primary;
+  color: $color-secondary;
+}
+
+.container {
+  @include container;
+}
+
+.container--narrow {
+  @include container-narrow;
+}
+
+.section {
+  @include section-padding;
+}
+
+.section--dark {
+  background-color: $color-secondary;
+  color: $color-white;
+
+  h2,
+  h3 {
+    color: $color-white;
+  }
+}
+
+.section--grey {
+  background-color: $color-off-white;
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: $spacing-3xl;
+
+  @include respond-to('md') {
+    margin-bottom: $spacing-4xl;
+  }
+}
+
+.section__heading {
+  @include section-heading;
+}
+
+.section__subheading {
+  font-size: $font-size-lg;
+  color: $color-grey;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section--dark .section__subheading {
+  color: rgba($color-white, 0.7);
+}

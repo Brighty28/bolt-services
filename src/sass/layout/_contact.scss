@@ -1,0 +1,93 @@
+@use '../abstracts' as *;
+// ======================
+// Contact Section
+// ======================
+
+.contact-grid {
+  display: grid;
+  gap: $spacing-2xl;
+
+  @include respond-to('md') {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-info {
+  @include flex-column;
+  gap: $spacing-xl;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-lg;
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: $border-radius;
+    background: linear-gradient(135deg, $color-primary, $color-primary-dark);
+    @include flex-center;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      stroke: $color-secondary;
+    }
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    color: $color-grey;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__value {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+
+    a {
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+.contact-form {
+  @include flex-column;
+  gap: $spacing-md;
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: $spacing-md $spacing-lg;
+    background-color: $color-off-white;
+    border: 2px solid transparent;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    color: $color-grey-dark;
+    transition: border-color $transition-fast;
+
+    &::placeholder {
+      color: $color-grey;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      background-color: $color-white;
+    }
+  }
+
+  &__textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+}

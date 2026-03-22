@@ -1,0 +1,17 @@
+// ======================
+// Functions
+// ======================
+
+// Convert px to rem
+@function px-to-rem($px, $base: 16) {
+  @return ($px / $base) * 1rem;
+}
+
+// Lighten/darken helpers
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}

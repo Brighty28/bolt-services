@@ -1,0 +1,36 @@
+@use '../abstracts' as *;
+// ======================
+// Stat Highlights
+// ======================
+
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: $spacing-xl;
+  margin-top: $spacing-2xl;
+}
+
+.highlight {
+  text-align: center;
+  padding: $spacing-lg;
+  border-radius: $border-radius;
+  background-color: rgba($color-primary, 0.08);
+  border: 1px solid rgba($color-primary, 0.15);
+
+  &__stat {
+    font-family: $font-heading;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-extrabold;
+    color: $color-primary;
+    line-height: 1;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__label {
+    font-size: $font-size-sm;
+    color: $color-grey;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
