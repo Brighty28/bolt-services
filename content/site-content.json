@@ -5,7 +5,7 @@
   },
   "hero": {
     "headline": "Industrial Engineering Services",
-    "subheadline": "Delivering quality electrical & mechanical engineering solutions across the UK",
+    "subheadline": "Delivering quality electrical & mechanical engineering solutions across the UK\nProject & Site Management Continuous Improvement",
     "backgroundImage": "assets/hero-bg.jpg",
     "cta": {
       "text": "Get in Touch",
@@ -36,34 +36,34 @@
     "intro": "We supply labour fully qualified and experienced in leading teams of Engineers and delivering Projects on time and within budget.",
     "items": [
       {
-        "icon": "clipboard",
         "title": "Project & Site Management",
-        "description": "Full project and site management across the UK for short or long-term contracts. CDM Project Management, risk assessments, and programme delivery."
+        "description": "Full project and site management across the UK for short or long-term contracts. CDM Project Management, risk assessments, and programme delivery.",
+        "icon": "clipboard"
       },
       {
-        "icon": "zap",
         "title": "Electrical Engineering",
-        "description": "Comprehensive electrical engineering services including installation, maintenance, and commissioning for industrial facilities."
+        "description": "Comprehensive electrical engineering services including installation, maintenance, and commissioning for industrial facilities.",
+        "icon": "zap"
       },
       {
-        "icon": "cog",
         "title": "Mechanical Engineering",
-        "description": "Expert mechanical engineering services covering installation, fabrication, pipework, and plant maintenance."
+        "description": "Expert mechanical engineering services covering installation, fabrication, pipework, and plant maintenance.",
+        "icon": "cog"
       },
       {
-        "icon": "shield",
         "title": "Health & Safety Management",
-        "description": "SMSTS and SSSTS qualified managers ensuring full compliance with Health and Safety legislation on every project."
+        "description": "SMSTS and SSSTS qualified managers ensuring full compliance with Health and Safety legislation on every project.",
+        "icon": "shield"
       },
       {
-        "icon": "users",
         "title": "Labour Supply",
-        "description": "Supplying skilled engineers, supervisors, and operatives. Interim Engineering Supervisor and Manager positions available."
+        "description": "Supplying skilled engineers, supervisors, and operatives. Interim Engineering Supervisor and Manager positions available.",
+        "icon": "users"
       },
       {
-        "icon": "bar-chart",
         "title": "Lean Manufacturing",
-        "description": "Implementing lean manufacturing techniques and continuous improvement methodologies to optimise operational efficiency."
+        "description": "Implementing lean manufacturing techniques and continuous improvement methodologies to optimise operational efficiency.",
+        "icon": "bar-chart"
       }
     ]
   },
@@ -102,7 +102,7 @@
     "heading": "Get In Touch",
     "intro": "Ready to discuss your next project? Contact us today.",
     "phone": "07885 729188",
-    "email": "info@boltservices.co.uk",
+    "email": "karl@boltservices.co.uk",
     "address": "4 Hawthorn Way, St. Ives, Cambridgeshire, PE27 3YP"
   }
 }
