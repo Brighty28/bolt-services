@@ -17,5 +17,8 @@
     "concurrently": "^9.1.0",
     "sass": "^1.72.0",
     "serve": "^14.2.0"
+  },
+  "dependencies": {
+    "nodemailer": "^8.0.3"
   }
 }

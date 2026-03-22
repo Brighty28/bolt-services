@@ -63,6 +63,7 @@ async function saveContent() {
   collectIndustries();
   collectTestimonials();
   collectContact();
+  collectSocial();
 
   try {
     const res = await fetch('/api/save-content', {
@@ -236,6 +237,7 @@ function renderAllSections() {
     ${renderIndustriesSection()}
     ${renderTestimonialsSection()}
     ${renderContactSection()}
+    ${renderSocialSection()}
     ${renderImagesSection()}
   `;
 }
@@ -583,6 +585,33 @@ function collectContact() {
   };
 }
 
+// ---- Social Media Section ----
+
+function renderSocialSection() {
+  const s = siteContent.social || {};
+  return `
+    <div class="cms-section" id="section-social">
+      <h2>Social Media</h2>
+      <div class="cms-field">
+        <label>Facebook URL</label>
+        <input type="url" id="social-facebook" value="${esc(s.facebook || '')}" placeholder="https://www.facebook.com/your-page">
+      </div>
+      <div class="cms-field">
+        <label>LinkedIn URL</label>
+        <input type="url" id="social-linkedin" value="${esc(s.linkedin || '')}" placeholder="https://www.linkedin.com/company/your-company">
+      </div>
+      <p style="font-size: 0.8125rem; color: #999; margin-top: 0.5rem;">Leave blank to hide the icon on the site.</p>
+    </div>
+  `;
+}
+
+function collectSocial() {
+  siteContent.social = {
+    facebook: val('social-facebook'),
+    linkedin: val('social-linkedin')
+  };
+}
+
 // ---- Images / Media Library Section ----
 
 function renderImagesSection() {
@@ -678,6 +707,7 @@ function refreshSection(sectionName) {
     industries: renderIndustriesSection,
     testimonials: renderTestimonialsSection,
     contact: renderContactSection,
+    social: renderSocialSection,
     images: renderImagesSection
   };
 
