@@ -9,7 +9,9 @@
     "copy": "node scripts/copy.js",
     "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"node server.js\"",
     "start": "npm run build && node server.js",
-    "serve": "npx serve dist -l 3000"
+    "serve": "npx serve dist -l 3000",
+    "deploy": "npm ci --production=false && npm run build",
+    "production": "NODE_ENV=production node server.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",

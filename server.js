@@ -6,6 +6,41 @@ const PORT = process.env.PORT || 3000;
 const DIST_DIR = path.join(__dirname, 'dist');
 const CONTENT_FILE = path.join(__dirname, 'content', 'site-content.json');
 
+// ---- Admin Authentication ----
+// Set these environment variables in production (Plesk Node.js settings)
+const ADMIN_USER = process.env.CMS_ADMIN_USER || '';
+const ADMIN_PASS = process.env.CMS_ADMIN_PASS || '';
+
+function isAuthEnabled() {
+  return ADMIN_USER.length > 0 && ADMIN_PASS.length > 0;
+}
+
+function checkAuth(req, res) {
+  if (!isAuthEnabled()) return true; // No credentials set = auth disabled (dev mode)
+
+  const header = req.headers['authorization'] || '';
+  if (!header.startsWith('Basic ')) {
+    sendAuthChallenge(res);
+    return false;
+  }
+
+  const decoded = Buffer.from(header.slice(6), 'base64').toString();
+  const [user, pass] = decoded.split(':');
+
+  if (user === ADMIN_USER && pass === ADMIN_PASS) return true;
+
+  sendAuthChallenge(res);
+  return false;
+}
+
+function sendAuthChallenge(res) {
+  res.writeHead(401, {
+    'WWW-Authenticate': 'Basic realm="Bolt CMS Admin"',
+    'Content-Type': 'text/html'
+  });
+  res.end('<h1>401 Unauthorised</h1><p>Valid credentials required to access the CMS.</p>');
+}
+
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -29,6 +64,12 @@ const server = http.createServer((req, res) => {
     res.writeHead(code, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(data));
   };
+
+  // Protect admin panel and API routes with Basic Auth
+  const urlPath = req.url.split('?')[0];
+  if (urlPath.startsWith('/admin') || urlPath.startsWith('/api/')) {
+    if (!checkAuth(req, res)) return;
+  }
 
   // Handle CMS save endpoint
   if (req.method === 'POST' && req.url === '/api/save-content') {
@@ -153,7 +194,6 @@ const server = http.createServer((req, res) => {
   }
 
   // Serve static files from dist/
-  const urlPath = req.url.split('?')[0];
   let filePath = path.join(DIST_DIR, urlPath);
 
   // Security: prevent path traversal
