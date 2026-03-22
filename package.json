@@ -6,7 +6,7 @@
     "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
     "build": "npm run sass && npm run copy",
-    "copy": "cp src/index.html dist/ && cp -r content dist/ && cp src/js/app.js dist/js/app.js",
+    "copy": "node scripts/copy.js",
     "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"npx serve dist -l 3000\"",
     "start": "npm run build && npx serve dist -l 3000"
   },
