@@ -25,6 +25,7 @@ fs.mkdirSync('dist/css', { recursive: true });
 fs.copyFileSync('src/index.html', 'dist/index.html');
 copyRecursive('content', 'dist/content');
 copyRecursive('src/assets', 'dist/assets');
+copyRecursive('src/admin', 'dist/admin');
 fs.copyFileSync('src/js/app.js', 'dist/js/app.js');
 
 console.log('Files copied to dist/');

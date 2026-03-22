@@ -7,8 +7,9 @@
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
     "build": "npm run sass && npm run copy",
     "copy": "node scripts/copy.js",
-    "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"npx serve dist -l 3000\"",
-    "start": "npm run build && npx serve dist -l 3000"
+    "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"node server.js\"",
+    "start": "npm run build && node server.js",
+    "serve": "npx serve dist -l 3000"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
