@@ -1,0 +1,34 @@
+// ======================
+// Bolt Industrial Engineering Services
+// 7-1 SASS Architecture
+// ======================
+
+// 1. Abstracts — Variables, mixins, functions (used via @use in partials)
+
+// 2. Vendors — Third-party styles
+@use 'vendors/normalize';
+
+// 3. Base — Reset, typography, base styles
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/base';
+
+// 4. Layout — Header, footer, grid, hero, contact
+@use 'layout/header';
+@use 'layout/hero';
+@use 'layout/grid';
+@use 'layout/contact';
+@use 'layout/footer';
+
+// 5. Components — Buttons, cards, testimonials, etc.
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/testimonials';
+@use 'components/industries';
+@use 'components/highlights';
+
+// 6. Pages — Page-specific styles
+@use 'pages/home';
+
+// 7. Themes — Theme overrides
+@use 'themes/default';

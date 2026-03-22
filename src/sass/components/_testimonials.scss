@@ -1,0 +1,51 @@
+@use '../abstracts' as *;
+// ======================
+// Testimonials
+// ======================
+
+.testimonial {
+  background-color: $color-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-2xl $spacing-2xl $spacing-xl;
+  position: relative;
+  box-shadow: $shadow-sm;
+  border: 1px solid $color-grey-light;
+  transition: all $transition-base;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    border-color: $color-primary;
+  }
+
+  &__quote-mark {
+    font-size: 4rem;
+    line-height: 1;
+    color: $color-primary;
+    font-family: Georgia, serif;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__text {
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $color-grey-dark;
+    font-style: italic;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__author {
+    border-top: 1px solid $color-grey-light;
+    padding-top: $spacing-lg;
+  }
+
+  &__name {
+    font-weight: $font-weight-semibold;
+    color: $color-secondary;
+    font-size: $font-size-base;
+  }
+
+  &__company {
+    font-size: $font-size-sm;
+    color: $color-grey;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "bolt-industrial-engineering-services",
+  "version": "1.0.0",
+  "description": "Bolt Industrial Engineering Services - One page engineering site",
+  "scripts": {
+    "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
+    "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
+    "build": "npm run sass && npm run copy",
+    "copy": "cp src/index.html dist/ && cp -r content dist/ && cp src/js/app.js dist/js/app.js",
+    "dev": "npm run sass:watch"
+  },
+  "devDependencies": {
+    "sass": "^1.72.0"
+  }
+}

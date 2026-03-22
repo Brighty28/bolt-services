@@ -1,0 +1,39 @@
+@use '../abstracts' as *;
+// ======================
+// Home Page Specifics
+// ======================
+
+// About section with side-by-side layout
+.about-content {
+  display: grid;
+  gap: $spacing-2xl;
+
+  @include respond-to('md') {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+.about-text {
+  p {
+    color: $color-grey;
+    font-size: $font-size-lg;
+  }
+}
+
+// Services section
+#services {
+  .grid {
+    gap: $spacing-xl;
+  }
+}
+
+// Testimonials section layout
+.testimonials-grid {
+  display: grid;
+  gap: $spacing-xl;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
