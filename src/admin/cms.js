@@ -158,7 +158,7 @@ function renderImageUploader(id, label, currentValue) {
     : '<div class="cms-image-preview cms-image-preview--empty">No image selected</div>';
 
   const imageOptions = siteImages
-    .filter(img => /\.(jpg|jpeg|png|webp)$/i.test(img.filename))
+    .filter(img => /\.(jpg|jpeg|png|svg|webp|gif)$/i.test(img.filename))
     .map(img => `<option value="${img.path}" ${img.path === currentValue ? 'selected' : ''}>${img.filename}</option>`)
     .join('');
 
@@ -248,9 +248,11 @@ function renderAllSections() {
 
 function renderHeroSection() {
   const h = siteContent.hero || {};
+  const m = siteContent.meta || {};
   return `
     <div class="cms-section active" id="section-hero">
       <h2>Hero Section</h2>
+      ${renderImageUploader('meta-logo', 'Company Logo', m.logo || 'assets/logo.svg')}
       ${renderImageUploader('hero-bg-image', 'Background Image', h.backgroundImage || 'assets/hero-bg.jpg')}
       <div class="cms-field">
         <label>Headline</label>
@@ -273,6 +275,10 @@ function renderHeroSection() {
 }
 
 function collectHero() {
+  // Save logo to meta
+  if (!siteContent.meta) siteContent.meta = {};
+  siteContent.meta.logo = val('meta-logo');
+
   siteContent.hero = {
     headline: val('hero-headline'),
     subheadline: val('hero-subheadline'),

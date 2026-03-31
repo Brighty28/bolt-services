@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Bolt Industrial Engineering Services",
-    "description": "Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach."
+    "description": "Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach.",
+    "logo": "assets/logo.svg"
   },
   "hero": {
     "headline": "Industrial Engineering Services",

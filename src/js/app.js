@@ -391,9 +391,13 @@
       if (content.blog) renderBlog(content.blog);
       renderSocial(content.social);
 
-      // Update page title from CMS
-      if (content.meta && content.meta.title) {
-        document.title = content.meta.title;
+      // Update page title and logo from CMS
+      if (content.meta) {
+        if (content.meta.title) document.title = content.meta.title;
+        if (content.meta.logo) {
+          const logoImg = document.getElementById('site-logo');
+          if (logoImg) logoImg.src = content.meta.logo;
+        }
       }
     }
 
