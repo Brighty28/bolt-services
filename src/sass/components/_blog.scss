@@ -1,0 +1,193 @@
+@use '../abstracts' as *;
+// ======================
+// Blog Section
+// ======================
+
+.blog-grid {
+  display: grid;
+  gap: $spacing-xl;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.blog-card {
+  background: $color-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-xl;
+  box-shadow: $shadow-sm;
+  cursor: pointer;
+  transition: transform $transition-base, box-shadow $transition-base;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+
+  &__date {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    margin-bottom: $spacing-md;
+    line-height: $line-height-heading;
+  }
+
+  &__excerpt {
+    font-size: $font-size-base;
+    color: $color-grey;
+    line-height: $line-height-base;
+    flex: 1;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: $spacing-md;
+    border-top: 1px solid $color-grey-light;
+  }
+
+  &__author {
+    font-size: $font-size-sm;
+    color: $color-grey-dark;
+    font-weight: $font-weight-medium;
+  }
+
+  &__read-more {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    transition: color $transition-fast;
+  }
+
+  &:hover &__read-more {
+    color: $color-primary-dark;
+  }
+}
+
+// ---- Blog Post Modal ----
+
+.blog-modal {
+  position: fixed;
+  inset: 0;
+  z-index: $z-modal;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: $spacing-2xl $spacing-lg;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $transition-base, visibility $transition-base;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba($color-black, 0.7);
+    cursor: pointer;
+  }
+
+  &__content {
+    position: relative;
+    background: $color-white;
+    border-radius: $border-radius-xl;
+    max-width: 720px;
+    width: 100%;
+    padding: $spacing-3xl;
+    box-shadow: $shadow-xl;
+    z-index: 1;
+    margin-top: $spacing-3xl;
+
+    @include respond-to('md') {
+      padding: $spacing-4xl;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: $border-radius-full;
+    background: $color-off-white;
+    color: $color-grey-dark;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: $color-grey-light;
+    }
+  }
+
+  &__date {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-extrabold;
+    color: $color-secondary;
+    line-height: $line-height-heading;
+    margin-bottom: $spacing-md;
+
+    @include respond-to('md') {
+      font-size: $font-size-4xl;
+    }
+  }
+
+  &__author {
+    font-size: $font-size-base;
+    color: $color-grey;
+    margin-bottom: $spacing-2xl;
+    padding-bottom: $spacing-xl;
+    border-bottom: 1px solid $color-grey-light;
+  }
+
+  &__body {
+    p {
+      font-size: $font-size-lg;
+      line-height: 1.8;
+      color: $color-grey-dark;
+      margin-bottom: $spacing-lg;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

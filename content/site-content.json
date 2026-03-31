@@ -108,5 +108,19 @@
   "social": {
     "facebook": "https://www.facebook.com/boltindustrialengineeringservices/",
     "linkedin": "https://www.linkedin.com/company/bolt-industrial-engineering-services/"
+  },
+  "blog": {
+    "heading": "News & Insights",
+    "intro": "Stay up to date with the latest from Bolt Industrial Engineering Services.",
+    "posts": [
+      {
+        "id": "welcome-to-bolt",
+        "title": "Welcome to Our New Website",
+        "date": "2026-03-31",
+        "author": "Bolt Services",
+        "excerpt": "We're excited to launch our brand new website, designed to better showcase our engineering services and make it easier to get in touch.",
+        "body": "We're excited to launch our brand new website, designed to better showcase our engineering services and make it easier for clients to get in touch.\n\nThe new site features a modern design, detailed information about all of our services, and a simple contact form so you can reach us quickly.\n\nWe'll be using this blog to share project updates, industry news, and insights from our team. Stay tuned for more!"
+      }
+    ]
   }
 }

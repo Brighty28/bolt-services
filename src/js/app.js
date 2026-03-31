@@ -184,6 +184,80 @@
     }
   }
 
+  function renderBlog(data) {
+    const heading = document.getElementById('blog-heading');
+    const subheading = document.getElementById('blog-subheading');
+    const grid = document.getElementById('blog-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+    if (grid && data.posts) {
+      // Sort posts newest-first by date
+      const sorted = [...data.posts].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      grid.innerHTML = sorted
+        .map((post) => {
+          const dateStr = post.date ? new Date(post.date + 'T00:00:00').toLocaleDateString('en-GB', {
+            day: 'numeric', month: 'long', year: 'numeric'
+          }) : '';
+          return `
+            <article class="blog-card" onclick="openBlogPost('${post.id}')">
+              <div class="blog-card__date">${dateStr}</div>
+              <h3 class="blog-card__title">${post.title}</h3>
+              <p class="blog-card__excerpt">${post.excerpt}</p>
+              <div class="blog-card__meta">
+                <span class="blog-card__author">${post.author}</span>
+                <span class="blog-card__read-more">Read more &rarr;</span>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+
+      // Store posts for modal access
+      window.__blogPosts = sorted;
+    }
+  }
+
+  // Blog post modal — attached to window for onclick access
+  window.openBlogPost = function (postId) {
+    const post = (window.__blogPosts || []).find(p => p.id === postId);
+    if (!post) return;
+
+    const modal = document.getElementById('blog-modal');
+    const content = document.getElementById('blog-modal-content');
+    const dateStr = post.date ? new Date(post.date + 'T00:00:00').toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    }) : '';
+
+    const bodyHtml = post.body
+      .split('\n')
+      .filter(p => p.trim())
+      .map(p => `<p>${p}</p>`)
+      .join('');
+
+    content.innerHTML = `
+      <button class="blog-modal__close" onclick="closeBlogPost()">&times;</button>
+      <div class="blog-modal__date">${dateStr}</div>
+      <h2 class="blog-modal__title">${post.title}</h2>
+      <div class="blog-modal__author">By ${post.author}</div>
+      <div class="blog-modal__body">${bodyHtml}</div>
+    `;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeBlogPost = function () {
+    const modal = document.getElementById('blog-modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') window.closeBlogPost();
+  });
+
   function renderSocial(data) {
     const container = document.getElementById('footer-social');
     if (!container || !data) return;
@@ -290,7 +364,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item').forEach((el) => {
+    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -314,6 +388,7 @@
       renderIndustries(content.industries);
       renderTestimonials(content.testimonials);
       renderContact(content.contact);
+      if (content.blog) renderBlog(content.blog);
       renderSocial(content.social);
 
       // Update page title from CMS

@@ -63,6 +63,7 @@ async function saveContent() {
   collectIndustries();
   collectTestimonials();
   collectContact();
+  collectBlog();
   collectSocial();
 
   try {
@@ -237,6 +238,7 @@ function renderAllSections() {
     ${renderIndustriesSection()}
     ${renderTestimonialsSection()}
     ${renderContactSection()}
+    ${renderBlogSection()}
     ${renderSocialSection()}
     ${renderImagesSection()}
   `;
@@ -585,6 +587,112 @@ function collectContact() {
   };
 }
 
+// ---- Blog Section ----
+
+function renderBlogSection() {
+  const b = siteContent.blog || {};
+  const posts = (b.posts || []).map((post, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removeBlogPost(${i})">&times;</button>
+      <h3>Post ${i + 1}: ${esc(post.title || 'Untitled')}</h3>
+      <div class="cms-field">
+        <label>Title</label>
+        <input type="text" class="blog-title" value="${esc(post.title || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Date</label>
+        <input type="date" class="blog-date" value="${esc(post.date || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Author</label>
+        <input type="text" class="blog-author" value="${esc(post.author || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Excerpt <span style="font-weight:400; color:#999;">(shown on the blog card)</span></label>
+        <textarea class="blog-excerpt" style="min-height:60px">${esc(post.excerpt || '')}</textarea>
+      </div>
+      <div class="cms-field">
+        <label>Full Article</label>
+        <textarea class="blog-body" style="min-height:200px">${esc(post.body || '')}</textarea>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-blog">
+      <h2>Blog / News</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="blog-heading" value="${esc(b.heading || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Section Intro</label>
+        <textarea id="blog-intro" style="min-height:60px">${esc(b.intro || '')}</textarea>
+      </div>
+      <div id="blog-list">${posts}</div>
+      <button class="cms-add-btn" onclick="addBlogPost()">+ Add Blog Post</button>
+      <p style="font-size: 0.8125rem; color: #999; margin-top: 0.75rem;">Posts are displayed newest-first on the site. Use line breaks in the article body to separate paragraphs.</p>
+    </div>
+  `;
+}
+
+function generatePostId(title) {
+  return (title || 'post')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    + '-' + Date.now().toString(36);
+}
+
+function collectBlog() {
+  const titles = document.querySelectorAll('.blog-title');
+  const dates = document.querySelectorAll('.blog-date');
+  const authors = document.querySelectorAll('.blog-author');
+  const excerpts = document.querySelectorAll('.blog-excerpt');
+  const bodies = document.querySelectorAll('.blog-body');
+  const existingPosts = (siteContent.blog && siteContent.blog.posts) || [];
+  const posts = [];
+
+  titles.forEach((t, i) => {
+    const existingId = existingPosts[i] && existingPosts[i].id;
+    posts.push({
+      id: existingId || generatePostId(t.value),
+      title: t.value,
+      date: dates[i].value,
+      author: authors[i].value,
+      excerpt: excerpts[i].value,
+      body: bodies[i].value
+    });
+  });
+
+  siteContent.blog = {
+    heading: val('blog-heading'),
+    intro: val('blog-intro'),
+    posts
+  };
+}
+
+window.addBlogPost = function () {
+  collectBlog();
+  const today = new Date().toISOString().split('T')[0];
+  siteContent.blog.posts.unshift({
+    id: generatePostId('new-post'),
+    title: '',
+    date: today,
+    author: 'Bolt Services',
+    excerpt: '',
+    body: ''
+  });
+  refreshSection('blog');
+};
+
+window.removeBlogPost = function (index) {
+  if (!confirm('Delete this blog post?')) return;
+  collectBlog();
+  siteContent.blog.posts.splice(index, 1);
+  refreshSection('blog');
+};
+
 // ---- Social Media Section ----
 
 function renderSocialSection() {
@@ -707,6 +815,7 @@ function refreshSection(sectionName) {
     industries: renderIndustriesSection,
     testimonials: renderTestimonialsSection,
     contact: renderContactSection,
+    blog: renderBlogSection,
     social: renderSocialSection,
     images: renderImagesSection
   };
