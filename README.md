@@ -49,6 +49,23 @@ Access the content management system at `/admin/` to edit all site content witho
 
 All content is stored in `content/site-content.json`. The CMS admin panel reads and writes to this file via the Node.js server API. The frontend JavaScript fetches this JSON at runtime and renders every section dynamically.
 
+## Authentication
+
+The CMS admin panel and all API endpoints are protected by HTTP Basic Auth in production.
+
+### Setup
+
+Set two environment variables on your server (in Plesk: Node.js settings > Environment Variables):
+
+```
+CMS_ADMIN_USER=your-username
+CMS_ADMIN_PASS=your-secure-password
+```
+
+When both are set, visiting `/admin/` or calling any `/api/` endpoint will prompt for credentials. When both are empty (local development), auth is disabled.
+
+See `.env.example` for all available environment variables.
+
 ## Scripts
 
 | Command | Description |
@@ -56,6 +73,8 @@ All content is stored in `content/site-content.json`. The CMS admin panel reads 
 | `npm start` | Build + start server on port 3000 (CMS saving enabled) |
 | `npm run dev` | Build + watch SASS + start server (for development) |
 | `npm run build` | Compile SASS and copy all files to `dist/` |
+| `npm run deploy` | Clean install + build (used by Plesk post-deploy action) |
+| `npm run production` | Start server in production mode (no build, NODE_ENV=production) |
 | `npm run serve` | Serve `dist/` statically (no CMS save support) |
 | `npm run sass` | Compile SASS only |
 
@@ -67,6 +86,7 @@ All content is stored in `content/site-content.json`. The CMS admin panel reads 
 | `POST` | `/api/upload-image` | Upload an image (multipart form-data) |
 | `GET` | `/api/images` | List all uploaded images |
 | `DELETE` | `/api/images/:filename` | Delete an image |
+| `POST` | `/api/contact` | Send a contact form email via SMTP |
 
 ## Project Structure
 
@@ -98,6 +118,52 @@ bolt-services/
 ├── dist/                       # Built output
 ├── package.json
 └── README.md
+```
+
+## Deploying to Plesk (The Hosting Heroes)
+
+### Prerequisites
+
+1. **Node.js Toolkit** enabled on your Plesk domain
+2. **SSH access** set to `/bin/bash` for the domain's system user
+3. **Git extension** available in Plesk
+
+### Setup Steps
+
+1. **Connect the repo** — In Plesk: Websites & Domains > your-domain > Git. Add the SSH URL `git@github.com:Brighty28/bolt-services.git`. Copy Plesk's generated SSH key and add it as a Deploy Key in GitHub.
+
+2. **Set the branch** — Point Plesk at your `main` branch and enable automatic deployment.
+
+3. **Add the webhook** — Copy the Webhook URL from Plesk's Git settings and add it in GitHub under Settings > Webhooks (push events only).
+
+4. **Configure Node.js** — In Plesk: Websites & Domains > your-domain > Node.js:
+   - Application root: `/`
+   - Startup file: `server.js`
+   - Document root: `/dist`
+   - Application mode: `production`
+
+5. **Set environment variables** — In the Node.js settings:
+   - `CMS_ADMIN_USER` = your chosen username
+   - `CMS_ADMIN_PASS` = a strong password
+   - `SMTP_HOST` = `send.one.com`
+   - `SMTP_PORT` = `587`
+   - `SMTP_USER` = `assist@boltservices.co.uk`
+   - `SMTP_PASS` = your SMTP password
+   - `SMTP_FROM` = `assist@boltservices.co.uk`
+   - `SMTP_TO` = `info@boltservices.co.uk` (or wherever you want enquiries delivered)
+
+6. **Post-deploy actions** — In Git > Repository Settings > Enable additional deploy actions:
+   ```bash
+   export PATH="/opt/plesk/node/18/bin:$PATH"
+   cd $DEPLOYDIR
+   npm run deploy
+   touch tmp/restart.txt
+   ```
+
+### Deploy Flow
+
+```
+Push to main → GitHub webhook → Plesk pulls code → npm run deploy → Node.js restarts
 ```
 
 ## Site Sections

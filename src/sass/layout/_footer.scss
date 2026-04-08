@@ -25,6 +25,39 @@
     font-size: $font-size-sm;
   }
 
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+
+  &__social {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba($color-white, 0.1);
+    color: rgba($color-white, 0.6);
+    transition: background $transition-fast, color $transition-fast;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: $color-primary;
+      color: $color-white;
+    }
+  }
+
   &__links {
     display: flex;
     gap: $spacing-lg;
