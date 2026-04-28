@@ -5,7 +5,8 @@
   "scripts": {
     "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
-    "build": "npm run sass && npm run copy",
+    "build": "npm run sass && npm run analytics && npm run copy",
+    "analytics": "node scripts/build-analytics.js",
     "copy": "node scripts/copy.js",
     "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"node server.js\"",
     "start": "npm run build && node server.js",
@@ -13,7 +14,11 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "esbuild": "^0.28.0",
     "sass": "^1.72.0",
     "serve": "^14.2.0"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }
