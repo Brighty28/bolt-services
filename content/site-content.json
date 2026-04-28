@@ -110,6 +110,16 @@
     "facebook": "https://www.facebook.com/boltindustrialengineeringservices/",
     "linkedin": "https://www.linkedin.com/company/bolt-industrial-engineering-services/"
   },
+  "quote": {
+    "heading": "Request a Quote",
+    "intro": "Tell us about your project and we'll provide a no-obligation quote tailored to your requirements.",
+    "features": [
+      "Free no-obligation estimates",
+      "Response within 24 hours",
+      "Competitive rates",
+      "UK-wide coverage"
+    ]
+  },
   "blog": {
     "heading": "News & Insights",
     "intro": "Stay up to date with the latest from Bolt Industrial Engineering Services.",

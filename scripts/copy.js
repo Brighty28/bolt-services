@@ -28,4 +28,8 @@ copyRecursive('src/assets', 'dist/assets');
 copyRecursive('src/admin', 'dist/admin');
 fs.copyFileSync('src/js/app.js', 'dist/js/app.js');
 
+// Copy SEO files
+if (fs.existsSync('src/robots.txt')) fs.copyFileSync('src/robots.txt', 'dist/robots.txt');
+if (fs.existsSync('src/sitemap.xml')) fs.copyFileSync('src/sitemap.xml', 'dist/sitemap.xml');
+
 console.log('Files copied to dist/');

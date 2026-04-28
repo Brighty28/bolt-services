@@ -184,6 +184,84 @@
     }
   }
 
+  function renderQuote(data, services) {
+    const heading = document.getElementById('quote-heading');
+    const subheading = document.getElementById('quote-subheading');
+    const info = document.getElementById('quote-info');
+    const serviceSelect = document.getElementById('quote-service');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+
+    if (info && data.features) {
+      info.innerHTML = `
+        <div class="quote-info__content">
+          <ul class="quote-features">
+            ${data.features.map(f => `
+              <li class="quote-features__item">
+                <svg class="quote-features__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>${f}</span>
+              </li>
+            `).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    if (serviceSelect && services && services.items) {
+      const options = services.items.map(s =>
+        `<option value="${s.title}">${s.title}</option>`
+      ).join('');
+      serviceSelect.innerHTML = '<option value="">Select a Service...</option>' + options;
+    }
+  }
+
+  function initQuoteForm() {
+    const form = document.getElementById('quote-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.btn');
+      const inputs = form.querySelectorAll('input, select, textarea');
+      const [name, email, phone, company, service, details] = Array.from(inputs).map(i => i.value);
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name,
+            email,
+            subject: `Quote Request — ${service || 'General'}`,
+            message: `QUOTE REQUEST\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nCompany: ${company || 'Not provided'}\nService: ${service || 'Not specified'}\n\nProject Details:\n${details}`
+          })
+        });
+
+        if (res.ok) {
+          btn.textContent = 'Quote Requested!';
+          btn.style.backgroundColor = '#27ae60';
+          form.reset();
+        } else {
+          const data = await res.json();
+          throw new Error(data.error || 'Failed to send');
+        }
+      } catch (err) {
+        btn.textContent = 'Failed — Try Again';
+        btn.style.backgroundColor = '#e74c3c';
+      }
+
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.textContent = 'Request Quote';
+        btn.style.backgroundColor = '';
+      }, 4000);
+    });
+  }
+
   function renderBlog(data) {
     const heading = document.getElementById('blog-heading');
     const subheading = document.getElementById('blog-subheading');
@@ -364,7 +442,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card').forEach((el) => {
+    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card, .quote-features__item').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -387,13 +465,18 @@
       renderServices(content.services);
       renderIndustries(content.industries);
       renderTestimonials(content.testimonials);
+      if (content.quote) renderQuote(content.quote, content.services);
       renderContact(content.contact);
       if (content.blog) renderBlog(content.blog);
       renderSocial(content.social);
 
-      // Update page title and logo from CMS
+      // Update page title, meta, and logo from CMS
       if (content.meta) {
         if (content.meta.title) document.title = content.meta.title;
+        if (content.meta.description) {
+          const metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute('content', content.meta.description);
+        }
         if (content.meta.logo) {
           const logoImg = document.getElementById('site-logo');
           if (logoImg) logoImg.src = content.meta.logo;
@@ -405,6 +488,7 @@
     initHeader();
     initMobileNav();
     initContactForm();
+    initQuoteForm();
 
     // Delayed to ensure DOM is rendered
     requestAnimationFrame(() => {

@@ -62,6 +62,7 @@ async function saveContent() {
   collectServices();
   collectIndustries();
   collectTestimonials();
+  collectQuote();
   collectContact();
   collectBlog();
   collectSocial();
@@ -238,6 +239,7 @@ function renderAllSections() {
     ${renderIndustriesSection()}
     ${renderTestimonialsSection()}
     ${renderContactSection()}
+    ${renderQuoteSection()}
     ${renderBlogSection()}
     ${renderSocialSection()}
     ${renderImagesSection()}
@@ -593,6 +595,59 @@ function collectContact() {
   };
 }
 
+// ---- Quote Section ----
+
+function renderQuoteSection() {
+  const q = siteContent.quote || {};
+  const features = (q.features || []).map((f, i) => `
+    <div class="cms-list-item" style="padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.5rem;">
+      <input type="text" class="quote-feature" value="${esc(f)}" style="flex:1">
+      <button class="cms-remove-btn" style="position:static; width:28px; height:28px; flex-shrink:0;" onclick="removeQuoteFeature(${i})">&times;</button>
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-quote">
+      <h2>Request a Quote</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="quote-heading" value="${esc(q.heading || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Section Intro</label>
+        <textarea id="quote-intro" style="min-height:60px">${esc(q.intro || '')}</textarea>
+      </div>
+      <h3 style="margin: 1.5rem 0 1rem;">Features / Selling Points</h3>
+      <div id="quote-features-list">${features}</div>
+      <button class="cms-add-btn" onclick="addQuoteFeature()">+ Add Feature</button>
+      <p style="font-size: 0.8125rem; color: #999; margin-top: 0.75rem;">These bullet points appear beside the quote request form. The service dropdown is automatically populated from your Services section.</p>
+    </div>
+  `;
+}
+
+function collectQuote() {
+  const inputs = document.querySelectorAll('.quote-feature');
+  const features = [];
+  inputs.forEach(inp => { if (inp.value.trim()) features.push(inp.value.trim()); });
+  siteContent.quote = {
+    heading: val('quote-heading'),
+    intro: val('quote-intro'),
+    features
+  };
+}
+
+window.addQuoteFeature = function () {
+  collectQuote();
+  siteContent.quote.features.push('');
+  refreshSection('quote');
+};
+
+window.removeQuoteFeature = function (index) {
+  collectQuote();
+  siteContent.quote.features.splice(index, 1);
+  refreshSection('quote');
+};
+
 // ---- Blog Section ----
 
 function renderBlogSection() {
@@ -820,6 +875,7 @@ function refreshSection(sectionName) {
     services: renderServicesSection,
     industries: renderIndustriesSection,
     testimonials: renderTestimonialsSection,
+    quote: renderQuoteSection,
     contact: renderContactSection,
     blog: renderBlogSection,
     social: renderSocialSection,
