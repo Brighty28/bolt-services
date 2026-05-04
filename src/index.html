@@ -3,12 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bolt Industrial Engineering Services</title>
-  <meta name="description" content="Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach.">
+  <title>Bolt Industrial Engineering Services | Electrical &amp; Mechanical Engineering UK</title>
+  <meta name="description" content="Bolt Industrial Engineering Services — Electrical and Mechanical Engineering across the UK. Project management, lean manufacturing, and 24/7 support.">
+  <meta name="keywords" content="industrial engineering, electrical engineering, mechanical engineering, project management, site management, lean manufacturing, UK engineering services, FMCG engineering, continuous improvement">
+  <meta name="author" content="Bolt Industrial Engineering Services Ltd">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.boltservices.co.uk/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.boltservices.co.uk/">
+  <meta property="og:title" content="Bolt Industrial Engineering Services | Electrical &amp; Mechanical Engineering UK">
+  <meta property="og:description" content="Delivering quality electrical &amp; mechanical engineering solutions across the UK. Project &amp; Site Management, Continuous Improvement, and 24/7 support.">
+  <meta property="og:image" content="https://www.boltservices.co.uk/assets/hero-bg.jpg">
+  <meta property="og:site_name" content="Bolt Industrial Engineering Services">
+  <meta property="og:locale" content="en_GB">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bolt Industrial Engineering Services | Electrical &amp; Mechanical Engineering UK">
+  <meta name="twitter:description" content="Delivering quality electrical &amp; mechanical engineering solutions across the UK.">
+  <meta name="twitter:image" content="https://www.boltservices.co.uk/assets/hero-bg.jpg">
+
+  <!-- Geo tags -->
+  <meta name="geo.region" content="GB">
+  <meta name="geo.placename" content="St. Ives, Cambridgeshire">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Structured Data / JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Bolt Industrial Engineering Services Ltd",
+    "description": "Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach.",
+    "url": "https://www.boltservices.co.uk",
+    "telephone": "+447885729188",
+    "email": "karl@boltservices.co.uk",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "4 Hawthorn Way",
+      "addressLocality": "St. Ives",
+      "addressRegion": "Cambridgeshire",
+      "postalCode": "PE27 3YP",
+      "addressCountry": "GB"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "United Kingdom"
+    },
+    "serviceType": [
+      "Electrical Engineering",
+      "Mechanical Engineering",
+      "Project Management",
+      "Site Management",
+      "Lean Manufacturing",
+      "Health & Safety Management"
+    ],
+    "sameAs": [
+      "https://www.facebook.com/boltindustrialengineeringservices/",
+      "https://www.linkedin.com/company/bolt-industrial-engineering-services/"
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -16,7 +77,7 @@
   <header class="header" id="header">
     <div class="container">
       <a href="#" class="header__logo">
-        <img src="assets/logo.svg" alt="Bolt Industrial Engineering Services" class="header__logo-img">
+        <img src="assets/logo.svg" alt="Bolt Industrial Engineering Services" class="header__logo-img" id="site-logo">
       </a>
 
       <nav class="header__nav">
@@ -24,6 +85,7 @@
         <a href="#services" class="header__nav-link">Services</a>
         <a href="#industries" class="header__nav-link">Industries</a>
         <a href="#testimonials" class="header__nav-link">Testimonials</a>
+        <a href="#blog" class="header__nav-link">Blog</a>
         <a href="#contact" class="btn btn--primary">Contact Us</a>
       </nav>
 
@@ -43,6 +105,7 @@
     <a href="#services" class="mobile-nav__link">Services</a>
     <a href="#industries" class="mobile-nav__link">Industries</a>
     <a href="#testimonials" class="mobile-nav__link">Testimonials</a>
+    <a href="#blog" class="mobile-nav__link">Blog</a>
     <a href="#contact" class="mobile-nav__link">Contact Us</a>
   </nav>
 
@@ -106,6 +169,23 @@
     </div>
   </section>
 
+  <!-- Blog -->
+  <section class="section" id="blog">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__heading" id="blog-heading"></h2>
+        <p class="section__subheading" id="blog-subheading"></p>
+      </div>
+      <div class="blog-grid" id="blog-grid"></div>
+    </div>
+  </section>
+
+  <!-- Blog Post Modal -->
+  <div class="blog-modal" id="blog-modal">
+    <div class="blog-modal__overlay" onclick="closeBlogPost()"></div>
+    <article class="blog-modal__content" id="blog-modal-content"></article>
+  </div>
+
   <!-- Contact -->
   <section class="section" id="contact">
     <div class="container">
@@ -130,9 +210,12 @@
   <footer class="footer">
     <div class="container">
       <p class="footer__copy">&copy; <span id="footer-year"></span> Bolt Industrial Engineering Services Ltd. All rights reserved.</p>
-      <div class="footer__links">
-        <a href="mailto:info@boltservices.co.uk" class="footer__link">info@boltservices.co.uk</a>
-        <a href="tel:07885729188" class="footer__link">07885 729188</a>
+      <div class="footer__right">
+        <div class="footer__social" id="footer-social"></div>
+        <div class="footer__links">
+          <a href="mailto:karl@boltservices.co.uk" class="footer__link">karl@boltservices.co.uk</a>
+          <a href="tel:07885729188" class="footer__link">07885 729188</a>
+        </div>
       </div>
     </div>
   </footer>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolt Services — New Website Design &amp; Features</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #e8611a;
+      --primary-dark: #c95215;
+      --secondary: #1a1a2e;
+      --white: #ffffff;
+      --off-white: #f4f4f8;
+      --grey: #888888;
+      --grey-dark: #333333;
+      --black: #0a0a0a;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { page-break-after: always; break-after: page; }
+      .page:last-child { page-break-after: avoid; break-after: avoid; }
+      .no-print { display: none !important; }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--grey-dark);
+      line-height: 1.6;
+      background: var(--off-white);
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ---- Print hint bar ---- */
+    .print-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--secondary);
+      color: var(--white);
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      z-index: 100;
+    }
+    .print-bar button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    /* ---- Cover page ---- */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 3rem;
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--secondary) 0%, #16213e 50%, var(--secondary) 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: rgba(232, 97, 26, 0.08);
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -20%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(232, 97, 26, 0.05);
+    }
+
+    .cover__bolt {
+      width: 64px;
+      height: 64px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover__bolt svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--white);
+    }
+
+    .cover__badge {
+      display: inline-block;
+      background: rgba(232, 97, 26, 0.15);
+      color: var(--primary);
+      padding: 0.375rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover h1 span { color: var(--primary); }
+
+    .cover__sub {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 550px;
+      margin-bottom: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover__meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 2rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .cover__meta strong { color: rgba(255,255,255,0.8); }
+
+    /* ---- Section pages ---- */
+    .section-page {
+      padding: 4rem 3rem;
+    }
+
+    .section-page h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-page h2 span { color: var(--primary); }
+
+    .section-intro {
+      color: var(--grey);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      max-width: 650px;
+    }
+
+    .divider {
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      margin-bottom: 2rem;
+    }
+
+    /* ---- Feature cards ---- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--off-white);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-card h3 .icon {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-card h3 .icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--white);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--grey);
+      line-height: 1.5;
+    }
+
+    /* ---- Site sections showcase ---- */
+    .section-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .section-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .section-item__num {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .section-item__text h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 0.25rem;
+    }
+
+    .section-item__text p {
+      font-size: 0.875rem;
+      color: var(--grey);
+    }
+
+    /* ---- CMS showcase ---- */
+    .cms-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .cms-card {
+      background: var(--off-white);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .cms-card h3 {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 0.375rem;
+    }
+
+    .cms-card p {
+      font-size: 0.8125rem;
+      color: var(--grey);
+      line-height: 1.5;
+    }
+
+    .cms-card__icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ---- Tech stack ---- */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tech-item {
+      text-align: center;
+      padding: 1.25rem 1rem;
+      background: var(--off-white);
+      border-radius: 10px;
+    }
+
+    .tech-item__label {
+      font-size: 0.8125rem;
+      color: var(--grey);
+      margin-bottom: 0.25rem;
+    }
+
+    .tech-item__value {
+      font-weight: 700;
+      color: var(--secondary);
+      font-size: 0.9375rem;
+    }
+
+    /* ---- Deployment ---- */
+    .deploy-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .deploy-step {
+      background: var(--off-white);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--secondary);
+      text-align: center;
+    }
+
+    .deploy-arrow {
+      color: var(--primary);
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    /* ---- Highlight box ---- */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--secondary), #16213e);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .highlight-box h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.125rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .highlight-box p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .highlight-box ul {
+      list-style: none;
+      margin-top: 0.75rem;
+    }
+
+    .highlight-box li {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.8);
+      padding: 0.25rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .highlight-box li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* ---- Footer strip ---- */
+    .brochure-footer {
+      text-align: center;
+      padding: 2rem 3rem;
+      border-top: 1px solid #eee;
+      font-size: 0.8125rem;
+      color: var(--grey);
+    }
+
+    .brochure-footer strong { color: var(--secondary); }
+
+    /* ---- Next steps checklist ---- */
+    .checklist {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .checklist li {
+      padding: 0.625rem 0;
+      padding-left: 2rem;
+      position: relative;
+      font-size: 0.9375rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.85rem;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--primary);
+      border-radius: 4px;
+    }
+
+    /* ---- Contact bar ---- */
+    .contact-bar {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-bar__item {
+      font-size: 0.875rem;
+    }
+
+    .contact-bar__item strong {
+      display: block;
+      color: var(--secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.125rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print hint -->
+  <div class="print-bar no-print">
+    Save as PDF: use your browser's Print function (Ctrl+P / Cmd+P) and select "Save as PDF"
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <!-- ==================== PAGE 1: COVER ==================== -->
+  <div class="page cover">
+    <div class="cover__bolt">
+      <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    </div>
+    <div class="cover__badge">Website Redesign &amp; Feature Overview</div>
+    <h1>Bolt <span>Industrial</span><br>Engineering Services</h1>
+    <p class="cover__sub">
+      A complete redesign of the Bolt Services website with a modern tech stack,
+      built-in content management system, and production-ready deployment pipeline.
+    </p>
+    <div class="cover__meta">
+      <div><strong>Prepared for</strong><br>Bolt Industrial Engineering Services Ltd</div>
+      <div><strong>Date</strong><br>March 2026</div>
+      <div><strong>Version</strong><br>1.0</div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: DESIGN OVERVIEW ==================== -->
+  <div class="page section-page">
+    <h2>New <span>Design</span> Overview</h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      The website has been completely redesigned with a modern, professional look that reflects
+      Bolt's industrial engineering expertise. Here's what's new.
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></span>
+          Modern Visual Identity
+        </h3>
+        <p>Bold industrial colour palette (Bolt orange #e8611a, deep navy #1a1a2e) with premium typography using Inter and Plus Jakarta Sans fonts.</p>
+      </div>
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></span>
+          Fully Responsive
+        </h3>
+        <p>Mobile-first design that works seamlessly across phones, tablets, and desktops. Includes a dedicated mobile navigation drawer.</p>
+      </div>
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+          Scroll Animations
+        </h3>
+        <p>Subtle fade-in animations on cards, testimonials, and highlights as the user scrolls through each section.</p>
+      </div>
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          Full-Viewport Hero
+        </h3>
+        <p>Eye-catching hero section with an industrial background image, gradient overlay, and clear call-to-action buttons.</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top: 2.5rem;">Site <span>Sections</span></h2>
+    <div class="divider"></div>
+
+    <div class="section-list">
+      <div class="section-item">
+        <div class="section-item__num">1</div>
+        <div class="section-item__text">
+          <h3>Hero</h3>
+          <p>Full-viewport section with CMS-configurable background image, headline, subheadline, and call-to-action button.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">2</div>
+        <div class="section-item__text">
+          <h3>About</h3>
+          <p>Company introduction with three stat highlights: UK Wide Coverage, 24/7 Support, and 100% Safety Focused.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">3</div>
+        <div class="section-item__text">
+          <h3>Services</h3>
+          <p>Six service cards with icons — Project Management, Electrical, Mechanical, H&amp;S, Labour Supply, and Lean Manufacturing.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">4</div>
+        <div class="section-item__text">
+          <h3>Industries</h3>
+          <p>Visual tag grid showcasing 11 industry sectors including FMCG, Food, Cement, Refrigeration, and more.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">5</div>
+        <div class="section-item__text">
+          <h3>Testimonials</h3>
+          <p>Client quotes from Omya UK and Integral Refrigeration, presented in professional quote cards.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">6</div>
+        <div class="section-item__text">
+          <h3>Blog / News</h3>
+          <p>A news and insights section where you can publish blog posts. Visitors see post cards with excerpts, and click through to read the full article in a modal overlay.</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-item__num">7</div>
+        <div class="section-item__text">
+          <h3>Contact</h3>
+          <p>Phone, email, and address details alongside a working contact form that sends email enquiries directly to you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 3: CMS ==================== -->
+  <div class="page section-page">
+    <h2>Content <span>Management</span> System</h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      A built-in admin panel at <strong>/admin/</strong> lets you update all website content
+      without any technical knowledge. No coding required.
+    </p>
+
+    <div class="cms-features">
+      <div class="cms-card">
+        <div class="cms-card__icon">&#9998;</div>
+        <h3>Edit All Content</h3>
+        <p>Update every section of the site — headlines, descriptions, service cards, testimonials, contact details — all from a clean, tabbed interface.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128247;</div>
+        <h3>Media Library</h3>
+        <p>Upload, browse, and delete images via drag &amp; drop. Change the hero background image with a single click. Supports JPG, PNG, SVG, WebP, and GIF (up to 10MB).</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#43;</div>
+        <h3>Add &amp; Remove Items</h3>
+        <p>Dynamically add or remove services, industry tags, testimonials, and stat highlights. No limits on the number of items.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128279;</div>
+        <h3>Social Media Links</h3>
+        <p>Configure Facebook and LinkedIn URLs from the Social tab. Icons appear in the footer automatically. Leave blank to hide.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128221;</div>
+        <h3>Blog / News Posts</h3>
+        <p>Create, edit, and delete blog posts from the Blog tab. Each post has a title, date, author, excerpt, and full article body. Posts display newest-first on the site.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128274;</div>
+        <h3>Password Protected</h3>
+        <p>The admin panel is secured with HTTP Basic Authentication in production. Only authorised users can access the CMS or API endpoints.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128190;</div>
+        <h3>Instant Save</h3>
+        <p>Click "Save Changes" and the site updates immediately. Content is stored as a simple JSON file — no database required.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h3>How the CMS Works</h3>
+      <p>All site content lives in a single JSON file. The admin panel provides a user-friendly interface to edit this file. When you click save, the server updates the file and the website reflects the changes immediately — no rebuild or restart needed.</p>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 4: CONTACT FORM & TECH ==================== -->
+  <div class="page section-page">
+    <h2>Working <span>Contact Form</span></h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      The contact form now sends real emails via your existing SMTP service.
+    </p>
+
+    <div class="features-grid" style="margin-bottom: 2.5rem;">
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          Email Delivery
+        </h3>
+        <p>Enquiries are sent directly to your inbox. Each email includes the sender's name, email, subject, and message with a reply-to header for easy responses.</p>
+      </div>
+      <div class="feature-card">
+        <h3>
+          <span class="icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          Secure Credentials
+        </h3>
+        <p>SMTP credentials are stored as server environment variables, never in the code. Safe and easy to update without touching the codebase.</p>
+      </div>
+    </div>
+
+    <h2>Technology <span>Stack</span></h2>
+    <div class="divider"></div>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="tech-item__label">Styling</div>
+        <div class="tech-item__value">SASS (7-1)</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-item__label">Frontend</div>
+        <div class="tech-item__value">Vanilla JS</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-item__label">Server</div>
+        <div class="tech-item__value">Node.js</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-item__label">CMS Data</div>
+        <div class="tech-item__value">JSON</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-item__label">Email</div>
+        <div class="tech-item__value">Nodemailer</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-item__label">Design</div>
+        <div class="tech-item__value">Mobile-First</div>
+      </div>
+    </div>
+
+    <h2>Deployment <span>Pipeline</span></h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      The site is configured for continuous deployment via Plesk's Git integration with your hosting provider (The Hosting Heroes).
+    </p>
+
+    <div class="deploy-flow">
+      <div class="deploy-step">Push code<br>to GitHub</div>
+      <div class="deploy-arrow">&rarr;</div>
+      <div class="deploy-step">Webhook<br>triggers Plesk</div>
+      <div class="deploy-arrow">&rarr;</div>
+      <div class="deploy-step">Plesk pulls<br>&amp; builds</div>
+      <div class="deploy-arrow">&rarr;</div>
+      <div class="deploy-step">Node.js<br>restarts</div>
+      <div class="deploy-arrow">&rarr;</div>
+      <div class="deploy-step">Site is<br>live</div>
+    </div>
+
+    <div class="highlight-box">
+      <h3>Key Benefits</h3>
+      <ul>
+        <li>Zero-downtime deployments — push to GitHub and the site updates automatically</li>
+        <li>No database dependency — content is file-based, fast, and simple to back up</li>
+        <li>No third-party CMS subscriptions — everything is self-hosted</li>
+        <li>Secure by default — admin panel locked behind authentication in production</li>
+        <li>Lightweight &amp; fast — no frontend frameworks, minimal dependencies</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 5: NEXT STEPS ==================== -->
+  <div class="page section-page">
+    <h2>Next <span>Steps</span></h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      The following items are needed to take the site live.
+    </p>
+
+    <ul class="checklist">
+      <li>Confirm Node.js extension is available on your Plesk hosting plan</li>
+      <li>Set the deploy branch in Plesk and configure the GitHub webhook</li>
+      <li>Set CMS admin username and password as environment variables</li>
+      <li>Set SMTP credentials as environment variables for the contact form</li>
+      <li>Add your Facebook and LinkedIn page URLs via the CMS Social tab</li>
+      <li>Review all site content in the CMS and update as needed</li>
+      <li>Upload the final hero background image via the Media Library</li>
+      <li>Test the contact form end-to-end in production</li>
+      <li>Point your domain DNS to the hosting server</li>
+      <li>Verify the site on mobile, tablet, and desktop</li>
+    </ul>
+
+    <div class="highlight-box" style="margin-top: 2.5rem;">
+      <h3>Environment Variables Required</h3>
+      <p>These must be set in Plesk's Node.js settings before going live:</p>
+      <ul>
+        <li><strong>CMS_ADMIN_USER</strong> — Username for the admin panel</li>
+        <li><strong>CMS_ADMIN_PASS</strong> — Password for the admin panel</li>
+        <li><strong>SMTP_HOST</strong> — Email server (send.one.com)</li>
+        <li><strong>SMTP_PORT</strong> — Email port (587)</li>
+        <li><strong>SMTP_USER</strong> — Email account username</li>
+        <li><strong>SMTP_PASS</strong> — Email account password</li>
+        <li><strong>SMTP_FROM</strong> — Sender address for contact form emails</li>
+        <li><strong>SMTP_TO</strong> — Where contact form enquiries are delivered</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 3rem; text-align: center;">
+      <h2 style="margin-bottom: 0.5rem;">Ready to <span>Go Live</span></h2>
+      <p class="section-intro" style="margin: 0 auto 2rem;">
+        Once hosting is confirmed and environment variables are set, the site can be deployed immediately.
+      </p>
+    </div>
+
+    <div class="brochure-footer">
+      <strong>Bolt Industrial Engineering Services Ltd</strong><br>
+      4 Hawthorn Way, St. Ives, Cambridgeshire, PE27 3YP<br>
+      07885 729188 &middot; info@boltservices.co.uk
+    </div>
+  </div>
+
+  <script>
+    // No-op — just the print button
+  </script>
+</body>
+</html>
