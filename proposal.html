@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bolt Services — Website Redesign Proposal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #e8611a;
+      --primary-dark: #c95215;
+      --secondary: #1a1a2e;
+      --white: #ffffff;
+      --off-white: #f4f4f8;
+      --grey: #888888;
+      --grey-dark: #333333;
+      --grey-light: #e0e0e0;
+      --black: #0a0a0a;
+      --success: #27ae60;
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { page-break-after: always; break-after: page; }
+      .page:last-child { page-break-after: avoid; break-after: avoid; }
+      .no-print { display: none !important; }
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--grey-dark);
+      line-height: 1.6;
+      background: var(--off-white);
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .print-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--secondary);
+      color: var(--white);
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      z-index: 100;
+    }
+
+    .print-bar button {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-left: 1rem;
+    }
+
+    /* Cover page */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 3rem;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--secondary) 0%, #16213e 100%);
+      color: var(--white);
+    }
+
+    .cover__badge {
+      display: inline-block;
+      background: rgba(232, 97, 26, 0.15);
+      color: var(--primary);
+      padding: 0.4rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .cover h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .cover h1 span { color: var(--primary); }
+
+    .cover__subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    .cover__meta {
+      margin-top: auto;
+      padding-top: 3rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .cover__prepared {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Content pages */
+    .content {
+      padding: 3.5rem 3rem;
+    }
+
+    .content h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .content h2 span { color: var(--primary); }
+
+    .content h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .content p {
+      margin-bottom: 1rem;
+      color: var(--grey-dark);
+    }
+
+    .content .lead {
+      font-size: 1.05rem;
+      color: var(--grey);
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--primary);
+      padding-left: 1rem;
+    }
+
+    .divider {
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      border: none;
+      margin: 0.5rem 0 2rem;
+      max-width: 80px;
+    }
+
+    /* Problem / Solution layout */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .comparison__box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+
+    .comparison__box--before {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+
+    .comparison__box--after {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .comparison__box h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .comparison__box--before h4 { color: #dc2626; }
+    .comparison__box--after h4 { color: var(--success); }
+
+    .comparison__box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .comparison__box li {
+      padding: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .comparison__box--before li::before {
+      content: "\2717";
+      position: absolute;
+      left: 0;
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .comparison__box--after li::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    /* Features list */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 1rem;
+      border-radius: 10px;
+      background: var(--off-white);
+    }
+
+    .feature__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .feature__text strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--secondary);
+      margin-bottom: 0.15rem;
+    }
+
+    .feature__text span {
+      font-size: 0.8rem;
+      color: var(--grey);
+      line-height: 1.4;
+    }
+
+    /* Pricing table */
+    .pricing {
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--grey-light);
+    }
+
+    .pricing__header {
+      background: var(--secondary);
+      color: var(--white);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pricing__header h3 {
+      color: var(--white);
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .pricing__header .price {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .pricing__rows {
+      padding: 0;
+    }
+
+    .pricing__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid var(--grey-light);
+      font-size: 0.9rem;
+    }
+
+    .pricing__row:last-child { border-bottom: none; }
+
+    .pricing__row span:first-child { color: var(--grey-dark); }
+    .pricing__row span:last-child {
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .pricing__row--included span:last-child {
+      color: var(--success);
+    }
+
+    .pricing__footer {
+      background: var(--off-white);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid var(--grey-light);
+    }
+
+    .pricing__footer strong {
+      font-size: 1rem;
+      color: var(--secondary);
+    }
+
+    .pricing__footer .total {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* Value callout */
+    .callout {
+      background: linear-gradient(135deg, var(--secondary) 0%, #16213e 100%);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin: 2rem 0;
+    }
+
+    .callout h3 {
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+      margin: 1.5rem 0;
+    }
+
+    .timeline__step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .timeline__num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .timeline__text strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--secondary);
+    }
+
+    .timeline__text span {
+      font-size: 0.85rem;
+      color: var(--grey);
+    }
+
+    /* Terms */
+    .terms {
+      font-size: 0.8rem;
+      color: var(--grey);
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--grey-light);
+    }
+
+    .terms p { margin-bottom: 0.4rem; font-size: 0.8rem; color: var(--grey); }
+
+    /* Footer */
+    .page-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 3rem;
+      font-size: 0.75rem;
+      color: var(--grey);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 700px) {
+      .content { padding: 2rem 1.5rem; }
+      .cover { padding: 3rem 1.5rem; }
+      .cover h1 { font-size: 2rem; }
+      .comparison { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Print hint -->
+  <div class="print-bar no-print">
+    Save or print this proposal as a PDF &rarr;
+    <button onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <!-- PAGE 1: Cover -->
+  <div class="page">
+    <div class="cover">
+      <div class="cover__badge">Proposal</div>
+      <h1>Website <span>Redesign</span><br>& Modernisation</h1>
+      <p class="cover__subtitle">A complete refresh of the Bolt Industrial Engineering Services online presence modern design, easy content management, and built to grow with your business.</p>
+      <div class="cover__meta">
+        <p class="cover__prepared">Prepared for Mel Jest - Bolt Industrial Engineering Services Ltd</p>
+        <p>May 2026</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 2: Why Upgrade -->
+  <div class="page">
+    <div class="content">
+      <h2>Why <span>Upgrade</span> Now?</h2>
+      <hr class="divider">
+      <p class="lead">Your current site does the job but it's leaving opportunities on the table. Here's what a modern site unlocks for Bolt Services.</p>
+
+      <div class="comparison">
+        <div class="comparison__box comparison__box--before">
+          <h4>Current Limitations</h4>
+          <ul>
+            <li>Static design looks dated on mobile devices</li>
+            <li>No way to update content without a developer</li>
+            <li>No blog or news to show activity and expertise</li>
+            <li>Missing from Google for key search terms</li>
+          </ul>
+        </div>
+        <div class="comparison__box comparison__box--after">
+          <h4>After the Redesign</h4>
+          <ul>
+            <li>Professional, mobile-first design that builds trust</li>
+            <li>Edit all content yourself no developer needed</li>
+            <li>Blog section to share news and project updates</li>
+            <li>SEO-optimised to rank for engineering searches</li>
+            <li>Working contact form delivers enquiries to your inbox</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>First Impressions Matter</h3>
+      <p>75% of users judge a company's credibility based on their website. When a potential client searches for industrial engineering services, your site is often the first thing they see. A modern, professional site signals that Bolt Services is established, capable, and worth contacting.</p>
+
+      <h3>Your Competitors Have Already Upgraded</h3>
+      <p>Most engineering firms in the UK now have responsive, SEO-friendly websites with clear calls to action. A refreshed site ensures you're competing on equal footing and the built-in blog gives you an edge by demonstrating active expertise in your sector.</p>
+
+      <h3>Independence from Developers</h3>
+      <p>The built-in content management system means you can update text, images, services, testimonials, and blog posts yourself instantly, from any device. No waiting, no extra costs for simple changes.</p>
+    </div>
+    <div class="page-footer">
+      <span>Bolt Services - Website Redesign Proposal</span>
+      <span>Page 2</span>
+    </div>
+  </div>
+
+  <!-- PAGE 3: What's Included -->
+  <div class="page">
+    <div class="content">
+      <h2>What's <span>Included</span></h2>
+      <hr class="divider">
+      <p class="lead">Everything you need for a complete, professional online presence designed, built, and ready to deploy.</p>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature__icon">&#9881;</div>
+          <div class="feature__text">
+            <strong>Modern Responsive Design</strong>
+            <span>Looks great on phones, tablets, and desktops. Fast loading with smooth animations.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#9998;</div>
+          <div class="feature__text">
+            <strong>Content Management System</strong>
+            <span>Edit every section, upload images, manage your blog — all from a simple admin panel.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#9993;</div>
+          <div class="feature__text">
+            <strong>Working Contact Form</strong>
+            <span>Enquiries delivered straight to your inbox via email. No third-party services needed.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#128196;</div>
+          <div class="feature__text">
+            <strong>Blog / News Section</strong>
+            <span>Share project updates, industry news, and company milestones to keep the site active.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#128269;</div>
+          <div class="feature__text">
+            <strong>SEO Optimisation</strong>
+            <span>Structured data, meta tags, sitemap, and semantic HTML to help Google find you.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#128274;</div>
+          <div class="feature__text">
+            <strong>Secure Admin Access</strong>
+            <span>Password-protected CMS. Only you can edit the site content.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#128247;</div>
+          <div class="feature__text">
+            <strong>Media Library</strong>
+            <span>Upload and manage images with drag &amp; drop. Change your logo anytime.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">&#127760;</div>
+          <div class="feature__text">
+            <strong>Social Media Integration</strong>
+            <span>Facebook and LinkedIn links visible across the site, manageable from the CMS.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h3>Built to Last</h3>
+        <p>The site is built with modern, maintainable code no WordPress plugins to break, no monthly CMS fees, no dependency on third-party page builders. It's lightweight, fast, and entirely under your control.</p>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span>Bolt Services - Website Redesign Proposal</span>
+      <span>Page 3</span>
+    </div>
+  </div>
+
+  <!-- PAGE 4: Pricing & Next Steps -->
+  <div class="page">
+    <div class="content">
+      <h2>Investment & <span>Next Steps</span></h2>
+      <hr class="divider">
+      <p class="lead">A straightforward, one-off cost for everything no hidden fees, no recurring charges for the build itself.</p>
+
+      <div class="pricing">
+        <div class="pricing__header">
+          <h3>Complete Website Package</h3>
+          <span class="price">&pound;295</span>
+        </div>
+        <div class="pricing__rows">
+          <div class="pricing__row pricing__row--included">
+            <span>Bespoke responsive design (7 sections)</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Content Management System (CMS)</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Blog / News section with editor</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Contact form with email delivery</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>SEO optimisation &amp; Google structured data</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Media library &amp; image uploads</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Social media integration</span>
+            <span>Included</span>
+          </div>
+          <div class="pricing__row pricing__row--included">
+            <span>Deployment to your hosting</span>
+            <span>Included</span>
+          </div>
+        </div>
+        <div class="pricing__footer">
+          <strong>Total (one-off)</strong>
+          <span class="total">&pound;295 + VAT</span>
+        </div>
+      </div>
+
+      <h3>What Happens Next</h3>
+      <div class="timeline">
+        <div class="timeline__step">
+          <div class="timeline__num">1</div>
+          <div class="timeline__text">
+            <strong>Approval</strong>
+            <span>Confirm you're happy to proceed and we'll finalise the content together.</span>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__num">2</div>
+          <div class="timeline__text">
+            <strong>Content Review</strong>
+            <span>We'll walk through the CMS so you can review and tweak all text, images, and services before launch.</span>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__num">3</div>
+          <div class="timeline__text">
+            <strong>Deployment</strong>
+            <span>Site goes live on your existing hosting. Your current domain stays the same no disruption.</span>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__num">4</div>
+          <div class="timeline__text">
+            <strong>Handover &amp; Training</strong>
+            <span>A quick walkthrough of the CMS admin panel so you can manage content independently going forward.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <h3>Optional Ongoing Support</h3>
+        <p>If you'd like help with content updates, hosting management, or future enhancements, ongoing support is available from &pound;25/month. This is completely optional the CMS is designed so you can manage everything yourself.</p>
+      </div>
+
+      <div class="terms">
+        <p><strong>Payment:</strong> 50% on approval, 50% on deployment. Bank transfer or invoice.</p>
+        <p><strong>Hosting:</strong> Continues with your current provider (The Hosting Heroes). No additional hosting costs from us.</p>
+        <p><strong>Turnaround:</strong> Site is built and ready deployment within 1 week of approval.</p>
+        <p><strong>Ownership:</strong> You own all code, content, and assets. No lock-in, no ongoing fees for the site itself.</p>
+      </div>
+    </div>
+    <div class="page-footer">
+      <span>Bolt Services Website Redesign Proposal</span>
+      <span>Page 4</span>
+    </div>
+  </div>
+
+  <div style="height: 3rem;"></div>
+</body>
+</html>
