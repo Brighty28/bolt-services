@@ -2,7 +2,7 @@
   "meta": {
     "title": "Bolt Services Ltd | Project & CDM Site Management UK",
     "description": "Bolt Services Ltd — nationwide Project and CDM Site Management for engineering and construction. Established 2017. Safe Contractor Approved. IOSH & SMSTS qualified.",
-    "logo": "assets/logo.svg"
+    "logo": "assets/bolt-logo.png"
   },
   "hero": {
     "headline": "Project & Site Management Services",
@@ -30,17 +30,6 @@
         "stat": "MCIOB",
         "label": "Chartered Institute"
       }
-    ],
-    "accreditations": [
-      "IOSH Managing Safely",
-      "SMSTS Qualified",
-      "First Aid at Work",
-      "Safe Contractor Approved"
-    ],
-    "insurances": [
-      "Professional Indemnity",
-      "Employers Liability",
-      "Public Liability"
     ]
   },
   "services": {
@@ -193,11 +182,26 @@
     "heading": "Our Client Partnerships",
     "intro": "Bolt has collaborated with several renowned brands, successfully executing projects and overseeing various construction related operations.",
     "clients": [
-      { "name": "ETEX", "logo": "" },
-      { "name": "GEA Refrigeration", "logo": "" },
-      { "name": "Morrison's", "logo": "" },
-      { "name": "Lidl", "logo": "" },
-      { "name": "Muller", "logo": "" }
+      {
+        "name": "ETEX",
+        "logo": ""
+      },
+      {
+        "name": "GEA Refrigeration",
+        "logo": ""
+      },
+      {
+        "name": "Morrison's",
+        "logo": ""
+      },
+      {
+        "name": "Lidl",
+        "logo": ""
+      },
+      {
+        "name": "Muller",
+        "logo": ""
+      }
     ]
   },
   "contact": {
