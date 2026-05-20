@@ -214,6 +214,44 @@
     }
   }
 
+  function renderInsurances(data) {
+    const heading = document.getElementById('insurances-heading');
+    const grid = document.getElementById('insurances-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (grid && data.items) {
+      const svgShield = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+      grid.innerHTML = data.items.map(item => `
+        <div class="insurance-card">
+          <div class="insurance-card__icon">${svgShield}</div>
+          <h3 class="insurance-card__title">${item.title}</h3>
+          <p class="insurance-card__desc">${item.description}</p>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderPartnerships(data) {
+    const heading = document.getElementById('partnerships-heading');
+    const subheading = document.getElementById('partnerships-subheading');
+    const grid = document.getElementById('partners-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+    if (grid && data.clients) {
+      grid.innerHTML = data.clients.map(c => {
+        const visual = c.logo
+          ? `<img class="partner-card__logo" src="${c.logo}" alt="${c.name}">`
+          : `<span class="partner-card__name-text">${c.name}</span>`;
+        return `
+          <div class="partner-card">
+            ${visual}
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
   function renderTeam(data) {
     const heading = document.getElementById('team-heading');
     const subheading = document.getElementById('team-subheading');
@@ -222,13 +260,18 @@
     if (heading) heading.textContent = data.heading;
     if (subheading) subheading.textContent = data.intro;
     if (grid && data.members) {
-      grid.innerHTML = data.members.map(m => `
-        <div class="team-card">
-          <div class="team-card__avatar">${m.initials}</div>
-          <h3 class="team-card__name">${m.name}</h3>
-          <p class="team-card__role">${m.role}</p>
-        </div>
-      `).join('');
+      grid.innerHTML = data.members.map(m => {
+        const avatar = m.photo
+          ? `<img class="team-card__photo" src="${m.photo}" alt="${m.name}">`
+          : `<div class="team-card__initials">${m.initials}</div>`;
+        return `
+          <div class="team-card">
+            <div class="team-card__avatar">${avatar}</div>
+            <h3 class="team-card__name">${m.name}</h3>
+            <p class="team-card__role">${m.role}</p>
+          </div>
+        `;
+      }).join('');
     }
   }
 
@@ -412,7 +455,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card, .methodology-card, .team-card').forEach((el) => {
+    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card, .methodology-card, .team-card, .insurance-card, .partner-card').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -435,6 +478,8 @@
       renderServices(content.services);
       if (content.methodology) renderMethodology(content.methodology);
       renderIndustries(content.industries);
+      if (content.partnerships) renderPartnerships(content.partnerships);
+      if (content.insurances) renderInsurances(content.insurances);
       renderTestimonials(content.testimonials);
       if (content.team) renderTeam(content.team);
       if (content.blog) renderBlog(content.blog);

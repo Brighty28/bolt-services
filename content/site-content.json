@@ -143,28 +143,61 @@
       {
         "name": "Karl Jest",
         "role": "Managing Director",
-        "initials": "KJ"
+        "initials": "KJ",
+        "photo": ""
       },
       {
         "name": "Mel Jest",
         "role": "Director of Administration",
-        "initials": "MJ"
+        "initials": "MJ",
+        "photo": ""
       },
       {
         "name": "Shane Steenson",
         "role": "Site Manager",
-        "initials": "SS"
+        "initials": "SS",
+        "photo": ""
       },
       {
         "name": "Paul Edwards",
         "role": "Site Manager",
-        "initials": "PE"
+        "initials": "PE",
+        "photo": ""
       },
       {
         "name": "Iain Mcdonald",
         "role": "Site Manager",
-        "initials": "IM"
+        "initials": "IM",
+        "photo": ""
       }
+    ]
+  },
+  "insurances": {
+    "heading": "Company Insurances",
+    "items": [
+      {
+        "title": "Professional Indemnity",
+        "description": "Fully covered by Professional Indemnity Insurance, protecting both our clients and business against claims related to professional advice or services."
+      },
+      {
+        "title": "Employers Liability",
+        "description": "Employers' Liability Insurance protecting our employees and business against work-related injury or illness claims."
+      },
+      {
+        "title": "Public Liability",
+        "description": "Public Liability Insurance protecting our business and clients against claims for accidental damage or injury to third parties."
+      }
+    ]
+  },
+  "partnerships": {
+    "heading": "Our Client Partnerships",
+    "intro": "Bolt has collaborated with several renowned brands, successfully executing projects and overseeing various construction related operations.",
+    "clients": [
+      { "name": "ETEX", "logo": "" },
+      { "name": "GEA Refrigeration", "logo": "" },
+      { "name": "Morrison's", "logo": "" },
+      { "name": "Lidl", "logo": "" },
+      { "name": "Muller", "logo": "" }
     ]
   },
   "contact": {

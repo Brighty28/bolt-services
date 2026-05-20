@@ -1,0 +1,46 @@
+@use '../abstracts' as *;
+
+.partners-grid {
+  display: grid;
+  gap: $spacing-lg;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.partner-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl $spacing-lg;
+  background: $color-white;
+  border: 1px solid $color-grey-light;
+  border-radius: $border-radius-lg;
+  min-height: 100px;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+  }
+
+  &__logo {
+    max-width: 120px;
+    max-height: 60px;
+    object-fit: contain;
+  }
+
+  &__name-text {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    text-align: center;
+  }
+}

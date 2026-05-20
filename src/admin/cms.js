@@ -62,6 +62,8 @@ async function saveContent() {
   collectServices();
   collectMethodology();
   collectIndustries();
+  collectPartnerships();
+  collectInsurances();
   collectTestimonials();
   collectTeam();
   collectContact();
@@ -239,6 +241,8 @@ function renderAllSections() {
     ${renderServicesSection()}
     ${renderMethodologySection()}
     ${renderIndustriesSection()}
+    ${renderPartnershipsSection()}
+    ${renderInsurancesSection()}
     ${renderTestimonialsSection()}
     ${renderTeamSection()}
     ${renderContactSection()}
@@ -556,6 +560,125 @@ window.removeIndustry = function (index) {
   refreshSection('industries');
 };
 
+// ---- Partnerships Section ----
+
+function renderPartnershipsSection() {
+  const p = siteContent.partnerships || {};
+  const clients = (p.clients || []).map((c, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removePartner(${i})">&times;</button>
+      <h3>Partner ${i + 1}: ${esc(c.name || 'New Partner')}</h3>
+      <div class="cms-field">
+        <label>Company Name</label>
+        <input type="text" class="partner-name" value="${esc(c.name || '')}">
+      </div>
+      ${renderImageUploader('partner-logo-' + i, 'Company Logo', c.logo || '')}
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-partnerships">
+      <h2>Client Partnerships</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="partnerships-heading" value="${esc(p.heading || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Section Intro</label>
+        <textarea id="partnerships-intro">${esc(p.intro || '')}</textarea>
+      </div>
+      <div id="partnerships-list">${clients}</div>
+      <button class="cms-add-btn" onclick="addPartner()">+ Add Partner</button>
+    </div>
+  `;
+}
+
+function collectPartnerships() {
+  const names = document.querySelectorAll('.partner-name');
+  const clients = [];
+  names.forEach((n, i) => {
+    const logoSelect = document.getElementById('partner-logo-' + i);
+    clients.push({
+      name: n.value,
+      logo: logoSelect ? logoSelect.value : ''
+    });
+  });
+  siteContent.partnerships = {
+    heading: val('partnerships-heading'),
+    intro: val('partnerships-intro'),
+    clients
+  };
+}
+
+window.addPartner = function () {
+  collectPartnerships();
+  siteContent.partnerships.clients.push({ name: '', logo: '' });
+  refreshSection('partnerships');
+};
+
+window.removePartner = function (index) {
+  collectPartnerships();
+  siteContent.partnerships.clients.splice(index, 1);
+  refreshSection('partnerships');
+};
+
+// ---- Insurances Section ----
+
+function renderInsurancesSection() {
+  const ins = siteContent.insurances || {};
+  const items = (ins.items || []).map((item, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removeInsurance(${i})">&times;</button>
+      <h3>Insurance ${i + 1}</h3>
+      <div class="cms-field">
+        <label>Title</label>
+        <input type="text" class="insurance-title" value="${esc(item.title || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Description</label>
+        <textarea class="insurance-desc">${esc(item.description || '')}</textarea>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-insurances">
+      <h2>Company Insurances</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="insurances-heading" value="${esc(ins.heading || '')}">
+      </div>
+      <div id="insurances-list">${items}</div>
+      <button class="cms-add-btn" onclick="addInsurance()">+ Add Insurance</button>
+    </div>
+  `;
+}
+
+function collectInsurances() {
+  const titles = document.querySelectorAll('.insurance-title');
+  const descs = document.querySelectorAll('.insurance-desc');
+  const items = [];
+  titles.forEach((t, i) => {
+    items.push({ title: t.value, description: descs[i].value });
+  });
+  siteContent.insurances = {
+    heading: val('insurances-heading'),
+    items
+  };
+}
+
+window.addInsurance = function () {
+  collectInsurances();
+  siteContent.insurances.items.push({ title: '', description: '' });
+  refreshSection('insurances');
+};
+
+window.removeInsurance = function (index) {
+  collectInsurances();
+  siteContent.insurances.items.splice(index, 1);
+  refreshSection('insurances');
+};
+
 // ---- Testimonials Section ----
 
 function renderTestimonialsSection() {
@@ -635,9 +758,10 @@ function renderTeamSection() {
         <input type="text" class="member-role" value="${esc(m.role || '')}">
       </div>
       <div class="cms-field">
-        <label>Initials (displayed in avatar)</label>
+        <label>Initials (fallback when no photo)</label>
         <input type="text" class="member-initials" value="${esc(m.initials || '')}" maxlength="3">
       </div>
+      ${renderImageUploader('member-photo-' + i, 'Photo', m.photo || '')}
     </div>
   `).join('');
 
@@ -664,7 +788,13 @@ function collectTeam() {
   const initials = document.querySelectorAll('.member-initials');
   const members = [];
   names.forEach((n, i) => {
-    members.push({ name: n.value, role: roles[i].value, initials: initials[i].value });
+    const photoSelect = document.getElementById('member-photo-' + i);
+    members.push({
+      name: n.value,
+      role: roles[i].value,
+      initials: initials[i].value,
+      photo: photoSelect ? photoSelect.value : ''
+    });
   });
   siteContent.team = {
     heading: val('team-heading'),
@@ -675,7 +805,7 @@ function collectTeam() {
 
 window.addTeamMember = function () {
   collectTeam();
-  siteContent.team.members.push({ name: '', role: '', initials: '' });
+  siteContent.team.members.push({ name: '', role: '', initials: '', photo: '' });
   refreshSection('team');
 };
 
@@ -953,6 +1083,8 @@ function refreshSection(sectionName) {
     services: renderServicesSection,
     methodology: renderMethodologySection,
     industries: renderIndustriesSection,
+    partnerships: renderPartnershipsSection,
+    insurances: renderInsurancesSection,
     testimonials: renderTestimonialsSection,
     team: renderTeamSection,
     contact: renderContactSection,
