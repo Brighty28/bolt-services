@@ -1,0 +1,46 @@
+@use '../abstracts' as *;
+
+.team-grid {
+  display: grid;
+  gap: $spacing-xl;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond-to('lg') {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.team-card {
+  text-align: center;
+
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: $border-radius-full;
+    background: linear-gradient(135deg, $color-secondary, $color-secondary-lighter);
+    color: $color-primary;
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    @include flex-center;
+    margin: 0 auto $spacing-md;
+    letter-spacing: 0.02em;
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__role {
+    font-size: $font-size-sm;
+    color: $color-grey;
+  }
+}

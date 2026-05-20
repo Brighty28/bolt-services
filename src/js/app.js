@@ -57,8 +57,8 @@
 
     if (heading) {
       heading.innerHTML = data.headline.replace(
-        'Industrial',
-        '<span>Industrial</span>'
+        'Site Management',
+        '<span>Site Management</span>'
       );
     }
     if (subheading) subheading.textContent = data.subheadline;
@@ -74,6 +74,7 @@
     const heading = document.getElementById('about-heading');
     const text = document.getElementById('about-text');
     const highlights = document.getElementById('about-highlights');
+    const accreditations = document.getElementById('about-accreditations');
 
     if (heading) heading.textContent = data.heading;
     if (text) {
@@ -90,6 +91,16 @@
       `
         )
         .join('');
+    }
+    if (accreditations) {
+      const badges = [];
+      if (data.accreditations) {
+        badges.push(...data.accreditations.map(a => `<span class="accreditation-badge">${a}</span>`));
+      }
+      if (data.insurances) {
+        badges.push(...data.insurances.map(i => `<span class="accreditation-badge accreditation-badge--insurance">${i}</span>`));
+      }
+      accreditations.innerHTML = badges.join('');
     }
   }
 
@@ -181,6 +192,43 @@
           </div>
         </div>
       `;
+    }
+  }
+
+  function renderMethodology(data) {
+    const heading = document.getElementById('methodology-heading');
+    const grid = document.getElementById('methodology-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (grid && data.stages) {
+      grid.innerHTML = data.stages.map((s, i) => `
+        <div class="methodology-card">
+          <div class="methodology-card__num">${i + 1}</div>
+          <div class="methodology-card__content">
+            <div class="methodology-card__stage">${s.stage}</div>
+            <h3 class="methodology-card__title">${s.title}</h3>
+            <p class="methodology-card__desc">${s.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderTeam(data) {
+    const heading = document.getElementById('team-heading');
+    const subheading = document.getElementById('team-subheading');
+    const grid = document.getElementById('team-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+    if (grid && data.members) {
+      grid.innerHTML = data.members.map(m => `
+        <div class="team-card">
+          <div class="team-card__avatar">${m.initials}</div>
+          <h3 class="team-card__name">${m.name}</h3>
+          <p class="team-card__role">${m.role}</p>
+        </div>
+      `).join('');
     }
   }
 
@@ -364,7 +412,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card').forEach((el) => {
+    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card, .methodology-card, .team-card').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -385,10 +433,12 @@
       renderHero(content.hero);
       renderAbout(content.about);
       renderServices(content.services);
+      if (content.methodology) renderMethodology(content.methodology);
       renderIndustries(content.industries);
       renderTestimonials(content.testimonials);
-      renderContact(content.contact);
+      if (content.team) renderTeam(content.team);
       if (content.blog) renderBlog(content.blog);
+      renderContact(content.contact);
       renderSocial(content.social);
 
       // Update page title, meta, and logo from CMS

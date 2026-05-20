@@ -1,0 +1,56 @@
+@use '../abstracts' as *;
+
+.methodology-grid {
+  display: grid;
+  gap: $spacing-xl;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.methodology-card {
+  display: flex;
+  gap: $spacing-lg;
+  align-items: flex-start;
+  padding: $spacing-xl;
+  background: $color-off-white;
+  border-radius: $border-radius-lg;
+  border-left: 3px solid $color-primary;
+
+  &__num {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: $border-radius;
+    background: linear-gradient(135deg, $color-primary, $color-primary-dark);
+    color: $color-white;
+    font-family: $font-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    @include flex-center;
+  }
+
+  &__stage {
+    font-size: $font-size-sm;
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-secondary;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__desc {
+    font-size: $font-size-base;
+    color: $color-grey;
+    line-height: $line-height-base;
+  }
+}
