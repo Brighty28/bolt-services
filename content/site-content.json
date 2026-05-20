@@ -144,31 +144,31 @@
         "name": "Karl Jest",
         "role": "Managing Director",
         "initials": "KJ",
-        "photo": ""
+        "photo": "assets/team-karl-jest.png"
       },
       {
         "name": "Mel Jest",
         "role": "Director of Administration",
         "initials": "MJ",
-        "photo": ""
+        "photo": "assets/team-mel-jest.png"
       },
       {
         "name": "Shane Steenson",
         "role": "Site Manager",
         "initials": "SS",
-        "photo": ""
+        "photo": "assets/team-shane-steenson.png"
       },
       {
         "name": "Paul Edwards",
         "role": "Site Manager",
         "initials": "PE",
-        "photo": ""
+        "photo": "assets/team-paul-edwards.png"
       },
       {
         "name": "Iain Mcdonald",
         "role": "Site Manager",
         "initials": "IM",
-        "photo": ""
+        "photo": "assets/team-iain-mcdonald.png"
       }
     ]
   },
@@ -193,11 +193,20 @@
     "heading": "Our Client Partnerships",
     "intro": "Bolt has collaborated with several renowned brands, successfully executing projects and overseeing various construction related operations.",
     "clients": [
-      { "name": "ETEX", "logo": "" },
-      { "name": "GEA Refrigeration", "logo": "" },
-      { "name": "Morrison's", "logo": "" },
-      { "name": "Lidl", "logo": "" },
-      { "name": "Muller", "logo": "" }
+      { "name": "Lidl", "logo": "assets/logo-lidl.png" },
+      { "name": "GEA", "logo": "assets/logo-gea.png" },
+      { "name": "McCormick", "logo": "assets/logo-mccormick.png" },
+      { "name": "Integral", "logo": "assets/logo-integral.png" },
+      { "name": "ETEX", "logo": "assets/logo-etex.png" },
+      { "name": "J&E Hall", "logo": "assets/logo-jeandhall.png" },
+      { "name": "Tyrrells", "logo": "assets/logo-tyrrells.png" },
+      { "name": "Pentadel", "logo": "assets/logo-pentadel.png" },
+      { "name": "Tesco", "logo": "assets/logo-tesco.png" },
+      { "name": "Charlie Bigham's", "logo": "assets/logo-charlie-bighams.png" },
+      { "name": "EJM", "logo": "assets/logo-ejm.png" },
+      { "name": "Dalehead Foods", "logo": "assets/logo-dalehead-foods.png" },
+      { "name": "Morrisons", "logo": "assets/logo-morrisons.png" },
+      { "name": "Müller", "logo": "assets/logo-muller.png" }
     ]
   },
   "contact": {
