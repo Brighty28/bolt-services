@@ -5,7 +5,7 @@
 
 .highlights {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: $spacing-xl;
   margin-top: $spacing-2xl;
 }
@@ -16,6 +16,7 @@
   border-radius: $border-radius;
   background-color: rgba($color-primary, 0.08);
   border: 1px solid rgba($color-primary, 0.15);
+  overflow: hidden;
 
   &__stat {
     font-family: $font-heading;
@@ -24,6 +25,8 @@
     color: $color-primary;
     line-height: 1;
     margin-bottom: $spacing-xs;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   &__label {
