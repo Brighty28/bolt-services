@@ -453,6 +453,103 @@
       border-radius: 4px;
     }
 
+    /* ---- Showcase cards ---- */
+    .showcase-card {
+      background: var(--off-white);
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+
+    .showcase-card--dark {
+      background: linear-gradient(135deg, #1e1e38, #16213e);
+    }
+
+    .showcase-card--dark .showcase-card__header h3 { color: var(--white); }
+    .showcase-card--dark .showcase-card__body p { color: rgba(255,255,255,0.7); }
+
+    .showcase-card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem 0;
+    }
+
+    .showcase-card__num {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .showcase-card__header h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin: 0;
+    }
+
+    .showcase-card__body {
+      padding: 0.75rem 1.25rem 1.25rem;
+    }
+
+    .showcase-card__body p {
+      font-size: 0.85rem;
+      color: var(--grey-dark);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .showcase-card__visual {
+      margin-top: 0.75rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .showcase-mini {
+      padding: 0.75rem;
+      background: var(--white);
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+
+    .showcase-card--dark .showcase-mini {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .showcase-partner {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 0.2rem;
+      text-align: center;
+      font-size: 0.35rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .showcase-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      color: white;
+      font-size: 0.45rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.15rem;
+    }
+
     /* ---- Contact bar ---- */
     .contact-bar {
       display: flex;
@@ -488,15 +585,15 @@
       <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
     </div>
     <div class="cover__badge">Website Redesign &amp; Feature Overview</div>
-    <h1>Bolt <span>Industrial</span><br>Engineering Services</h1>
+    <h1>Bolt <span>Services</span><br>Project &amp; CDM Site Management</h1>
     <p class="cover__sub">
-      A complete redesign of the Bolt Services website with a modern tech stack,
-      built-in content management system, and production-ready deployment pipeline.
+      A complete redesign of the Bolt Services website — 11 dedicated sections, built-in content management,
+      team &amp; partner imagery, and a production-ready deployment pipeline.
     </p>
     <div class="cover__meta">
-      <div><strong>Prepared for</strong><br>Bolt Services Ltd</div>
-      <div><strong>Date</strong><br>March 2026</div>
-      <div><strong>Version</strong><br>1.0</div>
+      <div><strong>Prepared for</strong><br>Karl Jest — Bolt Services Ltd</div>
+      <div><strong>Date</strong><br>May 2026</div>
+      <div><strong>Version</strong><br>2.0</div>
     </div>
   </div>
 
@@ -540,71 +637,321 @@
       </div>
     </div>
 
-    <h2 style="margin-top: 2.5rem;">Site <span>Sections</span></h2>
+  </div>
+
+  <!-- ==================== PAGE 2B: SECTION SHOWCASE ==================== -->
+  <div class="page section-page">
+    <h2>Website <span>Sections</span> — Look &amp; Feel</h2>
+    <div class="divider"></div>
+    <p class="section-intro">
+      The site features 11 distinct sections, each with its own visual style and purpose. Here's a detailed walkthrough.
+    </p>
+
+    <!-- Hero -->
+    <div class="showcase-card showcase-card--dark">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">1</span>
+        <h3>Hero Section</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>Full-viewport cinematic opening with an industrial background image, dark gradient overlay, and the Bolt orange accent. Features an animated "Engineering Excellence" badge, the main headline with highlighted keywords, and two call-to-action buttons ("Get in Touch" and "Our Services"). A scroll indicator at the bottom invites visitors to explore further.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="background: linear-gradient(135deg, #1a1a2e, #16213e); color: white; text-align: center;">
+            <span style="color: #e8611a; font-size: 0.65rem; border: 1px solid rgba(232,97,26,0.4); padding: 2px 8px; border-radius: 10px;">Engineering Excellence</span>
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; font-weight: 800; margin: 0.5rem 0 0.25rem;">Project &amp; Site Management <span style="color:#e8611a;">Services</span></div>
+            <div style="font-size: 0.55rem; color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;">Nationwide Project and CDM Site Management...</div>
+            <div style="display:flex; gap:0.3rem; justify-content:center;">
+              <span style="background:#e8611a; color:white; padding:2px 8px; border-radius:4px; font-size:0.5rem; font-weight:600;">Get in Touch</span>
+              <span style="border:1px solid rgba(255,255,255,0.3); color:white; padding:2px 8px; border-radius:4px; font-size:0.5rem;">Our Services</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">2</span>
+        <h3>About Bolt Services</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>Two-column layout with company introduction text on the left and three highlight stat cards on the right ("Est. 2017", "Nationwide", "MCIOB"). Below are colour-coded accreditation and insurance badges — orange for qualifications (IOSH, SMSTS, First Aid, Safe Contractor) and subtle grey for insurance types.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:flex; gap:0.5rem; align-items:flex-start;">
+            <div style="flex:1; font-size:0.5rem; color:#666;">Bolt Services Limited, established in 2017, provides nationwide Project and CDM Site Management...</div>
+            <div style="display:flex; gap:0.25rem;">
+              <div style="background:rgba(232,97,26,0.08); border:1px solid rgba(232,97,26,0.15); border-radius:4px; padding:0.3rem; text-align:center; width:50px;">
+                <div style="font-weight:800; color:#e8611a; font-size:0.6rem;">Est. 2017</div>
+                <div style="font-size:0.4rem; color:#888;">Established</div>
+              </div>
+              <div style="background:rgba(232,97,26,0.08); border:1px solid rgba(232,97,26,0.15); border-radius:4px; padding:0.3rem; text-align:center; width:55px;">
+                <div style="font-weight:800; color:#e8611a; font-size:0.55rem;">Nationwide</div>
+                <div style="font-size:0.4rem; color:#888;">UK Coverage</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div class="showcase-card showcase-card--dark">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">3</span>
+        <h3>Our Services</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>Dark-background section with a 3-column grid of service cards, each featuring an SVG icon, title, and description. Cards have a subtle hover lift animation. Services include Project Management, CDM Site Management, Health &amp; Safety, Quality Control, Communication &amp; Reporting, and Additional Trade Services.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="background:#1a1a2e; padding:0.5rem; border-radius:6px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.25rem;">
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem; margin-bottom:0.15rem;">&#128203;</div>
+              <div style="color:white; font-size:0.45rem; font-weight:700;">Project Mgmt</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem; margin-bottom:0.15rem;">&#128101;</div>
+              <div style="color:white; font-size:0.45rem; font-weight:700;">CDM Site Mgmt</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem; margin-bottom:0.15rem;">&#128737;</div>
+              <div style="color:white; font-size:0.45rem; font-weight:700;">Health &amp; Safety</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">4</span>
+        <h3>Project Management Methodology</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>A four-stage visual timeline showing the project lifecycle. Each stage has a numbered circle, stage label, title, and description. Connected by a vertical line to show progression.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:flex; gap:0.35rem; align-items:center;">
+            <div style="text-align:center; flex:1;">
+              <div style="width:20px; height:20px; border-radius:50%; background:#e8611a; color:white; font-size:0.5rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 0.15rem;">1</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Statement of Requirements</div>
+            </div>
+            <div style="height:2px; width:12px; background:#e8611a; flex-shrink:0;"></div>
+            <div style="text-align:center; flex:1;">
+              <div style="width:20px; height:20px; border-radius:50%; background:#e8611a; color:white; font-size:0.5rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 0.15rem;">2</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Basis of Design</div>
+            </div>
+            <div style="height:2px; width:12px; background:#e8611a; flex-shrink:0;"></div>
+            <div style="text-align:center; flex:1;">
+              <div style="width:20px; height:20px; border-radius:50%; background:#e8611a; color:white; font-size:0.5rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 0.15rem;">3</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Detailed Design &amp; Procurement</div>
+            </div>
+            <div style="height:2px; width:12px; background:#e8611a; flex-shrink:0;"></div>
+            <div style="text-align:center; flex:1;">
+              <div style="width:20px; height:20px; border-radius:50%; background:#e8611a; color:white; font-size:0.5rem; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 0.15rem;">4</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Construction &amp; Commissioning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Industries -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">5</span>
+        <h3>Industries We Serve</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>A grey-background section with a flowing tag grid of 12 industry sectors. Each tag is a rounded pill badge with a hover highlight effect.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="background:#f4f4f8; display:flex; flex-wrap:wrap; gap:0.2rem; padding:0.5rem;">
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Engineering</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Construction</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">FMCG</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Food Industry</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Cement</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Refrigeration</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Agricultural</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Packaging</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Recycling</span>
+            <span style="background:white; border:1px solid #e0e0e0; border-radius:12px; padding:0.15rem 0.4rem; font-size:0.4rem; font-weight:600; color:#1a1a2e;">Warehousing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2C: SECTIONS CONTINUED ==================== -->
+  <div class="page section-page">
+    <h2>Website <span>Sections</span> — continued</h2>
     <div class="divider"></div>
 
-    <div class="section-list">
-      <div class="section-item">
-        <div class="section-item__num">1</div>
-        <div class="section-item__text">
-          <h3>Hero</h3>
-          <p>Full-viewport section with CMS-configurable background image, headline, subheadline, and call-to-action button.</p>
+    <!-- Partnerships -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">6</span>
+        <h3>Client Partnerships</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>A 7-column logo grid showcasing all 14 client brands Bolt has worked with. Each partner is displayed in a clean white card with a subtle border, hover lift effect, and the company logo. Logos are uploadable via the CMS media library.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:grid; grid-template-columns:repeat(7,1fr); gap:0.2rem;">
+            <div class="showcase-partner">Lidl</div>
+            <div class="showcase-partner">GEA</div>
+            <div class="showcase-partner">McCormick</div>
+            <div class="showcase-partner">Integral</div>
+            <div class="showcase-partner">ETEX</div>
+            <div class="showcase-partner">J&amp;E Hall</div>
+            <div class="showcase-partner">Tyrrells</div>
+            <div class="showcase-partner">Pentadel</div>
+            <div class="showcase-partner">Tesco</div>
+            <div class="showcase-partner">Bigham's</div>
+            <div class="showcase-partner">EJM</div>
+            <div class="showcase-partner">Dalehead</div>
+            <div class="showcase-partner">Morrisons</div>
+            <div class="showcase-partner">Muller</div>
+          </div>
         </div>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">2</div>
-        <div class="section-item__text">
-          <h3>About</h3>
-          <p>Company introduction - established 2017, nationwide coverage, MCIOB accredited. Includes qualifications (IOSH, SMSTS, Safe Contractor) and insurance badges.</p>
+    </div>
+
+    <!-- Insurances -->
+    <div class="showcase-card showcase-card--dark">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">7</span>
+        <h3>Company Insurances</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>Dark-background section with three insurance cards, each featuring a shield icon in Bolt orange, the insurance type, and a description. Cards have a hover lift with an orange border highlight. Covers Professional Indemnity, Employers Liability, and Public Liability.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="background:#1a1a2e; padding:0.5rem; border-radius:6px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.25rem;">
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem;">&#128737;</div>
+              <div style="color:white; font-size:0.4rem; font-weight:700;">Professional Indemnity</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem;">&#128737;</div>
+              <div style="color:white; font-size:0.4rem; font-weight:700;">Employers Liability</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:4px; padding:0.3rem; text-align:center;">
+              <div style="color:#e8611a; font-size:0.8rem;">&#128737;</div>
+              <div style="color:white; font-size:0.4rem; font-weight:700;">Public Liability</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">3</div>
-        <div class="section-item__text">
-          <h3>Services</h3>
-          <p>Six service cards - Project Management, CDM Site Management, Health &amp; Safety, Quality Control, Communication &amp; Reporting, and Additional Trade Services.</p>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">8</span>
+        <h3>Client Testimonials</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>Professional quote cards on a light grey background, each with a large quotation mark, the full testimonial text, and the author's name and company. New testimonials can be added directly from the CMS.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="background:#f4f4f8; padding:0.5rem; display:flex; gap:0.3rem;">
+            <div style="flex:1; background:white; border-radius:6px; padding:0.4rem;">
+              <div style="color:#e8611a; font-size:1rem; line-height:1; margin-bottom:0.15rem;">&ldquo;</div>
+              <div style="font-size:0.38rem; color:#555; line-height:1.4; margin-bottom:0.25rem;">I cannot state highly enough how impressed we have been with the work...</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Malcolm Brown</div>
+              <div style="font-size:0.3rem; color:#888;">ETEX</div>
+            </div>
+            <div style="flex:1; background:white; border-radius:6px; padding:0.4rem;">
+              <div style="color:#e8611a; font-size:1rem; line-height:1; margin-bottom:0.15rem;">&ldquo;</div>
+              <div style="font-size:0.38rem; color:#555; line-height:1.4; margin-bottom:0.25rem;">GEA Refrigeration UK has been working with Bolt Services since 2018...</div>
+              <div style="font-size:0.35rem; font-weight:700; color:#1a1a2e;">Alyson Canning</div>
+              <div style="font-size:0.3rem; color:#888;">GEA Refrigeration UK</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">4</div>
-        <div class="section-item__text">
-          <h3>Methodology</h3>
-          <p>Four-stage project management approach: Statement of Requirements, Basis of Design, Detailed Design &amp; Procurement, Construction &amp; Commissioning.</p>
+    </div>
+
+    <!-- Team -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">9</span>
+        <h3>Meet the Team</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>A 5-column grid of team member cards. Each card shows a circular photo (extracted from the company presentation) with name and role underneath. Photos are uploaded via the CMS media library — if no photo is set, the member's initials are displayed as a fallback.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:grid; grid-template-columns:repeat(5,1fr); gap:0.3rem; text-align:center;">
+            <div><div class="showcase-avatar" style="background:#e8611a;">KJ</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Karl Jest</div><div style="font-size:0.35rem; color:#888;">Managing Director</div></div>
+            <div><div class="showcase-avatar" style="background:#c95215;">MJ</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Mel Jest</div><div style="font-size:0.35rem; color:#888;">Director of Admin</div></div>
+            <div><div class="showcase-avatar" style="background:#1a1a2e;">SS</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Shane Steenson</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+            <div><div class="showcase-avatar" style="background:#16213e;">PE</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Paul Edwards</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+            <div><div class="showcase-avatar" style="background:#0f3460;">IM</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Iain Mcdonald</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+          </div>
         </div>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">5</div>
-        <div class="section-item__text">
-          <h3>Industries</h3>
-          <p>Visual tag grid showcasing 12 industry sectors including Engineering, Construction, FMCG, Food, Refrigeration, and more.</p>
+    </div>
+
+    <!-- Blog -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">10</span>
+        <h3>Blog / News &amp; Insights</h3>
+      </div>
+      <div class="showcase-card__body">
+        <p>A news section where you can publish blog posts directly from the CMS. Clicking a card opens the full article in a modal overlay. Posts are sorted newest-first automatically.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:flex; gap:0.3rem;">
+            <div style="flex:1; border:1px solid #e0e0e0; border-radius:6px; overflow:hidden;">
+              <div style="background:#e8611a; height:3px;"></div>
+              <div style="padding:0.35rem;">
+                <div style="font-size:0.3rem; color:#888; margin-bottom:0.1rem;">31 March 2026</div>
+                <div style="font-size:0.42rem; font-weight:700; color:#1a1a2e; margin-bottom:0.1rem;">Welcome to Our New Website</div>
+                <div style="font-size:0.33rem; color:#666; line-height:1.3;">We're excited to launch our brand new website, designed to better showcase our services...</div>
+              </div>
+            </div>
+            <div style="flex:1; border:1px solid #e0e0e0; border-radius:6px; overflow:hidden; opacity:0.5;">
+              <div style="background:#e8611a; height:3px;"></div>
+              <div style="padding:0.35rem;">
+                <div style="font-size:0.3rem; color:#888; margin-bottom:0.1rem;">Your next post...</div>
+                <div style="font-size:0.42rem; font-weight:700; color:#1a1a2e; margin-bottom:0.1rem;">Add Posts via CMS</div>
+                <div style="font-size:0.33rem; color:#666; line-height:1.3;">Create new posts from the Blog tab in the admin panel. Each post gets a title, date, author and body.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">6</div>
-        <div class="section-item__text">
-          <h3>Testimonials</h3>
-          <p>Client quotes from ETEX and GEA Refrigeration UK, presented in professional quote cards.</p>
-        </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="showcase-card">
+      <div class="showcase-card__header">
+        <span class="showcase-card__num">11</span>
+        <h3>Contact &amp; Footer</h3>
       </div>
-      <div class="section-item">
-        <div class="section-item__num">7</div>
-        <div class="section-item__text">
-          <h3>Team</h3>
-          <p>Meet the team - Karl Jest (MD), Mel Jest (Admin Director), and three experienced Site Managers with initials avatars.</p>
-        </div>
-      </div>
-      <div class="section-item">
-        <div class="section-item__num">8</div>
-        <div class="section-item__text">
-          <h3>Blog / News</h3>
-          <p>A news and insights section where you can publish blog posts. Visitors see post cards with excerpts, and click through to read the full article in a modal overlay.</p>
-        </div>
-      </div>
-      <div class="section-item">
-        <div class="section-item__num">9</div>
-        <div class="section-item__text">
-          <h3>Contact</h3>
-          <p>Phone, email, and address details alongside a working contact form that sends email enquiries directly to you.</p>
+      <div class="showcase-card__body">
+        <p>Two-column contact section with phone, email, and address on the left, and a working SMTP contact form on the right. The footer includes social media icons linking to your company pages.</p>
+        <div class="showcase-card__visual">
+          <div class="showcase-mini" style="display:flex; gap:0.5rem;">
+            <div style="flex:1;">
+              <div style="display:flex; align-items:center; gap:0.2rem; margin-bottom:0.2rem;">
+                <span style="color:#e8611a; font-size:0.6rem;">&#9742;</span>
+                <span style="font-size:0.4rem; color:#1a1a2e;">07885 729188</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.2rem; margin-bottom:0.2rem;">
+                <span style="color:#e8611a; font-size:0.6rem;">&#9993;</span>
+                <span style="font-size:0.4rem; color:#1a1a2e;">karl@boltservices.co.uk</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.2rem;">
+                <span style="color:#e8611a; font-size:0.6rem;">&#9873;</span>
+                <span style="font-size:0.35rem; color:#666;">4 Hawthorn Way, St. Ives</span>
+              </div>
+            </div>
+            <div style="flex:1; background:#f4f4f8; border-radius:6px; padding:0.35rem;">
+              <div style="background:white; border:1px solid #ddd; border-radius:3px; padding:0.15rem; margin-bottom:0.15rem; font-size:0.35rem; color:#aaa;">Your name</div>
+              <div style="background:white; border:1px solid #ddd; border-radius:3px; padding:0.15rem; margin-bottom:0.15rem; font-size:0.35rem; color:#aaa;">Email address</div>
+              <div style="background:white; border:1px solid #ddd; border-radius:3px; padding:0.15rem 0.15rem 0.5rem; margin-bottom:0.15rem; font-size:0.35rem; color:#aaa;">Message</div>
+              <div style="background:#e8611a; color:white; text-align:center; padding:0.15rem; border-radius:3px; font-size:0.4rem; font-weight:600;">Send Message</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -622,23 +969,23 @@
     <div class="cms-features">
       <div class="cms-card">
         <div class="cms-card__icon">&#9998;</div>
-        <h3>Edit All Content</h3>
-        <p>Update every section of the site - headlines, descriptions, service cards, testimonials, contact details -all from a clean, tabbed interface.</p>
+        <h3>Edit All 11 Sections</h3>
+        <p>Update every section — hero, about, services, methodology, industries, partnerships, insurances, testimonials, team, blog, and contact — all from a clean, tabbed interface.</p>
       </div>
       <div class="cms-card">
         <div class="cms-card__icon">&#128247;</div>
-        <h3>Media Library</h3>
-        <p>Upload, browse, and delete images via drag &amp; drop. Change the hero background image with a single click. Supports JPG, PNG, SVG, WebP, and GIF (up to 10MB).</p>
+        <h3>Media Library &amp; Image Picker</h3>
+        <p>Upload images via drag &amp; drop. Assign team photos and partner logos from a dropdown that shows all uploaded images. Supports JPG, PNG, SVG, WebP, and GIF (up to 10MB).</p>
       </div>
       <div class="cms-card">
         <div class="cms-card__icon">&#43;</div>
         <h3>Add &amp; Remove Items</h3>
-        <p>Dynamically add or remove services, industry tags, testimonials, and stat highlights. No limits on the number of items.</p>
+        <p>Dynamically add or remove services, industry tags, testimonials, team members, client partnerships, and insurance entries. No limits on the number of items.</p>
       </div>
       <div class="cms-card">
-        <div class="cms-card__icon">&#128279;</div>
-        <h3>Social Media Links</h3>
-        <p>Configure Facebook and LinkedIn URLs from the Social tab. Icons appear in the footer automatically. Leave blank to hide.</p>
+        <div class="cms-card__icon">&#128101;</div>
+        <h3>Team &amp; Partners</h3>
+        <p>Manage team members with photos, names, and roles. Manage client partnerships with logos and names. Photos and logos are assigned from the media library.</p>
       </div>
       <div class="cms-card">
         <div class="cms-card__icon">&#128221;</div>
@@ -654,6 +1001,11 @@
         <div class="cms-card__icon">&#128190;</div>
         <h3>Instant Save</h3>
         <p>Click "Save Changes" and the site updates immediately. Content is stored as a simple JSON file -no database required.</p>
+      </div>
+      <div class="cms-card">
+        <div class="cms-card__icon">&#128279;</div>
+        <h3>Social Media Links</h3>
+        <p>Configure Facebook and LinkedIn URLs from the Social tab. Icons appear in the footer automatically. Leave blank to hide.</p>
       </div>
     </div>
 
