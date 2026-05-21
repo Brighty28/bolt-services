@@ -548,6 +548,18 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 0.15rem;
+
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+      letter-spacing: 0.02em;
+      overflow: hidden;
+    }
+
+    .team-card__photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     /* ---- Contact bar ---- */
@@ -587,11 +599,11 @@
     <div class="cover__badge">Website Redesign &amp; Feature Overview</div>
     <h1>Bolt <span>Services</span><br>Project &amp; CDM Site Management</h1>
     <p class="cover__sub">
-      A complete redesign of the Bolt Services website — 11 dedicated sections, built-in content management,
+      A complete redesign of the Bolt Services website - 11 dedicated sections, built-in content management,
       team &amp; partner imagery, and a production-ready deployment pipeline.
     </p>
     <div class="cover__meta">
-      <div><strong>Prepared for</strong><br>Karl Jest — Bolt Services Ltd</div>
+      <div><strong>Prepared for</strong><br>Mel Jest - Bolt Services Ltd</div>
       <div><strong>Date</strong><br>May 2026</div>
       <div><strong>Version</strong><br>2.0</div>
     </div>
@@ -641,7 +653,7 @@
 
   <!-- ==================== PAGE 2B: SECTION SHOWCASE ==================== -->
   <div class="page section-page">
-    <h2>Website <span>Sections</span> — Look &amp; Feel</h2>
+    <h2>Website <span>Sections</span> - Look &amp; Feel</h2>
     <div class="divider"></div>
     <p class="section-intro">
       The site features 11 distinct sections, each with its own visual style and purpose. Here's a detailed walkthrough.
@@ -676,7 +688,7 @@
         <h3>About Bolt Services</h3>
       </div>
       <div class="showcase-card__body">
-        <p>Two-column layout with company introduction text on the left and three highlight stat cards on the right ("Est. 2017", "Nationwide", "MCIOB"). Below are colour-coded accreditation and insurance badges — orange for qualifications (IOSH, SMSTS, First Aid, Safe Contractor) and subtle grey for insurance types.</p>
+        <p>Two-column layout with company introduction text on the left and three highlight stat cards on the right ("Est. 2017", "Nationwide", "MCIOB"). Below are colour-coded accreditation and insurance badges - orange for qualifications (IOSH, SMSTS, First Aid, Safe Contractor) and subtle grey for insurance types.</p>
         <div class="showcase-card__visual">
           <div class="showcase-mini" style="display:flex; gap:0.5rem; align-items:flex-start;">
             <div style="flex:1; font-size:0.5rem; color:#666;">Bolt Services Limited, established in 2017, provides nationwide Project and CDM Site Management...</div>
@@ -784,7 +796,7 @@
 
   <!-- ==================== PAGE 2C: SECTIONS CONTINUED ==================== -->
   <div class="page section-page">
-    <h2>Website <span>Sections</span> — continued</h2>
+    <h2>Website <span>Sections</span> - continued</h2>
     <div class="divider"></div>
 
     <!-- Partnerships -->
@@ -877,14 +889,14 @@
         <h3>Meet the Team</h3>
       </div>
       <div class="showcase-card__body">
-        <p>A 5-column grid of team member cards. Each card shows a circular photo (extracted from the company presentation) with name and role underneath. Photos are uploaded via the CMS media library — if no photo is set, the member's initials are displayed as a fallback.</p>
+        <p>A 5-column grid of team member cards. Each card shows a circular photo (extracted from the company presentation) with name and role underneath. Photos are uploaded via the CMS media library - if no photo is set, the member's initials are displayed as a fallback.</p>
         <div class="showcase-card__visual">
           <div class="showcase-mini" style="display:grid; grid-template-columns:repeat(5,1fr); gap:0.3rem; text-align:center;">
-            <div><div class="showcase-avatar" style="background:#e8611a;">KJ</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Karl Jest</div><div style="font-size:0.35rem; color:#888;">Managing Director</div></div>
-            <div><div class="showcase-avatar" style="background:#c95215;">MJ</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Mel Jest</div><div style="font-size:0.35rem; color:#888;">Director of Admin</div></div>
-            <div><div class="showcase-avatar" style="background:#1a1a2e;">SS</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Shane Steenson</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
-            <div><div class="showcase-avatar" style="background:#16213e;">PE</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Paul Edwards</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
-            <div><div class="showcase-avatar" style="background:#0f3460;">IM</div><div style="font-size:0.4rem; font-weight:700; color:#1a1a2e;">Iain Mcdonald</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+            <div><div class="showcase-avatar"><img class="team-card__photo" src="dist/assets/team-karl-jest.png" alt="Karl Jest"></div><div style="font-size:0.45rem; font-weight:700; color:#1a1a2e;">Karl Jest</div><div style="font-size:0.35rem; color:#888;">Managing Director</div></div>
+            <div><div class="showcase-avatar"><img class="team-card__photo" src="dist/assets/team-mel-jest.png" alt="Mel Jest"></div><div style="font-size:0.45rem; font-weight:700; color:#1a1a2e;">Mel Jest</div><div style="font-size:0.35rem; color:#888;">Director of Admin</div></div>
+            <div><div class="showcase-avatar"><img class="team-card__photo" src="dist/assets/team-shane-steenson.png" alt="Shane Steenson"></div><div style="font-size:0.45rem; font-weight:700; color:#1a1a2e;">Shane Steenson</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+            <div><div class="showcase-avatar"><img class="team-card__photo" src="dist/assets/team-paul-edwards.png" alt="Paul Edwards"></div><div style="font-size:0.45rem; font-weight:700; color:#1a1a2e;">Paul Edwards</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
+            <div><div class="showcase-avatar"><img class="team-card__photo" src="dist/assets/team-iain-mcdonald.png" alt="Iain Mcdonald"></div><div style="font-size:0.45rem; font-weight:700; color:#1a1a2e;">Iain Mcdonald</div><div style="font-size:0.35rem; color:#888;">Site Manager</div></div>
           </div>
         </div>
       </div>
@@ -970,7 +982,7 @@
       <div class="cms-card">
         <div class="cms-card__icon">&#9998;</div>
         <h3>Edit All 11 Sections</h3>
-        <p>Update every section — hero, about, services, methodology, industries, partnerships, insurances, testimonials, team, blog, and contact — all from a clean, tabbed interface.</p>
+        <p>Update every section - hero, about, services, methodology, industries, partnerships, insurances, testimonials, team, blog, and contact - all from a clean, tabbed interface.</p>
       </div>
       <div class="cms-card">
         <div class="cms-card__icon">&#128247;</div>
