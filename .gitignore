@@ -3,3 +3,6 @@ dist/
 .sass-cache/
 *.css.map
 .env
+studio/node_modules/
+studio/dist/
+studio/.sanity/
