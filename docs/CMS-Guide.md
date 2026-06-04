@@ -1,136 +1,166 @@
 # CMS Guide
 
-The Bolt Services website includes a built-in Content Management System (CMS) that lets you update all website content without touching any code.
+The Bolt Services website uses **Sanity.io** as its headless CMS. All content is edited through Sanity Studio — a secure, hosted back office — and delivered to the site via the Sanity CDN. No server restart or deployment is needed when you make content changes.
 
 ---
 
-## Accessing the CMS
+## Accessing the Studio
 
-Navigate to:
-
+**Hosted (production):**
 ```
-https://yourdomain.co.uk/admin/
+https://bolt-services.sanity.studio
 ```
 
-You will be prompted for a username and password. These are set as environment variables on the server — contact your developer or check the Plesk environment variable settings if you need the credentials.
+Log in with your Sanity account. If you don't have one yet, create a free account at [sanity.io](https://sanity.io) and ask your developer to invite you at:
+`https://sanity.io/manage/project/773dau1s/members`
 
-> **Local development:** the CMS is available at `http://localhost:3000/admin/` with no authentication required.
-
----
-
-## CMS Tabs Overview
-
-The admin panel is organised into tabs — one per section of the website:
-
-| Tab | What you can edit |
-|-----|-------------------|
-| **Hero** | Headline, sub-headline, CTA button text and link, background image |
-| **About** | Heading, intro/description text, stat highlights (add/remove) |
-| **Services** | Service cards — title, description, icon (add/remove) |
-| **Methodology** | Stage titles and descriptions |
-| **Industries** | Industry sector tags (add/remove) |
-| **Partnerships** | Client names and logos (add/remove) |
-| **Insurances** | Insurance type titles and descriptions (add/remove) |
-| **Testimonials** | Quote, author, company (add/remove) |
-| **Team** | Name, role, photo (add/remove) |
-| **Blog** | Post title, date, author, excerpt, full body (add/remove) |
-| **Contact** | Phone, email, address |
-| **Social** | Facebook and LinkedIn URLs |
-| **Media** | Upload, browse, and delete images |
+**Local (development):**
+```bash
+cd studio
+npm install
+npm run dev
+# Opens at http://localhost:3333
+```
 
 ---
 
-## Editing Text Content
+## Studio Navigation
 
-1. Click the relevant tab (e.g. **Services**)
-2. Edit the text fields directly in the form
-3. Click **Save Changes** at the bottom of the page
-4. The website updates immediately — no refresh or restart needed
+The left sidebar contains:
+
+| Section | What's managed here |
+|---------|---------------------|
+| **Site Settings** | Meta/SEO, hero, about, methodology, industries, contact, social links |
+| **Services** | Individual service cards (title, description, icon) |
+| **Team Members** | Name, role, photo for each team member |
+| **Testimonials** | Client quotes with author and company |
+| **Insurances** | Insurance type cards (title and description) |
+| **Partnerships** | Client logos and company names |
+| **Blog Posts** | News & Insights articles |
+
+---
+
+## Site Settings (Singleton)
+
+**Site Settings** is a single document that controls all section-level content. Click it in the sidebar to open. It is divided into tabs:
+
+| Tab | Controls |
+|-----|----------|
+| **Meta & Branding** | Page title, meta description, site logo |
+| **Hero** | Headline, sub-headline, background image, CTA button text and link |
+| **About** | Heading, intro text, description, stat highlights (Est. 2017, Nationwide, MCIOB) |
+| **Services** | Section heading and intro text |
+| **Methodology** | Section heading and all 4 stage definitions |
+| **Industries** | Section heading and list of industry tag strings |
+| **Section Headings** | Headings and intro text for Testimonials, Team, Insurances, Partnerships, Blog |
+| **Contact & Social** | Phone, email, address, Facebook URL, LinkedIn URL |
+
+---
+
+## Editing Content
+
+1. Click the relevant item in the left sidebar
+2. Edit the fields directly
+3. Click **Publish** (top right) to make changes live immediately
+
+> **Important:** Clicking "Save" only saves a draft. You must click **Publish** for changes to appear on the website.
 
 ---
 
 ## Uploading Images
 
-### Via the Media Library
+When editing a document that has an image field (hero background, team photo, partner logo, site logo):
 
-1. Click the **Media** tab
-2. Drag and drop an image onto the upload area, or click to browse
-3. The image is saved to `src/assets/` on the server
-4. It becomes available in all image picker dropdowns (hero background, team photos, partner logos)
+1. Click the image field
+2. Click **Upload** to select a file from your computer
+3. The image is stored on Sanity's CDN and will appear on the website immediately after publishing
 
-**Supported formats:** JPG, PNG, SVG, WebP, GIF  
-**Maximum file size:** 10MB
+**Supported formats:** JPG, PNG, SVG, WebP  
+**No file size limit** (Sanity handles optimisation automatically)
 
-### Assigning a Team Photo
+### Changing the Hero Background
 
-1. Go to the **Team** tab
-2. Find the team member you want to update
-3. Use the **Photo** dropdown to select an image from the media library
-4. Click **Save Changes**
+1. Open **Site Settings** → **Hero** tab
+2. Click the **Background Image** field
+3. Upload a new image or select an existing one
+4. Click **Publish**
 
-### Assigning a Partner Logo
+### Updating a Team Photo
 
-1. Go to the **Partnerships** tab
-2. Find the client you want to update
-3. Use the **Logo** dropdown to select an image from the media library
-4. Click **Save Changes**
+1. Click **Team Members** in the sidebar
+2. Select the team member
+3. Click the **Photo** field and upload or select an image
+4. Click **Publish**
+
+### Updating a Partner Logo
+
+1. Click **Partnerships** in the sidebar
+2. Select the partner
+3. Click the **Logo** field and upload or select an image
+4. Click **Publish**
 
 ---
 
 ## Adding New Items
 
-Most sections support adding new items dynamically:
+### New Team Member
+1. Click **Team Members** → click **Create new document** (pencil icon or + button)
+2. Fill in Name, Role, Initials (used as fallback if no photo), Photo, and Display Order
+3. Click **Publish**
 
-1. Scroll to the bottom of a section in the CMS
-2. Click the **+ Add [Item]** button (e.g. "+ Add Service", "+ Add Team Member")
-3. Fill in the new item's fields
-4. Click **Save Changes**
+### New Testimonial
+1. Click **Testimonials** → **Create new document**
+2. Fill in Quote, Author Name, Company
+3. Click **Publish**
 
-**Sections that support adding items:**
-- About (stat highlights)
-- Services
-- Industries
-- Partnerships
-- Insurances
-- Testimonials
-- Team
-- Blog
+### New Blog Post
+1. Click **Blog Posts** → **Create new document**
+2. Fill in Title, Slug (auto-generated from title), Date, Author, Excerpt, Body
+3. Click **Publish** — the post appears on the site immediately, sorted newest-first
+
+### New Partner
+1. Click **Partnerships** → **Create new document**
+2. Fill in Company Name, Logo image, Display Order
+3. Click **Publish**
+
+### New Service Card
+1. Click **Services** → **Create new document**
+2. Fill in Title, Description, Icon (select from list), Display Order
+3. Click **Publish**
 
 ---
 
 ## Removing Items
 
-1. Find the item you want to remove in the relevant CMS tab
-2. Click the **Remove** button next to it
-3. Click **Save Changes** to confirm
+1. Open the document you want to remove
+2. Click the **three-dot menu** (⋮) in the top right
+3. Select **Delete**
+4. Confirm the deletion
 
 ---
 
-## Publishing a Blog Post
+## Display Order
 
-1. Go to the **Blog** tab
-2. Click **+ Add Post**
-3. Fill in:
-   - **Title** — headline of the post
-   - **Date** — publication date (YYYY-MM-DD format)
-   - **Author** — e.g. "Bolt Services" or a team member's name
-   - **Excerpt** — short summary shown on the post card (1-2 sentences)
-   - **Body** — full article text (plain text, new lines create paragraphs)
-4. Click **Save Changes**
+Documents with an **Order** field (Services, Team Members, Insurances, Partnerships) are sorted by that number ascending. Set `order: 1` to appear first, `order: 2` second, etc.
 
-Posts appear on the site immediately, sorted newest-first.
+To re-order, simply edit the Order field on each document and publish.
 
 ---
 
-## How Content is Stored
+## Adding Industries
 
-All site content is stored in a single JSON file:
+Industries are a simple list of strings managed inside **Site Settings → Industries** tab:
 
-```
-content/site-content.json
-```
+1. Open **Site Settings** → **Industries** tab
+2. Click **Add item** in the Industry Tags list
+3. Type the industry name
+4. Click **Publish**
 
-The CMS reads this file on load and writes to it on save. There is no database. This makes the content easy to back up — just copy the JSON file.
+---
+
+## Real-Time Updates
+
+Changes published in Sanity Studio appear on the live website within a few seconds — the site fetches content from the Sanity CDN on every page load. No deployment, restart, or rebuild is needed.
 
 ---
 
@@ -138,7 +168,8 @@ The CMS reads this file on load and writes to it on save. There is no database. 
 
 | Problem | Solution |
 |---------|----------|
-| Login prompt appears even locally | Check `NODE_ENV` — authentication is only enforced in production |
-| Changes not saving | Check the browser console for errors; verify the server is running |
-| Image not appearing in picker | Confirm the upload succeeded in the Media tab |
-| Contact form not sending email | Check SMTP environment variables in Plesk (see [Deployment Guide](Deployment-Guide.md)) |
+| Published a change but site hasn't updated | Hard refresh the site (Ctrl+Shift+R) — the CDN may be cached for a few seconds |
+| Can't log in to Studio | Check you're using the correct Sanity account; ask developer to check member access at `sanity.io/manage/project/773dau1s/members` |
+| Image not appearing after upload | Ensure you clicked **Publish** (not just Save) |
+| Contact form not working | Check SMTP environment variables in Plesk — see [Deployment Guide](Deployment-Guide.md) |
+| Studio shows "No documents found" | Run the seed script — see [Home](Home.md) for instructions |
