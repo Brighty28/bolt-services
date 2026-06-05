@@ -1,176 +1,194 @@
-# Bolt Industrial Engineering Services
+# Bolt Services Ltd — Website
 
-One-page website for Bolt Industrial Engineering Services Ltd — providing electrical and mechanical engineering services across the UK.
+One-page website for Bolt Services Ltd — Project & CDM Site Management, UK.
 
 ## Tech Stack
 
-- **SASS** with 7-1 architecture
-- **Built-in CMS** admin panel for managing all site content and images
-- **Node.js server** with content save and image upload APIs
-- **Vanilla JS** for dynamic content rendering
-- **Responsive** mobile-first design
+| Layer | Technology |
+|-------|-----------|
+| Styling | SASS (7-1 architecture), compiled to CSS |
+| Frontend | Vanilla JavaScript |
+| Server | Node.js (static files + contact form) |
+| CMS | [Sanity.io](https://sanity.io) — project `773dau1s` |
+| Email | Nodemailer (SMTP) |
+| Deployment | Plesk + GitHub webhook |
 
-## Getting Started
+---
+
+## Getting Started (Local Development)
 
 ```bash
-# Install dependencies
 npm install
-
-# Build and start the server (with CMS support)
-npm start
-
-# Or run in development mode (SASS watch + server)
 npm run dev
 ```
 
-The site runs at `http://localhost:3000` and the CMS admin panel at `http://localhost:3000/admin/`.
+Site runs at `http://localhost:3000`. Content is fetched live from the Sanity CDN.
 
-## CMS Admin Panel
+---
 
-Access the content management system at `/admin/` to edit all site content without touching code.
+## Content Management
 
-### Content Editing
+All content is managed through **Sanity Studio** — a hosted, authenticated back office.
 
-- **Hero** — headline, subheadline, background image, CTA button
-- **About** — heading, intro text, description, stat highlights
-- **Services** — section heading/intro, add/remove/edit service cards with icons
-- **Industries** — add/remove industry tags
-- **Testimonials** — add/remove client quotes with author and company
-- **Contact** — phone, email, address, intro text
-
-### Media Library
-
-- **Upload** images via drag & drop or file browser (JPG, PNG, SVG, WebP, GIF)
-- **Select** uploaded images for the hero background directly from the CMS
-- **Delete** images from the media library
-- Max file size: 10MB
-
-### How It Works
-
-All content is stored in `content/site-content.json`. The CMS admin panel reads and writes to this file via the Node.js server API. The frontend JavaScript fetches this JSON at runtime and renders every section dynamically.
-
-## Authentication
-
-The CMS admin panel and all API endpoints are protected by HTTP Basic Auth in production.
-
-### Setup
-
-Set two environment variables on your server (in Plesk: Node.js settings > Environment Variables):
+### Accessing the Studio
 
 ```
-CMS_ADMIN_USER=your-username
-CMS_ADMIN_PASS=your-secure-password
+https://bolt-services.sanity.studio
 ```
 
-When both are set, visiting `/admin/` or calling any `/api/` endpoint will prompt for credentials. When both are empty (local development), auth is disabled.
+Log in with your Sanity account. Karl Jest should be invited as an Editor at:
+`https://sanity.io/manage/project/773dau1s/members`
 
-See `.env.example` for all available environment variables.
+### Running the Studio Locally
+
+```bash
+cd studio
+npm install
+npm run dev
+```
+
+Studio runs at `http://localhost:3333`.
+
+### Deploying the Studio
+
+```bash
+cd studio
+npm run deploy
+```
+
+This pushes the studio to `https://bolt-services.sanity.studio`.
+
+---
+
+## One-time Seed (Data Migration)
+
+To seed all content and images from `content/site-content.json` into Sanity:
+
+```powershell
+# Get a write token from https://sanity.io/manage/project/773dau1s/api → Tokens
+$env:SANITY_WRITE_TOKEN="sk_your_token_here"; node scripts/sanity-seed.js
+```
+
+After seeding, open Sanity Studio and **Publish** all draft documents.
+
+---
 
 ## Scripts
 
 | Command | Description |
-| --- | --- |
-| `npm start` | Build + start server on port 3000 (CMS saving enabled) |
-| `npm run dev` | Build + watch SASS + start server (for development) |
-| `npm run build` | Compile SASS and copy all files to `dist/` |
-| `npm run deploy` | Clean install + build (used by Plesk post-deploy action) |
-| `npm run production` | Start server in production mode (no build, NODE_ENV=production) |
-| `npm run serve` | Serve `dist/` statically (no CMS save support) |
-| `npm run sass` | Compile SASS only |
+|---------|-------------|
+| `npm run dev` | Build + watch SASS + start server |
+| `npm start` | Build + start server |
+| `npm run build` | Compile SASS and copy files to `dist/` |
+| `npm run deploy` | Clean install + build (used by Plesk post-deploy) |
+
+---
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| `POST` | `/api/save-content` | Save site content JSON |
-| `POST` | `/api/upload-image` | Upload an image (multipart form-data) |
-| `GET` | `/api/images` | List all uploaded images |
-| `DELETE` | `/api/images/:filename` | Delete an image |
-| `POST` | `/api/contact` | Send a contact form email via SMTP |
+|--------|----------|-------------|
+| `POST` | `/api/contact` | Send contact form email via SMTP |
+
+---
+
+## Environment Variables (Plesk)
+
+Set these in Plesk → Node.js → Environment Variables:
+
+| Variable | Description |
+|----------|-------------|
+| `SMTP_HOST` | Email server hostname (e.g. `send.one.com`) |
+| `SMTP_PORT` | Email port (e.g. `587`) |
+| `SMTP_USER` | Email account username |
+| `SMTP_PASS` | Email account password |
+| `SMTP_FROM` | Sender address for contact form emails |
+| `SMTP_TO` | Destination address for contact enquiries |
+| `NODE_ENV` | Set to `production` |
+
+---
 
 ## Project Structure
 
 ```
 bolt-services/
 ├── content/
-│   └── site-content.json      # CMS content (single source of truth)
+│   └── site-content.json      # Seed data (source of truth is now Sanity)
 ├── src/
 │   ├── index.html              # Main HTML page
-│   ├── admin/                  # CMS admin panel
-│   │   ├── index.html          # Admin UI
-│   │   ├── cms.js              # CMS logic (editors, uploaders)
-│   │   └── styles.css          # Admin styles
-│   ├── assets/                 # Images (logo, hero background)
+│   ├── assets/                 # Local images (logos, team photos, hero bg)
 │   ├── js/
-│   │   └── app.js              # Content renderer & UI interactions
+│   │   └── app.js              # Content renderer — fetches from Sanity CDN
 │   └── sass/                   # 7-1 SASS architecture
-│       ├── abstracts/          # Variables, mixins, functions
-│       ├── base/               # Reset, typography, base styles
-│       ├── components/         # Buttons, cards, testimonials
-│       ├── layout/             # Header, hero, grid, contact, footer
-│       ├── pages/              # Home page specifics
-│       ├── themes/             # Default theme
-│       ├── vendors/            # Normalize
-│       └── main.scss           # Main entry point
-├── server.js                   # Node.js server (static files + CMS API)
+├── studio/                     # Sanity Studio (CMS back office)
+│   ├── sanity.config.js        # Studio config (projectId, dataset, plugins)
+│   ├── structure.js            # Custom sidebar navigation
+│   └── schemas/                # Content type definitions
+│       ├── siteSettings.js     # Singleton: meta, hero, about, contact, social
+│       ├── service.js
+│       ├── teamMember.js
+│       ├── testimonial.js
+│       ├── insurance.js
+│       ├── partnership.js
+│       └── blogPost.js
 ├── scripts/
-│   └── copy.js                 # Build script (copies files to dist/)
-├── dist/                       # Built output
-├── package.json
-└── README.md
+│   ├── copy.js                 # Build script
+│   └── sanity-seed.js          # One-time data migration to Sanity
+├── server.js                   # Node.js server (static files + contact form)
+├── docs/                       # Wiki documentation
+└── dist/                       # Built output (git-ignored)
 ```
+
+---
 
 ## Deploying to Plesk (The Hosting Heroes)
 
 ### Prerequisites
 
-1. **Node.js Toolkit** enabled on your Plesk domain
-2. **SSH access** set to `/bin/bash` for the domain's system user
-3. **Git extension** available in Plesk
+1. Node.js Toolkit enabled on your Plesk domain
+2. Git extension available in Plesk
 
 ### Setup Steps
 
-1. **Connect the repo** — In Plesk: Websites & Domains > your-domain > Git. Add the SSH URL `git@github.com:Brighty28/bolt-services.git`. Copy Plesk's generated SSH key and add it as a Deploy Key in GitHub.
+1. **Connect the repo** — Plesk → Websites & Domains → your domain → Git → add `https://github.com/Brighty28/bolt-services.git`, branch `main`, enable automatic deployment.
 
-2. **Set the branch** — Point Plesk at your `main` branch and enable automatic deployment.
+2. **Copy the webhook URL** from Plesk's Git settings and add it in GitHub under Settings → Webhooks (push events only, `application/json`).
 
-3. **Add the webhook** — Copy the Webhook URL from Plesk's Git settings and add it in GitHub under Settings > Webhooks (push events only).
-
-4. **Configure Node.js** — In Plesk: Websites & Domains > your-domain > Node.js:
-   - Application root: `/`
-   - Startup file: `server.js`
-   - Document root: `/dist`
+3. **Configure Node.js** — Plesk → Node.js:
+   - Application startup file: `server.js`
    - Application mode: `production`
 
-5. **Set environment variables** — In the Node.js settings:
-   - `CMS_ADMIN_USER` = your chosen username
-   - `CMS_ADMIN_PASS` = a strong password
-   - `SMTP_HOST` = `send.one.com`
-   - `SMTP_PORT` = `587`
-   - `SMTP_USER` = `assist@boltservices.co.uk`
-   - `SMTP_PASS` = your SMTP password
-   - `SMTP_FROM` = `assist@boltservices.co.uk`
-   - `SMTP_TO` = `info@boltservices.co.uk` (or wherever you want enquiries delivered)
+4. **Set environment variables** — see table above.
 
-6. **Post-deploy actions** — In Git > Repository Settings > Enable additional deploy actions:
+5. **Post-deploy action** in Plesk Git settings:
    ```bash
    export PATH="/opt/plesk/node/18/bin:$PATH"
-   cd $DEPLOYDIR
-   npm run deploy
+   cd $DEPLOYDIR && npm run deploy
    touch tmp/restart.txt
    ```
 
 ### Deploy Flow
 
 ```
-Push to main → GitHub webhook → Plesk pulls code → npm run deploy → Node.js restarts
+git push main → GitHub webhook → Plesk pulls → npm run deploy → Node.js restarts
 ```
+
+> Content changes made in Sanity Studio take effect immediately — no deployment needed.
+
+---
 
 ## Site Sections
 
-- **Hero** — full-viewport with industrial background image, headline, and CTA
-- **About** — company intro with stat highlights
-- **Services** — 6 service cards (Project Management, Electrical, Mechanical, H&S, Labour, Lean)
-- **Industries** — 11 industry tags (FMCG, Food, Cement, Refrigeration, etc.)
-- **Testimonials** — client quotes (Omya UK, Integral Refrigeration)
-- **Contact** — phone, email, address + contact form
+| # | Section | Dark bg |
+|---|---------|---------|
+| 1 | Hero | ✓ |
+| 2 | About Bolt Services | |
+| 3 | Our Services | ✓ |
+| 4 | Project Management Methodology | |
+| 5 | Industries We Serve | |
+| 6 | Client Partnerships | |
+| 7 | Company Insurances | ✓ |
+| 8 | Client Testimonials | |
+| 9 | Meet the Team | |
+| 10 | News & Insights (Blog) | |
+| 11 | Contact & Footer | ✓ |

@@ -1,12 +1,12 @@
 {
   "meta": {
-    "title": "Bolt Industrial Engineering Services",
-    "description": "Electrical and Mechanical Engineering Services across the UK. Quality workmanship with a Continuous Improvement approach.",
-    "logo": "assets/logo.svg"
+    "title": "Bolt Services Ltd | Project & CDM Site Management UK",
+    "description": "Bolt Services Ltd — nationwide Project and CDM Site Management for engineering and construction. Established 2017. Safe Contractor Approved. IOSH & SMSTS qualified.",
+    "logo": "assets/bolt-logo.png"
   },
   "hero": {
-    "headline": "Industrial Engineering Services",
-    "subheadline": "Delivering quality electrical & mechanical engineering solutions across the UK\nProject & Site Management Continuous Improvement",
+    "headline": "Project & Site Management Services",
+    "subheadline": "Nationwide Project and CDM Site Management for the engineering and construction industries. Hands-on oversight, consistent quality, and full accountability.",
     "backgroundImage": "assets/hero-bg.jpg",
     "cta": {
       "text": "Get in Touch",
@@ -14,63 +14,90 @@
     }
   },
   "about": {
-    "heading": "About Bolt",
-    "intro": "Bolt Industrial Engineering Services Limited was formed to supply Electrical and Mechanical Services to Industry.",
-    "description": "We specialise in quality workmanship and adopt a Continuous Improvement approach to support the demands of our clients. Our Site Managers are responsible for the welfare and work quality of all personnel, ensuring works are carried out on schedule in line with time constraints.",
+    "heading": "About Bolt Services",
+    "intro": "Bolt Services Limited, established in 2017, provides nationwide Project and CDM Site Management services to the engineering and construction industries.",
+    "description": "We differentiate ourselves through our hands-on approach, actively managing and supporting our managers to ensure consistent quality, accountability, and efficiency. This enables us to deliver a level of oversight and performance that goes beyond that typically offered by agencies or standard contract providers.",
     "highlights": [
       {
-        "stat": "UK Wide",
-        "label": "Project Coverage"
+        "stat": "Est. 2017",
+        "label": "Established"
       },
       {
-        "stat": "24/7",
-        "label": "Support Available"
+        "stat": "Nationwide",
+        "label": "UK Coverage"
       },
       {
-        "stat": "100%",
-        "label": "Safety Focused"
+        "stat": "MCIOB",
+        "label": "Chartered Institute"
       }
     ]
   },
   "services": {
     "heading": "Our Services",
-    "intro": "We supply labour fully qualified and experienced in leading teams of Engineers and delivering Projects on time and within budget.",
+    "intro": "We provide comprehensive project and site management, delivering consistent quality across the full project lifecycle.",
     "items": [
       {
-        "title": "Project & Site Management",
-        "description": "Full project and site management across the UK for short or long-term contracts. CDM Project Management, risk assessments, and programme delivery.",
+        "title": "Project Management",
+        "description": "Full project management from Statement of Requirements through Detailed Design, Procurement, Construction Management, and Commissioning. Cost reporting, risk registers, and programme delivery.",
         "icon": "clipboard"
       },
       {
-        "title": "Electrical Engineering",
-        "description": "Comprehensive electrical engineering services including installation, maintenance, and commissioning for industrial facilities.",
-        "icon": "zap"
-      },
-      {
-        "title": "Mechanical Engineering",
-        "description": "Expert mechanical engineering services covering installation, fabrication, pipework, and plant maintenance.",
-        "icon": "cog"
-      },
-      {
-        "title": "Health & Safety Management",
-        "description": "SMSTS and SSSTS qualified managers ensuring full compliance with Health and Safety legislation on every project.",
-        "icon": "shield"
-      },
-      {
-        "title": "Labour Supply",
-        "description": "Supplying skilled engineers, supervisors, and operatives. Interim Engineering Supervisor and Manager positions available.",
+        "title": "CDM Site Management",
+        "description": "Leading and managing on-site construction activities, ensuring compliance with project plans, specifications, and safety standards. Daily activity briefings to coordinate contractors.",
         "icon": "users"
       },
       {
-        "title": "Lean Manufacturing",
-        "description": "Implementing lean manufacturing techniques and continuous improvement methodologies to optimise operational efficiency.",
+        "title": "Health & Safety",
+        "description": "Implementing and enforcing HSE requirements to create a safe working environment. Risk management, regular toolbox talks, and monitoring that approved RAMS are followed.",
+        "icon": "shield"
+      },
+      {
+        "title": "Quality Control",
+        "description": "Regularly inspecting work in progress to ensure it meets project specifications and quality standards. Proactive issue identification and resolution.",
         "icon": "bar-chart"
+      },
+      {
+        "title": "Communication & Reporting",
+        "description": "Serving as the primary point of contact for stakeholders with regular updates on project progress, milestones, and issues. Weekly reports to PM and QSHE departments.",
+        "icon": "zap"
+      },
+      {
+        "title": "Additional Trade Services",
+        "description": "Strong working relationships with a wide range of trades across various locations. If any task has been overlooked, we can help keep the project on track with cost-effective solutions.",
+        "icon": "cog"
+      }
+    ]
+  },
+  "methodology": {
+    "heading": "Our Project Management Methodology",
+    "stages": [
+      {
+        "stage": "Stage 1",
+        "title": "Statement of Requirements",
+        "description": "Establish the client's objectives and project requirements. Define scope, key deliverables, and success criteria."
+      },
+      {
+        "stage": "Stage 2",
+        "title": "Basis of Design",
+        "description": "Develop the initial design concept. Establish preliminary programme and cost expectations. Assess feasibility and prepare the Risk Register."
+      },
+      {
+        "stage": "Stage 3",
+        "title": "Detailed Design & Procurement",
+        "description": "Oversee detailed design development, structure competitive work packages for tender, manage procurement, and finalise the programme."
+      },
+      {
+        "stage": "Stage 4",
+        "title": "Construction & Commissioning",
+        "description": "Manage project delivery during the construction phase. Monitor programme, cost, and quality throughout. Oversee commissioning and completion."
       }
     ]
   },
   "industries": {
     "heading": "Industries We Serve",
     "items": [
+      "Engineering",
+      "Construction",
       "FMCG",
       "Food Industry",
       "Cement",
@@ -80,23 +107,95 @@
       "Print & Packaging",
       "Data Shredding",
       "Recycling & Waste to Energy",
-      "Warehousing",
-      "General Industry"
+      "Warehousing"
     ]
   },
   "testimonials": {
     "heading": "What Our Clients Say",
     "items": [
       {
-        "quote": "We have been impressed with the response along with the quality of the staff provided. Excellent safety performance, quality trained staff, and an excellent standard of work.",
+        "quote": "I cannot state highly enough how impressed we have been with the work we have had done during the HV Rationalisation project as well as other projects. Both from an electrical and mechanical engineering point of view and H&S, project management and formal reporting. The costs have also represented value for money with the internal expertise that Bolt has.",
         "author": "Malcolm Brown",
-        "company": "Omya UK"
+        "company": "ETEX"
       },
       {
-        "quote": "Your input on the Morrison's, Lidl, and Muller Projects has been invaluable to us, and you have become a real key part of the team.",
-        "author": "Dave",
-        "company": "Integral Refrigeration"
+        "quote": "GEA Refrigeration UK has been working with Bolt Services since 2018. The team at Bolt have thoroughly supported GEA by providing experienced site managers to work with the GEA contracts team on various large projects in the UK. GEA are always confident in the ability of Bolt to manage these areas effectively. The management team at Bolt are always on hand to support GEA project management & senior management with any requests, even last-minute ones!",
+        "author": "Alyson Canning",
+        "company": "GEA Refrigeration UK"
       }
+    ]
+  },
+  "team": {
+    "heading": "Meet the Team",
+    "intro": "Our dedicated team are the backbone of our success, bringing expertise, commitment, and a strong safety focus to each project.",
+    "members": [
+      {
+        "name": "Karl Jest",
+        "role": "Managing Director",
+        "initials": "KJ",
+        "photo": "assets/team-karl-jest.png"
+      },
+      {
+        "name": "Mel Jest",
+        "role": "Director of Administration",
+        "initials": "MJ",
+        "photo": "assets/team-mel-jest.png"
+      },
+      {
+        "name": "Shane Steenson",
+        "role": "Site Manager",
+        "initials": "SS",
+        "photo": "assets/team-shane-steenson.png"
+      },
+      {
+        "name": "Paul Edwards",
+        "role": "Site Manager",
+        "initials": "PE",
+        "photo": "assets/team-paul-edwards.png"
+      },
+      {
+        "name": "Iain Mcdonald",
+        "role": "Site Manager",
+        "initials": "IM",
+        "photo": "assets/team-iain-mcdonald.png"
+      }
+    ]
+  },
+  "insurances": {
+    "heading": "Company Insurances",
+    "items": [
+      {
+        "title": "Professional Indemnity",
+        "description": "Fully covered by Professional Indemnity Insurance, protecting both our clients and business against claims related to professional advice or services."
+      },
+      {
+        "title": "Employers Liability",
+        "description": "Employers' Liability Insurance protecting our employees and business against work-related injury or illness claims."
+      },
+      {
+        "title": "Public Liability",
+        "description": "Public Liability Insurance protecting our business and clients against claims for accidental damage or injury to third parties."
+      }
+    ]
+  },
+  "partnerships": {
+    "heading": "Our Client Partnerships",
+    "intro": "Bolt has collaborated with several renowned brands, successfully executing projects and overseeing various construction related operations.",
+    "clients": [
+      { "name": "Lidl", "logo": "assets/logo-lidl.png" },
+      { "name": "GEA", "logo": "assets/logo-gea.png" },
+      { "name": "McCormick", "logo": "assets/logo-mccormick.png" },
+      { "name": "Integral", "logo": "assets/logo-integral.png" },
+      { "name": "ETEX", "logo": "assets/logo-etex.png" },
+      { "name": "J&E Hall", "logo": "assets/logo-jeandhall.png" },
+      { "name": "Tyrrells", "logo": "assets/logo-tyrrells.png" },
+      { "name": "Pentadel", "logo": "assets/logo-pentadel.png" },
+      { "name": "Tesco", "logo": "assets/logo-tesco.png" },
+      { "name": "Charlie Bigham's", "logo": "assets/logo-charlie-bighams.png" },
+      { "name": "EJM", "logo": "assets/logo-ejm.png" },
+      { "name": "Dalehead Foods", "logo": "assets/logo-dalehead-foods.png" },
+      { "name": "Morrisons", "logo": "assets/logo-morrisons.png" },
+      { "name": "Müller", "logo": "assets/logo-muller.png" }
     ]
   },
   "contact": {
@@ -112,15 +211,15 @@
   },
   "blog": {
     "heading": "News & Insights",
-    "intro": "Stay up to date with the latest from Bolt Industrial Engineering Services.",
+    "intro": "Stay up to date with the latest from Bolt Services.",
     "posts": [
       {
         "id": "welcome-to-bolt",
         "title": "Welcome to Our New Website",
         "date": "2026-03-31",
         "author": "Bolt Services",
-        "excerpt": "We're excited to launch our brand new website, designed to better showcase our engineering services and make it easier to get in touch.",
-        "body": "We're excited to launch our brand new website, designed to better showcase our engineering services and make it easier for clients to get in touch.\n\nThe new site features a modern design, detailed information about all of our services, and a simple contact form so you can reach us quickly.\n\nWe'll be using this blog to share project updates, industry news, and insights from our team. Stay tuned for more!"
+        "excerpt": "We're excited to launch our brand new website, designed to better showcase our project and site management services and make it easier to get in touch.",
+        "body": "We're excited to launch our brand new website, designed to better showcase our project and site management services and make it easier for clients to get in touch.\n\nThe new site features a modern design, detailed information about all of our services, and a simple contact form so you can reach us quickly.\n\nWe'll be using this blog to share project updates, industry news, and insights from our team. Stay tuned for more!"
       }
     ]
   }

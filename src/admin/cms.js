@@ -60,8 +60,12 @@ async function saveContent() {
   collectHero();
   collectAbout();
   collectServices();
+  collectMethodology();
   collectIndustries();
+  collectPartnerships();
+  collectInsurances();
   collectTestimonials();
+  collectTeam();
   collectContact();
   collectBlog();
   collectSocial();
@@ -235,8 +239,12 @@ function renderAllSections() {
     ${renderHeroSection()}
     ${renderAboutSection()}
     ${renderServicesSection()}
+    ${renderMethodologySection()}
     ${renderIndustriesSection()}
+    ${renderPartnershipsSection()}
+    ${renderInsurancesSection()}
     ${renderTestimonialsSection()}
+    ${renderTeamSection()}
     ${renderContactSection()}
     ${renderBlogSection()}
     ${renderSocialSection()}
@@ -444,6 +452,68 @@ window.removeService = function (index) {
   refreshSection('services');
 };
 
+// ---- Methodology Section ----
+
+function renderMethodologySection() {
+  const m = siteContent.methodology || {};
+  const stages = (m.stages || []).map((stage, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removeStage(${i})">&times;</button>
+      <h3>Stage ${i + 1}</h3>
+      <div class="cms-field">
+        <label>Stage Label</label>
+        <input type="text" class="stage-label" value="${esc(stage.stage || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Title</label>
+        <input type="text" class="stage-title" value="${esc(stage.title || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Description</label>
+        <textarea class="stage-desc">${esc(stage.description || '')}</textarea>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-methodology">
+      <h2>Project Management Methodology</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="methodology-heading" value="${esc(m.heading || '')}">
+      </div>
+      <div id="methodology-list">${stages}</div>
+      <button class="cms-add-btn" onclick="addStage()">+ Add Stage</button>
+    </div>
+  `;
+}
+
+function collectMethodology() {
+  const labels = document.querySelectorAll('.stage-label');
+  const titles = document.querySelectorAll('.stage-title');
+  const descs = document.querySelectorAll('.stage-desc');
+  const stages = [];
+  labels.forEach((l, i) => {
+    stages.push({ stage: l.value, title: titles[i].value, description: descs[i].value });
+  });
+  siteContent.methodology = {
+    heading: val('methodology-heading'),
+    stages
+  };
+}
+
+window.addStage = function () {
+  collectMethodology();
+  siteContent.methodology.stages.push({ stage: '', title: '', description: '' });
+  refreshSection('methodology');
+};
+
+window.removeStage = function (index) {
+  collectMethodology();
+  siteContent.methodology.stages.splice(index, 1);
+  refreshSection('methodology');
+};
+
 // ---- Industries Section ----
 
 function renderIndustriesSection() {
@@ -488,6 +558,125 @@ window.removeIndustry = function (index) {
   collectIndustries();
   siteContent.industries.items.splice(index, 1);
   refreshSection('industries');
+};
+
+// ---- Partnerships Section ----
+
+function renderPartnershipsSection() {
+  const p = siteContent.partnerships || {};
+  const clients = (p.clients || []).map((c, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removePartner(${i})">&times;</button>
+      <h3>Partner ${i + 1}: ${esc(c.name || 'New Partner')}</h3>
+      <div class="cms-field">
+        <label>Company Name</label>
+        <input type="text" class="partner-name" value="${esc(c.name || '')}">
+      </div>
+      ${renderImageUploader('partner-logo-' + i, 'Company Logo', c.logo || '')}
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-partnerships">
+      <h2>Client Partnerships</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="partnerships-heading" value="${esc(p.heading || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Section Intro</label>
+        <textarea id="partnerships-intro">${esc(p.intro || '')}</textarea>
+      </div>
+      <div id="partnerships-list">${clients}</div>
+      <button class="cms-add-btn" onclick="addPartner()">+ Add Partner</button>
+    </div>
+  `;
+}
+
+function collectPartnerships() {
+  const names = document.querySelectorAll('.partner-name');
+  const clients = [];
+  names.forEach((n, i) => {
+    const logoSelect = document.getElementById('partner-logo-' + i);
+    clients.push({
+      name: n.value,
+      logo: logoSelect ? logoSelect.value : ''
+    });
+  });
+  siteContent.partnerships = {
+    heading: val('partnerships-heading'),
+    intro: val('partnerships-intro'),
+    clients
+  };
+}
+
+window.addPartner = function () {
+  collectPartnerships();
+  siteContent.partnerships.clients.push({ name: '', logo: '' });
+  refreshSection('partnerships');
+};
+
+window.removePartner = function (index) {
+  collectPartnerships();
+  siteContent.partnerships.clients.splice(index, 1);
+  refreshSection('partnerships');
+};
+
+// ---- Insurances Section ----
+
+function renderInsurancesSection() {
+  const ins = siteContent.insurances || {};
+  const items = (ins.items || []).map((item, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removeInsurance(${i})">&times;</button>
+      <h3>Insurance ${i + 1}</h3>
+      <div class="cms-field">
+        <label>Title</label>
+        <input type="text" class="insurance-title" value="${esc(item.title || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Description</label>
+        <textarea class="insurance-desc">${esc(item.description || '')}</textarea>
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-insurances">
+      <h2>Company Insurances</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="insurances-heading" value="${esc(ins.heading || '')}">
+      </div>
+      <div id="insurances-list">${items}</div>
+      <button class="cms-add-btn" onclick="addInsurance()">+ Add Insurance</button>
+    </div>
+  `;
+}
+
+function collectInsurances() {
+  const titles = document.querySelectorAll('.insurance-title');
+  const descs = document.querySelectorAll('.insurance-desc');
+  const items = [];
+  titles.forEach((t, i) => {
+    items.push({ title: t.value, description: descs[i].value });
+  });
+  siteContent.insurances = {
+    heading: val('insurances-heading'),
+    items
+  };
+}
+
+window.addInsurance = function () {
+  collectInsurances();
+  siteContent.insurances.items.push({ title: '', description: '' });
+  refreshSection('insurances');
+};
+
+window.removeInsurance = function (index) {
+  collectInsurances();
+  siteContent.insurances.items.splice(index, 1);
+  refreshSection('insurances');
 };
 
 // ---- Testimonials Section ----
@@ -550,6 +739,80 @@ window.removeTestimonial = function (index) {
   collectTestimonials();
   siteContent.testimonials.items.splice(index, 1);
   refreshSection('testimonials');
+};
+
+// ---- Team Section ----
+
+function renderTeamSection() {
+  const t = siteContent.team || {};
+  const members = (t.members || []).map((m, i) => `
+    <div class="cms-list-item">
+      <button class="cms-remove-btn" onclick="removeTeamMember(${i})">&times;</button>
+      <h3>Member ${i + 1}: ${esc(m.name || 'New Member')}</h3>
+      <div class="cms-field">
+        <label>Name</label>
+        <input type="text" class="member-name" value="${esc(m.name || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Role</label>
+        <input type="text" class="member-role" value="${esc(m.role || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Initials (fallback when no photo)</label>
+        <input type="text" class="member-initials" value="${esc(m.initials || '')}" maxlength="3">
+      </div>
+      ${renderImageUploader('member-photo-' + i, 'Photo', m.photo || '')}
+    </div>
+  `).join('');
+
+  return `
+    <div class="cms-section" id="section-team">
+      <h2>Team</h2>
+      <div class="cms-field">
+        <label>Section Heading</label>
+        <input type="text" id="team-heading" value="${esc(t.heading || '')}">
+      </div>
+      <div class="cms-field">
+        <label>Section Intro</label>
+        <textarea id="team-intro" style="min-height:60px">${esc(t.intro || '')}</textarea>
+      </div>
+      <div id="team-list">${members}</div>
+      <button class="cms-add-btn" onclick="addTeamMember()">+ Add Team Member</button>
+    </div>
+  `;
+}
+
+function collectTeam() {
+  const names = document.querySelectorAll('.member-name');
+  const roles = document.querySelectorAll('.member-role');
+  const initials = document.querySelectorAll('.member-initials');
+  const members = [];
+  names.forEach((n, i) => {
+    const photoSelect = document.getElementById('member-photo-' + i);
+    members.push({
+      name: n.value,
+      role: roles[i].value,
+      initials: initials[i].value,
+      photo: photoSelect ? photoSelect.value : ''
+    });
+  });
+  siteContent.team = {
+    heading: val('team-heading'),
+    intro: val('team-intro'),
+    members
+  };
+}
+
+window.addTeamMember = function () {
+  collectTeam();
+  siteContent.team.members.push({ name: '', role: '', initials: '', photo: '' });
+  refreshSection('team');
+};
+
+window.removeTeamMember = function (index) {
+  collectTeam();
+  siteContent.team.members.splice(index, 1);
+  refreshSection('team');
 };
 
 // ---- Contact Section ----
@@ -818,8 +1081,12 @@ function refreshSection(sectionName) {
     hero: renderHeroSection,
     about: renderAboutSection,
     services: renderServicesSection,
+    methodology: renderMethodologySection,
     industries: renderIndustriesSection,
+    partnerships: renderPartnershipsSection,
+    insurances: renderInsurancesSection,
     testimonials: renderTestimonialsSection,
+    team: renderTeamSection,
     contact: renderContactSection,
     blog: renderBlogSection,
     social: renderSocialSection,

@@ -25,19 +25,67 @@
     linkedin: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
   };
 
-  // ---- Content Fetcher ----
-  // In production, replace this URL with your headless CMS API endpoint
-  // e.g., Contentful: https://cdn.contentful.com/spaces/{space_id}/entries
-  // e.g., Strapi: https://your-strapi.com/api/homepage
-  const CMS_ENDPOINT = 'content/site-content.json';
+  // ---- Sanity CDN Content Fetcher ----
+  const SANITY_PROJECT_ID = '773dau1s';
+  const SANITY_DATASET = 'production';
+  const SANITY_API_VERSION = '2024-01-01';
+
+  const GROQ_QUERY = `{
+    "settings": *[_type == "siteSettings"][0] {
+      siteTitle, siteDescription,
+      "logoUrl": logo.asset->url,
+      hero { headline, subheadline, "backgroundImage": backgroundImage.asset->url, ctaText, ctaHref },
+      about { heading, intro, description, highlights[]{ stat, label } },
+      servicesHeading, servicesIntro,
+      methodology { heading, stages[]{ stage, title, description } },
+      industries { heading, items },
+      testimonialsHeading,
+      teamHeading, teamIntro,
+      insurancesHeading,
+      partnershipsHeading, partnershipsIntro,
+      blogHeading, blogIntro,
+      contact { heading, intro, phone, email, address },
+      social { facebook, linkedin }
+    },
+    "services":      *[_type == "service"]      | order(order asc) { title, description, icon },
+    "testimonials":  *[_type == "testimonial"]  | order(_createdAt asc) { quote, author, company },
+    "teamMembers":   *[_type == "teamMember"]   | order(order asc) { name, role, initials, "photo": photo.asset->url },
+    "insurances":    *[_type == "insurance"]    | order(order asc) { title, description },
+    "partnerships":  *[_type == "partnership"]  | order(order asc) { name, "logo": logo.asset->url },
+    "blogPosts":     *[_type == "blogPost"]     | order(date desc) { "id": slug.current, title, date, author, excerpt, body }
+  }`;
 
   async function fetchContent() {
     try {
-      const response = await fetch(CMS_ENDPOINT);
-      if (!response.ok) throw new Error('Failed to fetch content');
-      return await response.json();
+      const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(GROQ_QUERY)}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Sanity fetch failed: ${response.status}`);
+      const { result } = await response.json();
+      if (!result || !result.settings) return null;
+
+      const s = result.settings;
+      return {
+        meta: { title: s.siteTitle, description: s.siteDescription, logo: s.logoUrl },
+        hero: {
+          headline: s.hero?.headline,
+          subheadline: s.hero?.subheadline,
+          backgroundImage: s.hero?.backgroundImage,
+          cta: { text: s.hero?.ctaText, href: s.hero?.ctaHref },
+        },
+        about: s.about,
+        services: { heading: s.servicesHeading, intro: s.servicesIntro, items: result.services },
+        methodology: s.methodology,
+        industries: s.industries,
+        testimonials: { heading: s.testimonialsHeading, items: result.testimonials },
+        team: { heading: s.teamHeading, intro: s.teamIntro, members: result.teamMembers },
+        insurances: { heading: s.insurancesHeading, items: result.insurances },
+        partnerships: { heading: s.partnershipsHeading, intro: s.partnershipsIntro, clients: result.partnerships },
+        blog: { heading: s.blogHeading, intro: s.blogIntro, posts: result.blogPosts },
+        contact: s.contact,
+        social: s.social,
+      };
     } catch (error) {
-      console.error('CMS fetch error:', error);
+      console.error('Sanity fetch error:', error);
       return null;
     }
   }
@@ -57,8 +105,8 @@
 
     if (heading) {
       heading.innerHTML = data.headline.replace(
-        'Industrial',
-        '<span>Industrial</span>'
+        'Site Management',
+        '<span>Site Management</span>'
       );
     }
     if (subheading) subheading.textContent = data.subheadline;
@@ -74,6 +122,7 @@
     const heading = document.getElementById('about-heading');
     const text = document.getElementById('about-text');
     const highlights = document.getElementById('about-highlights');
+    const accreditations = document.getElementById('about-accreditations');
 
     if (heading) heading.textContent = data.heading;
     if (text) {
@@ -90,6 +139,16 @@
       `
         )
         .join('');
+    }
+    if (accreditations) {
+      const badges = [];
+      if (data.accreditations) {
+        badges.push(...data.accreditations.map(a => `<span class="accreditation-badge">${a}</span>`));
+      }
+      if (data.insurances) {
+        badges.push(...data.insurances.map(i => `<span class="accreditation-badge accreditation-badge--insurance">${i}</span>`));
+      }
+      accreditations.innerHTML = badges.join('');
     }
   }
 
@@ -181,6 +240,86 @@
           </div>
         </div>
       `;
+    }
+  }
+
+  function renderMethodology(data) {
+    const heading = document.getElementById('methodology-heading');
+    const grid = document.getElementById('methodology-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (grid && data.stages) {
+      grid.innerHTML = data.stages.map((s, i) => `
+        <div class="methodology-card">
+          <div class="methodology-card__num">${i + 1}</div>
+          <div class="methodology-card__content">
+            <div class="methodology-card__stage">${s.stage}</div>
+            <h3 class="methodology-card__title">${s.title}</h3>
+            <p class="methodology-card__desc">${s.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderInsurances(data) {
+    const heading = document.getElementById('insurances-heading');
+    const grid = document.getElementById('insurances-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (grid && data.items) {
+      const svgShield = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+      grid.innerHTML = data.items.map(item => `
+        <div class="insurance-card">
+          <div class="insurance-card__icon">${svgShield}</div>
+          <h3 class="insurance-card__title">${item.title}</h3>
+          <p class="insurance-card__desc">${item.description}</p>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderPartnerships(data) {
+    const heading = document.getElementById('partnerships-heading');
+    const subheading = document.getElementById('partnerships-subheading');
+    const grid = document.getElementById('partners-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+    if (grid && data.clients) {
+      grid.innerHTML = data.clients.map(c => {
+        const visual = c.logo
+          ? `<img class="partner-card__logo" src="${c.logo}" alt="${c.name}">`
+          : `<span class="partner-card__name-text">${c.name}</span>`;
+        return `
+          <div class="partner-card">
+            ${visual}
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function renderTeam(data) {
+    const heading = document.getElementById('team-heading');
+    const subheading = document.getElementById('team-subheading');
+    const grid = document.getElementById('team-grid');
+
+    if (heading) heading.textContent = data.heading;
+    if (subheading) subheading.textContent = data.intro;
+    if (grid && data.members) {
+      grid.innerHTML = data.members.map(m => {
+        const avatar = m.photo
+          ? `<img class="team-card__photo" src="${m.photo}" alt="${m.name}">`
+          : `<div class="team-card__initials">${m.initials}</div>`;
+        return `
+          <div class="team-card">
+            <div class="team-card__avatar">${avatar}</div>
+            <h3 class="team-card__name">${m.name}</h3>
+            <p class="team-card__role">${m.role}</p>
+          </div>
+        `;
+      }).join('');
     }
   }
 
@@ -364,7 +503,7 @@
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card').forEach((el) => {
+    document.querySelectorAll('.card, .testimonial, .highlight, .contact-item, .blog-card, .methodology-card, .team-card, .insurance-card, .partner-card').forEach((el) => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -385,10 +524,14 @@
       renderHero(content.hero);
       renderAbout(content.about);
       renderServices(content.services);
+      if (content.methodology) renderMethodology(content.methodology);
       renderIndustries(content.industries);
+      if (content.partnerships) renderPartnerships(content.partnerships);
+      if (content.insurances) renderInsurances(content.insurances);
       renderTestimonials(content.testimonials);
-      renderContact(content.contact);
+      if (content.team) renderTeam(content.team);
       if (content.blog) renderBlog(content.blog);
+      renderContact(content.contact);
       renderSocial(content.social);
 
       // Update page title, meta, and logo from CMS

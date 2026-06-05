@@ -1,0 +1,51 @@
+@use '../abstracts' as *;
+
+.insurances-grid {
+  display: grid;
+  gap: $spacing-xl;
+  grid-template-columns: 1fr;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.insurance-card {
+  text-align: center;
+  padding: $spacing-2xl $spacing-xl;
+  background: rgba($color-white, 0.05);
+  border: 1px solid rgba($color-white, 0.1);
+  border-radius: $border-radius-lg;
+  transition: transform $transition-base, border-color $transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: $color-primary;
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto $spacing-lg;
+    color: $color-primary;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    color: $color-white;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__desc {
+    font-size: $font-size-sm;
+    color: rgba($color-white, 0.7);
+    line-height: $line-height-base;
+  }
+}
