@@ -1,6 +1,6 @@
-# Bolt Services Ltd — Website
+# Bolt Services Ltd - Website
 
-One-page website for Bolt Services Ltd — Project & CDM Site Management, UK.
+One-page website for Bolt Services Ltd - Project & CDM Site Management, UK.
 
 ## Tech Stack
 
@@ -150,7 +150,7 @@ bolt-services/
 
 ### Setup Steps
 
-1. **Connect the repo** — Plesk → Websites & Domains → your domain → Git → add `https://github.com/Brighty28/bolt-services.git`, branch `main`, enable automatic deployment.
+1. **Connect the repo** - Plesk → Websites & Domains → your domain → Git → add `https://github.com/Brighty28/bolt-services.git`, branch `main`, enable automatic deployment.
 
 2. **Copy the webhook URL** from Plesk's Git settings and add it in GitHub under Settings → Webhooks (push events only, `application/json`).
 
