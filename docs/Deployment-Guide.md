@@ -50,23 +50,39 @@ Before the site can go live, confirm the following with The Hosting Heroes:
 3. Set the following:
    - **Application startup file:** `server.js`
    - **Application mode:** `production`
-   - Leave all other fields at their defaults
 
-### 2. Set Environment Variables
+### 2. Upgrade Node.js Version
 
-After enabling Node.js, the dashboard shows an **Environment Variables** section. Add each of the following:
+The app requires Node.js 18+. If the dashboard shows an older version (e.g. 10.x):
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `SMTP_HOST` | Email server hostname | `send.one.com` |
-| `SMTP_PORT` | Email server port | `587` |
-| `SMTP_USER` | Email account username | `contact@boltservices.co.uk` |
-| `SMTP_PASS` | Email account password | `yourpassword` |
-| `SMTP_FROM` | Sender address for contact form emails | `contact@boltservices.co.uk` |
-| `SMTP_TO` | Where contact form enquiries are delivered | `karl@boltservices.co.uk` |
-| `NODE_ENV` | Set to `production` | `production` |
+1. Click the version number on the Node.js dashboard
+2. Select **18** (or the highest available)
+3. Save / Apply
 
-> **Security:** Never put these values in code or commit them to GitHub. Plesk's environment variable panel is the only place they should live.
+If no newer version is available, contact The Hosting Heroes to enable Node.js 18+ on the plan.
+
+### 3. Set Environment Variables via `.env` File
+
+The server reads SMTP credentials from environment variables. If Plesk's Node.js dashboard does not show an Environment Variables section, create a `.env` file directly on the server using **File Manager**:
+
+1. In Plesk, go to **Files** (or **File Manager** under your domain)
+2. Navigate to `/httpdocs` (the application root)
+3. Click **New File**, name it `.env`
+4. Paste the following, replacing each value with your real credentials:
+
+```
+SMTP_HOST=send.one.com
+SMTP_PORT=587
+SMTP_USER=contact@boltservices.co.uk
+SMTP_PASS=yourpassword
+SMTP_FROM=contact@boltservices.co.uk
+SMTP_TO=karl@boltservices.co.uk
+NODE_ENV=production
+```
+
+5. Save the file
+
+> **Security:** The `.env` file is listed in `.gitignore` and will never be committed to GitHub. It exists only on the server. Never paste credentials into any file that is tracked by git.
 
 ### 3. Connect GitHub via Git
 
