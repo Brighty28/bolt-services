@@ -32,4 +32,7 @@ fs.copyFileSync('src/js/app.js', 'dist/js/app.js');
 if (fs.existsSync('src/robots.txt')) fs.copyFileSync('src/robots.txt', 'dist/robots.txt');
 if (fs.existsSync('src/sitemap.xml')) fs.copyFileSync('src/sitemap.xml', 'dist/sitemap.xml');
 
+// Favicon — use bolt-logo.png as ico fallback so browsers don't 404
+if (fs.existsSync('src/assets/bolt-logo.png')) fs.copyFileSync('src/assets/bolt-logo.png', 'dist/favicon.ico');
+
 console.log('Files copied to dist/');
