@@ -11,7 +11,8 @@
     "start": "npm run build && node server.js",
     "serve": "npx serve dist -l 3000",
     "deploy": "npm ci --production=false && npm run build",
-    "production": "NODE_ENV=production node server.js"
+    "production": "NODE_ENV=production node server.js",
+    "debug-build": "node -e \"const fs=require('fs'); console.log('CWD:', process.cwd()); console.log('src/sass exists:', fs.existsSync('src/sass')); console.log('main.scss exists:', fs.existsSync('src/sass/main.scss')); console.log('sass binary exists:', fs.existsSync('node_modules/.bin/sass')); console.log('root files:', fs.readdirSync('.').join(', '));\""
   },
   "devDependencies": {
     "@sanity/client": "^6.22.0",
