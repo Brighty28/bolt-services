@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Bolt Industrial Engineering Services - One page engineering site",
   "scripts": {
-    "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
+    "sass": "node scripts/build-sass.js",
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
     "prebuild": "node -e \"require('fs').mkdirSync('dist/css', {recursive:true})\"",
     "build": "npm run sass && npm run copy",
