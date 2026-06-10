@@ -5,6 +5,7 @@
   "scripts": {
     "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
+    "prebuild": "node -e \"require('fs').mkdirSync('dist/css', {recursive:true})\"",
     "build": "npm run sass && npm run copy",
     "copy": "node scripts/copy.js",
     "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"node server.js\"",
