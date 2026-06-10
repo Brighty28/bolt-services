@@ -1,6 +1,6 @@
 # Deployment Guide
 
-This guide covers how to deploy the Bolt Services website to production using Plesk and GitHub.
+This guide covers how to deploy the Bolt Services website to production using DirectAdmin and GitHub.
 
 ---
 
@@ -14,9 +14,9 @@ Your machine / Claude Code
   GitHub Repository
   (Brighty28/bolt-services)
         │
-        │  webhook → Plesk pulls & runs post-deploy script
+        │  GitHub Actions → SSH → git pull + build
         ▼
-   Plesk Hosting
+   DirectAdmin Hosting
    (The Hosting Heroes)
         │
         │  Node.js app restart
@@ -25,50 +25,78 @@ Your machine / Claude Code
   (boltservices.co.uk)
 ```
 
-When you push code to the `main` branch on GitHub, Plesk automatically pulls the changes, runs the build script, and restarts the Node.js application.
-
 > **Content changes** made in Sanity Studio are live instantly — no deployment needed.
 
 ---
 
-## Prerequisites
+## Initial Setup
 
-Before the site can go live, confirm the following with The Hosting Heroes:
+### Step 1 — Find the Node.js section in DirectAdmin
 
-- [ ] Node.js extension is enabled on your Plesk hosting plan (Node.js 18+)
-- [ ] The domain DNS is pointing to the Plesk server
-- [ ] An SSL certificate is configured for your domain (for HTTPS)
+1. Log in to DirectAdmin
+2. Click your domain (`boltservices.co.uk`) to open its management area
+3. Look for **Node.js** — it may appear under:
+   - **Extra Features → Node.js**
+   - **Advanced Features → Node.js**
+   - Or directly on the domain dashboard as a "Node.js" tile
+
+If you cannot find it, contact The Hosting Heroes and ask them to point you to the Node.js app manager for your domain.
 
 ---
 
-## Initial Setup on Plesk
+### Step 2 — Create the Node.js Application
 
-### 1. Enable Node.js
+In the Node.js section:
 
-1. Log in to Plesk → **Websites & Domains** → your domain → **Node.js**
-2. Click **Enable Node.js**
-3. Set the following:
-   - **Application startup file:** `server.js`
-   - **Application mode:** `production`
+| Setting | Value |
+|---------|-------|
+| **Node.js version** | 18 (or highest available) |
+| **Application mode** | production |
+| **Application root** | the folder where your site files live (e.g. `/home/abright/domains/boltservices.co.uk/public_html`) |
+| **Application startup file** | `server.js` |
 
-### 2. Upgrade Node.js Version
+Save / Create the app.
 
-The app requires Node.js 18+. If the dashboard shows an older version (e.g. 10.x):
+---
 
-1. Click the version number on the Node.js dashboard
-2. Select **18** (or the highest available)
-3. Save / Apply
+### Step 3 — Get the Code onto the Server
 
-If no newer version is available, contact The Hosting Heroes to enable Node.js 18+ on the plan.
+#### Option A — SSH (recommended if available)
 
-### 3. Set Environment Variables via `.env` File
+Ask The Hosting Heroes to confirm your SSH hostname and whether SSH access is enabled. Then:
 
-The server reads SMTP credentials from environment variables. If Plesk's Node.js dashboard does not show an Environment Variables section, create a `.env` file directly on the server using **File Manager**:
+```bash
+# Connect to the server
+ssh yourusername@boltservices.co.uk
 
-1. In Plesk, go to **Files** (or **File Manager** under your domain)
-2. Navigate to `/httpdocs` (the application root)
-3. Click **New File**, name it `.env`
-4. Paste the following, replacing each value with your real credentials:
+# Navigate to your domain root (path may differ — ask hosting if unsure)
+cd ~/domains/boltservices.co.uk/public_html
+
+# Clone the repository (replaces any existing files)
+git clone https://github.com/Brighty28/bolt-services.git .
+
+# Install dependencies and build
+npm run deploy
+```
+
+#### Option B — File Manager
+
+1. In DirectAdmin → **Files** (or File Manager)
+2. Navigate to your domain's public root folder
+3. Download a ZIP of the repo from GitHub: `https://github.com/Brighty28/bolt-services/archive/refs/heads/main.zip`
+4. Upload and extract the ZIP into the public root
+
+---
+
+### Step 4 — Create the `.env` File
+
+The server reads SMTP credentials from a `.env` file. This file must **never** be committed to git — create it directly on the server.
+
+**Via File Manager:**
+
+1. DirectAdmin → **Files** → navigate to the public root folder
+2. Click **New File**, name it `.env`
+3. Paste the following with your real values:
 
 ```
 SMTP_HOST=send.one.com
@@ -80,125 +108,131 @@ SMTP_TO=karl@boltservices.co.uk
 NODE_ENV=production
 ```
 
-5. Save the file
+4. Save
 
-> **Security:** The `.env` file is listed in `.gitignore` and will never be committed to GitHub. It exists only on the server. Never paste credentials into any file that is tracked by git.
-
-### 3. Connect GitHub via Git
-
-1. In Plesk, go to **Git** (under your domain)
-2. Click **Add Repository**
-3. Enter: `https://github.com/Brighty28/bolt-services.git`
-4. Set deploy branch to `main`
-5. Tick **Deploy automatically when changes are pushed to repository**
-6. Copy the **webhook URL** Plesk provides
-
-### 4. Add the Webhook on GitHub
-
-1. Go to `https://github.com/Brighty28/bolt-services/settings/hooks`
-2. Click **Add webhook**
-3. Paste the Plesk webhook URL into **Payload URL**
-4. Set **Content type** to `application/json`
-5. Select **Just the push event**
-6. Click **Add webhook**
-
-### 5. Set the Post-Deploy Script
-
-In Plesk → **Git** → your repository settings, find **Additional deploy actions** (sometimes labelled "Post-receive" or in the repository's Advanced settings). Add:
+**Via SSH:**
 
 ```bash
-export PATH="/opt/plesk/node/18/bin:$PATH"
-cd $DEPLOYDIR && npm run deploy
-touch tmp/restart.txt
+nano ~/domains/boltservices.co.uk/public_html/.env
+# paste the values above, then Ctrl+O to save, Ctrl+X to exit
 ```
-
-`npm run deploy` runs `npm ci && npm run build`, which installs dependencies and compiles SASS to `dist/`. The `touch tmp/restart.txt` signals Plesk to restart the Node.js process.
-
-> If Plesk uses a different Node.js version path (e.g. Node 20), adjust the PATH line accordingly. The Hosting Heroes can confirm the correct path.
 
 ---
 
-## Deploying Updates
+### Step 5 — Run the Build
 
-Once setup is complete, deploying is simply:
+If you used SSH to clone, the build already ran in Step 3. If you used File Manager:
+
+1. In DirectAdmin, look for a **Terminal** or **Run command** feature in the Node.js section
+2. Run: `npm run deploy`
+
+Or via SSH:
 
 ```bash
-git add .
-git commit -m "Describe your change"
-git push origin main
+cd ~/domains/boltservices.co.uk/public_html
+npm run deploy
 ```
 
-Plesk will automatically:
-1. Pull the new code from GitHub
-2. Run `npm ci && npm run build` (compiles SASS, copies files to `dist/`)
-3. Restart the Node.js server
-4. Serve the updated site
-
-This typically takes 30–60 seconds.
+`npm run deploy` runs `npm ci && npm run build` — installs packages and compiles SASS to `dist/`.
 
 ---
 
-## Content Updates (No Deployment Needed)
+### Step 6 — Restart the App
 
-Content changes made in **Sanity Studio** appear live within seconds of publishing — the site fetches from the Sanity CDN on every page load. No git push, no deployment.
+In the DirectAdmin Node.js section, click **Restart** (or **Restart App**). The site should now be live at `http://boltservices.co.uk`.
 
-Go to: `https://bolt-services.sanity.studio`
+---
+
+## Automatic Deployment (GitHub → Server on Push)
+
+To make `git push` automatically deploy the site, set up a GitHub Action that SSHes into the server and runs `git pull && npm run deploy`.
+
+### 1. Generate a Deploy Key
+
+On your local machine (or via SSH on the server):
+
+```bash
+ssh-keygen -t ed25519 -C "deploy@boltservices.co.uk" -f deploy_key -N ""
+```
+
+This creates `deploy_key` (private) and `deploy_key.pub` (public).
+
+### 2. Add the Public Key to the Server
+
+Copy the contents of `deploy_key.pub` and add it to `~/.ssh/authorized_keys` on the server (via SSH or DirectAdmin's SSH Key Manager if available).
+
+### 3. Add the Private Key to GitHub
+
+1. Go to `https://github.com/Brighty28/bolt-services/settings/secrets/actions`
+2. Click **New repository secret**
+3. Name: `SSH_PRIVATE_KEY`
+4. Value: paste the full contents of `deploy_key`
+
+Also add these secrets:
+
+| Secret | Value |
+|--------|-------|
+| `SSH_HOST` | Your server hostname (e.g. `boltservices.co.uk`) |
+| `SSH_USER` | Your DirectAdmin username |
+| `SSH_PATH` | Path to site root (e.g. `/home/abright/domains/boltservices.co.uk/public_html`) |
+
+### 4. Create the GitHub Actions Workflow
+
+The file `.github/workflows/deploy.yml` in the repo handles this automatically on every push to `main`. See that file for the full workflow.
 
 ---
 
 ## Manual Deployment (SSH)
 
-If the webhook isn't set up or you need to force a deployment:
+If you need to deploy manually at any time:
 
 ```bash
-# SSH into the server, then:
-cd /var/www/vhosts/boltservices.co.uk/httpdocs
+ssh yourusername@boltservices.co.uk
+cd ~/domains/boltservices.co.uk/public_html
 git pull origin main
 npm run deploy
-touch tmp/restart.txt
+# Then restart via DirectAdmin Node.js panel
 ```
 
 ---
 
-## File Structure on the Server
+## Content Updates (No Deployment Needed)
 
-```
-httpdocs/
-├── server.js              # Node.js entry point (static files + contact form)
-├── package.json
-├── src/
-│   ├── index.html
-│   ├── assets/            # Images (logos, team photos, hero bg)
-│   └── js/app.js          # Fetches content from Sanity CDN
-├── dist/                  # Compiled output (built by npm run build)
-│   ├── index.html
-│   ├── assets/
-│   └── css/style.css
-└── scripts/               # Build and seed utilities
-```
+Changes in **Sanity Studio** (`https://bolt-services.sanity.studio`) are live within seconds of publishing. No git push or server restart needed.
 
-> The `studio/` directory (Sanity Studio) is deployed separately via `sanity deploy` and hosted at `bolt-services.sanity.studio` — it is **not** part of the Plesk deployment.
+---
+
+## Environment Variables Reference
+
+| Variable | Description |
+|----------|-------------|
+| `SMTP_HOST` | Email server hostname |
+| `SMTP_PORT` | Email port (usually `587`) |
+| `SMTP_USER` | Email account username |
+| `SMTP_PASS` | Email account password |
+| `SMTP_FROM` | Sender address shown on contact emails |
+| `SMTP_TO` | Where contact form enquiries are delivered |
+| `NODE_ENV` | Set to `production` |
 
 ---
 
 ## Verifying the Deployment
 
-After deploying, check:
+After deploying:
 
 1. **Homepage loads** — visit `https://boltservices.co.uk`
-2. **Content visible** — sections (hero, services, team, etc.) all populated from Sanity
-3. **Contact form works** — submit a test message and confirm receipt
-4. **Mobile view** — check on a phone or browser dev tools
-5. **HTTPS** — confirm the padlock shows in the browser address bar
+2. **Content visible** — all sections populated from Sanity
+3. **Contact form works** — submit a test message and confirm receipt at `karl@boltservices.co.uk`
+4. **HTTPS** — padlock shows in the browser address bar
 
 ---
 
 ## Rollback
 
-If a deployment causes an issue, revert on GitHub and push — Plesk will auto-deploy the revert. Or via SSH:
-
 ```bash
-git log --oneline -5
-git revert HEAD        # creates a new revert commit (safe)
-git push origin main
+ssh yourusername@boltservices.co.uk
+cd ~/domains/boltservices.co.uk/public_html
+git log --oneline -5       # find the commit to go back to
+git revert HEAD            # creates a safe revert commit
+git push origin main       # triggers auto-deploy if webhook is set up
 ```
