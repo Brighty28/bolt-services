@@ -33,6 +33,6 @@ if (fs.existsSync('src/robots.txt')) fs.copyFileSync('src/robots.txt', 'dist/rob
 if (fs.existsSync('src/sitemap.xml')) fs.copyFileSync('src/sitemap.xml', 'dist/sitemap.xml');
 
 // Favicon icon for /favicon.ico fallback request
-if (fs.existsSync('src/assets/favicon-icon.svg')) fs.copyFileSync('src/assets/favicon-icon.svg', 'dist/favicon.ico');
+if (fs.existsSync('src/assets/favicon-icon.png')) fs.copyFileSync('src/assets/favicon-icon.png', 'dist/favicon.ico');
 
 console.log('Files copied to dist/');
