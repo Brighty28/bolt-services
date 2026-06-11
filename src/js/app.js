@@ -466,8 +466,9 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = form.querySelector('.btn');
-      const inputs = form.querySelectorAll('input, textarea');
+      const inputs = form.querySelectorAll('input:not(.contact-form__honeypot), textarea');
       const [name, email, subject, message] = Array.from(inputs).map(i => i.value);
+      const honeypot = form.querySelector('.contact-form__honeypot');
 
       btn.textContent = 'Sending...';
       btn.disabled = true;
@@ -476,7 +477,7 @@
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, subject, message })
+          body: JSON.stringify({ name, email, subject, message, _h: honeypot?.value || '' })
         });
 
         if (res.ok) {

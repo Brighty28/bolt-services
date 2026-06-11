@@ -20,6 +20,20 @@ function isSmtpConfigured() {
   return SMTP_HOST && SMTP_USER && SMTP_PASS && SMTP_FROM && SMTP_TO;
 }
 
+// ---- Rate limiting (in-memory, per IP) ----
+const rateLimitMap = new Map();
+const RATE_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX = 3;
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const hits = (rateLimitMap.get(ip) || []).filter(t => now - t < RATE_WINDOW_MS);
+  if (hits.length >= RATE_LIMIT_MAX) return true;
+  hits.push(now);
+  rateLimitMap.set(ip, hits);
+  return false;
+}
+
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css':  'text/css',
@@ -45,7 +59,20 @@ const server = http.createServer((req, res) => {
     req.on('data', chunk => { body += chunk; });
     req.on('end', async () => {
       try {
-        const { name, email, subject, message } = JSON.parse(body);
+        const { name, email, subject, message, _h } = JSON.parse(body);
+
+        // Honeypot — bots fill this, humans never see it
+        if (_h) {
+          jsonResponse(200, { success: true });
+          return;
+        }
+
+        // Rate limit per IP
+        const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.socket.remoteAddress || 'unknown';
+        if (isRateLimited(ip)) {
+          jsonResponse(429, { error: 'Too many requests — please try again later' });
+          return;
+        }
 
         if (!name || !email || !message) {
           jsonResponse(400, { error: 'Name, email, and message are required' });
