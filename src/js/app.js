@@ -232,13 +232,14 @@
             <div class="contact-item__value"><a href="mailto:${data.email}">${data.email}</a></div>
           </div>
         </div>
+        ${data.address ? `
         <div class="contact-item">
           <div class="contact-item__icon">${icons['map-pin']}</div>
           <div>
             <div class="contact-item__label">Address</div>
             <div class="contact-item__value">${data.address}</div>
           </div>
-        </div>
+        </div>` : ''}
       `;
     }
   }
