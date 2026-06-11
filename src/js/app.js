@@ -411,6 +411,15 @@
     container.innerHTML = links.join('');
   }
 
+  function renderFooterLinks(data) {
+    const container = document.getElementById('footer-links');
+    if (!container || !data) return;
+    const links = [];
+    if (data.email) links.push(`<a href="mailto:${data.email}" class="footer__link">${data.email}</a>`);
+    if (data.phone) links.push(`<a href="tel:${data.phone.replace(/\s/g, '')}" class="footer__link">${data.phone}</a>`);
+    if (links.length) container.innerHTML = links.join('');
+  }
+
   // ---- UI Interactions ----
 
   function initHeader() {
@@ -533,6 +542,7 @@
       if (content.blog) renderBlog(content.blog);
       renderContact(content.contact);
       renderSocial(content.social);
+      renderFooterLinks(content.contact);
 
       // Update page title, meta, and logo from CMS
       if (content.meta) {
