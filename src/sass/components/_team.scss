@@ -19,8 +19,13 @@
   text-align: center;
 
   &__avatar {
-    width: 140px;
-    height: 140px;
+    width: 80px;
+    height: 80px;
+
+    @include respond-to('lg') {
+      width: 140px;
+      height: 140px;
+    }
     border-radius: $border-radius-full;
     background: linear-gradient(135deg, $color-secondary, $color-secondary-lighter);
     color: $color-primary;
