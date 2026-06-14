@@ -10,7 +10,7 @@
   }
 
   @include respond-to('lg') {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 180px));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
     justify-content: center;
   }
 }
@@ -19,8 +19,8 @@
   text-align: center;
 
   &__avatar {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
     border-radius: $border-radius-full;
     background: linear-gradient(135deg, $color-secondary, $color-secondary-lighter);
     color: $color-primary;
