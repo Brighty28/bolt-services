@@ -26,9 +26,9 @@
     max-width: 240px;
   }
 
-  // Staff row: uncapped, wraps naturally
+  // Staff row: wide enough for 4 cards before wrapping
   &--staff {
-    max-width: 480px;
+    max-width: 840px;
   }
 }
 
