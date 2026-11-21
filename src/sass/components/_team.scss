@@ -19,11 +19,19 @@
   // Directors row: cap width so 2 cards sit comfortably centred
   &--directors {
     max-width: 480px;
+
+    @include respond-below('sm') {
+      max-width: 100%;
+    }
   }
 
   // Single manager row: narrower cap keeps it centred without stretching
   &--manager {
     max-width: 240px;
+
+    @include respond-below('sm') {
+      max-width: 100%;
+    }
   }
 
   // Staff row: wide enough for 4 cards before wrapping
@@ -35,6 +43,11 @@
 .team-card {
   text-align: center;
   flex: 0 0 180px;
+
+  // Mobile: 2 cards per row
+  @include respond-below('sm') {
+    flex: 0 0 calc(50% - #{$spacing-lg});
+  }
 
   &__avatar {
     width: 100px;
