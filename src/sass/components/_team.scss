@@ -1,31 +1,44 @@
 @use '../abstracts' as *;
 
+// Pyramid container — stacks tiers vertically, each centred
 .team-grid {
-  display: grid;
-  gap: $spacing-xl;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+  align-items: center;
+}
 
-  @include respond-to('md') {
-    grid-template-columns: repeat(3, 1fr);
+// Each tier is a centred row of cards
+.team-tier {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-xl;
+  flex-wrap: wrap;
+  width: 100%;
+
+  // Directors row: cap width so 2 cards sit comfortably centred
+  &--directors {
+    max-width: 480px;
   }
 
-  @include respond-to('lg') {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
-    justify-content: center;
+  // Single manager row: narrower cap keeps it centred without stretching
+  &--manager {
+    max-width: 240px;
+  }
+
+  // Staff row: uncapped, wraps naturally
+  &--staff {
+    max-width: 480px;
   }
 }
 
 .team-card {
   text-align: center;
+  flex: 0 0 180px;
 
   &__avatar {
-    width: 80px;
-    height: 80px;
-
-    @include respond-to('lg') {
-      width: 140px;
-      height: 140px;
-    }
+    width: 100px;
+    height: 100px;
     border-radius: $border-radius-full;
     background: linear-gradient(135deg, $color-secondary, $color-secondary-lighter);
     color: $color-primary;
@@ -64,5 +77,13 @@
   &__role {
     font-size: $font-size-sm;
     color: $color-grey;
+  }
+
+  // Directors get a slightly larger avatar to emphasise seniority
+  .team-tier--directors & {
+    &__avatar {
+      width: 120px;
+      height: 120px;
+    }
   }
 }

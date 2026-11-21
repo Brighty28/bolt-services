@@ -49,7 +49,7 @@
     },
     "services":      *[_type == "service"]      | order(order asc) { title, description, icon },
     "testimonials":  *[_type == "testimonial"]  | order(_createdAt asc) { quote, author, company },
-    "teamMembers":   *[_type == "teamMember"]   | order(order asc) { name, role, initials, "photo": photo.asset->url },
+    "teamMembers":   *[_type == "teamMember"]   | order(order asc) { name, role, initials, order, "photo": photo.asset->url },
     "insurances":    *[_type == "insurance"]    | order(order asc) { title, description },
     "partnerships":  *[_type == "partnership"]  | order(order asc) { name, "logo": logo.asset->url },
     "blogPosts":     *[_type == "blogPost"]     | order(date desc) { "id": slug.current, title, date, author, excerpt, body }
@@ -98,9 +98,9 @@
     const subheading = document.getElementById('hero-subheading');
     const actions = document.getElementById('hero-actions');
 
-    // Set background image from CMS content
-    if (hero && data.backgroundImage) {
-      hero.style.backgroundImage = `url('${data.backgroundImage}')`;
+    // Set background image from Sanity; clear any inline value when none is set
+    if (hero) {
+      hero.style.backgroundImage = data.backgroundImage ? `url('${data.backgroundImage}')` : '';
     }
 
     if (heading) {
@@ -309,18 +309,28 @@
     if (heading) heading.textContent = data.heading;
     if (subheading) subheading.textContent = data.intro;
     if (grid && data.members) {
-      grid.innerHTML = data.members.map(m => {
+      const makeCard = m => {
         const avatar = m.photo
           ? `<img class="team-card__photo" src="${m.photo}" alt="${m.name}">`
-          : `<div class="team-card__initials">${m.initials}</div>`;
+          : `<div class="team-card__initials">${m.initials || ''}</div>`;
         return `
           <div class="team-card">
             <div class="team-card__avatar">${avatar}</div>
             <h3 class="team-card__name">${m.name}</h3>
             <p class="team-card__role">${m.role}</p>
-          </div>
-        `;
-      }).join('');
+          </div>`;
+      };
+
+      // Pyramid hierarchy: order 1-2 (directors) / order 3 (manager) / order 4+ (team)
+      const tier1 = data.members.filter(m => m.order <= 2);
+      const tier2 = data.members.filter(m => m.order === 3);
+      const tier3 = data.members.filter(m => m.order >= 4);
+
+      grid.innerHTML = `
+        <div class="team-tier team-tier--directors">${tier1.map(makeCard).join('')}</div>
+        ${tier2.length ? `<div class="team-tier team-tier--manager">${tier2.map(makeCard).join('')}</div>` : ''}
+        ${tier3.length ? `<div class="team-tier team-tier--staff">${tier3.map(makeCard).join('')}</div>` : ''}
+      `;
     }
   }
 
