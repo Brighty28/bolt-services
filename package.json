@@ -3,23 +3,27 @@
   "version": "1.0.0",
   "description": "Bolt Industrial Engineering Services - One page engineering site",
   "scripts": {
-    "sass": "sass src/sass/main.scss dist/css/style.css --style compressed",
+    "sass": "node scripts/build-sass.js",
     "sass:watch": "sass src/sass/main.scss dist/css/style.css --watch",
+    "prebuild": "node -e \"require('fs').mkdirSync('dist/css', {recursive:true})\"",
     "build": "npm run sass && npm run copy",
     "copy": "node scripts/copy.js",
     "dev": "npm run build && npx concurrently \"npm run sass:watch\" \"node server.js\"",
     "start": "npm run build && node server.js",
     "serve": "npx serve dist -l 3000",
     "deploy": "npm ci --production=false && npm run build",
-    "production": "NODE_ENV=production node server.js"
+    "production": "NODE_ENV=production node server.js",
+    "debug-build": "node -e \"const fs=require('fs'); console.log('CWD:', process.cwd()); console.log('src/sass exists:', fs.existsSync('src/sass')); console.log('main.scss exists:', fs.existsSync('src/sass/main.scss')); console.log('sass binary exists:', fs.existsSync('node_modules/.bin/sass')); console.log('root files:', fs.readdirSync('.').join(', '));\"",
+    "debug-dist": "node -e \"const fs=require('fs'); const e=p=>fs.existsSync(p); console.log('dist exists:', e('dist')); console.log('dist/css exists:', e('dist/css')); console.log('dist/css/style.css exists:', e('dist/css/style.css')); console.log('dist/js exists:', e('dist/js')); console.log('dist/js/app.js exists:', e('dist/js/app.js')); console.log('dist/assets exists:', e('dist/assets')); console.log('dist/index.html exists:', e('dist/index.html')); if(e('dist'))console.log('dist contents:', fs.readdirSync('dist').join(', '));\""
   },
   "devDependencies": {
     "@sanity/client": "^6.22.0",
     "concurrently": "^9.1.0",
-    "sass": "^1.72.0",
     "serve": "^14.2.0"
   },
   "dependencies": {
-    "nodemailer": "^8.0.3"
+    "dotenv": "^16.6.1",
+    "nodemailer": "^8.0.3",
+    "sass": "^1.72.0"
   }
 }

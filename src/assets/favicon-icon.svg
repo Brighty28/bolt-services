@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Flat-top hexagon -->
+  <polygon points="72.5,7 95,50 72.5,93 27.5,93 5,50 27.5,7" fill="#E8611A" stroke="#1a1a1a" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Inner dark ring -->
+  <circle cx="50" cy="50" r="27" fill="#1a1a1a" opacity="0.85"/>
+  <!-- Lightning bolt -->
+  <path d="M55,24 L37,52 L51,52 L45,76 L63,48 L49,48 Z" fill="white"/>
+</svg>

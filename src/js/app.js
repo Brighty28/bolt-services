@@ -232,13 +232,14 @@
             <div class="contact-item__value"><a href="mailto:${data.email}">${data.email}</a></div>
           </div>
         </div>
+        ${data.address ? `
         <div class="contact-item">
           <div class="contact-item__icon">${icons['map-pin']}</div>
           <div>
             <div class="contact-item__label">Address</div>
             <div class="contact-item__value">${data.address}</div>
           </div>
-        </div>
+        </div>` : ''}
       `;
     }
   }
@@ -421,6 +422,15 @@
     container.innerHTML = links.join('');
   }
 
+  function renderFooterLinks(data) {
+    const container = document.getElementById('footer-links');
+    if (!container || !data) return;
+    const links = [];
+    if (data.email) links.push(`<a href="mailto:${data.email}" class="footer__link">${data.email}</a>`);
+    if (data.phone) links.push(`<a href="tel:${data.phone.replace(/\s/g, '')}" class="footer__link">${data.phone}</a>`);
+    if (links.length) container.innerHTML = links.join('');
+  }
+
   // ---- UI Interactions ----
 
   function initHeader() {
@@ -466,8 +476,9 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = form.querySelector('.btn');
-      const inputs = form.querySelectorAll('input, textarea');
+      const inputs = form.querySelectorAll('input:not(.contact-form__honeypot), textarea');
       const [name, email, subject, message] = Array.from(inputs).map(i => i.value);
+      const honeypot = form.querySelector('.contact-form__honeypot');
 
       btn.textContent = 'Sending...';
       btn.disabled = true;
@@ -476,7 +487,7 @@
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, subject, message })
+          body: JSON.stringify({ name, email, subject, message, _h: honeypot?.value || '' })
         });
 
         if (res.ok) {
@@ -543,6 +554,7 @@
       if (content.blog) renderBlog(content.blog);
       renderContact(content.contact);
       renderSocial(content.social);
+      renderFooterLinks(content.contact);
 
       // Update page title, meta, and logo from CMS
       if (content.meta) {

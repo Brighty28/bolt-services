@@ -33,6 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/favicon-icon.png" type="image/png">
 
   <!-- Structured Data / JSON-LD -->
   <script type="application/ld+json">
@@ -113,8 +114,7 @@
   <!-- Hero -->
   <section class="hero" id="hero">
     <div class="hero__content">
-      <div class="hero__badge">Engineering Excellence</div>
-      <h1 class="hero__heading" id="hero-heading"></h1>
+<h1 class="hero__heading" id="hero-heading"></h1>
       <p class="hero__subheading" id="hero-subheading"></p>
       <div class="hero__actions" id="hero-actions"></div>
     </div>
@@ -244,6 +244,7 @@
           <input type="email" class="contact-form__input" placeholder="Your Email" required>
           <input type="text" class="contact-form__input" placeholder="Subject">
           <textarea class="contact-form__textarea" placeholder="Tell us about your project..." required></textarea>
+          <input type="text" name="website" id="contact-hp" class="contact-form__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button type="submit" class="btn btn--primary btn--lg">Send Message</button>
         </form>
       </div>
@@ -256,7 +257,7 @@
       <p class="footer__copy">&copy; <span id="footer-year"></span> Bolt Services Ltd. All rights reserved.</p>
       <div class="footer__right">
         <div class="footer__social" id="footer-social"></div>
-        <div class="footer__links">
+        <div class="footer__links" id="footer-links">
           <a href="mailto:karl@boltservices.co.uk" class="footer__link">karl@boltservices.co.uk</a>
           <a href="tel:07885729188" class="footer__link">07885 729188</a>
         </div>

@@ -1,4 +1,4 @@
-# Bolt Services Ltd — Website
+# Bolt Services Ltd - Website
 
 One-page website for Bolt Services Ltd — Project and CDM Site Management across the UK.
 
@@ -149,7 +149,7 @@ See the full [Deployment Guide](docs/Deployment-Guide.md). Summary:
 3. Plesk runs `npm run deploy` and restarts Node.js
 4. Site is updated — typically within 30–60 seconds
 
-### Required Environment Variables (Plesk → Node.js settings)
+1. **Connect the repo** - Plesk → Websites & Domains → your domain → Git → add `https://github.com/Brighty28/bolt-services.git`, branch `main`, enable automatic deployment.
 
 | Variable | Description |
 |----------|-------------|
