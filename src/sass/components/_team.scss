@@ -16,6 +16,15 @@
   flex-wrap: wrap;
   width: 100%;
 
+  // Mobile: switch to a 2-column grid so pairs always sit side-by-side
+  @include respond-below('sm') {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
+    max-width: 100%;
+    justify-items: center;
+  }
+
   // Directors row: cap width so 2 cards sit comfortably centred
   &--directors {
     max-width: 480px;
@@ -31,6 +40,8 @@
 
     @include respond-below('sm') {
       max-width: 100%;
+      // Single card spans both columns so it stays centred
+      grid-template-columns: 1fr;
     }
   }
 
@@ -44,9 +55,9 @@
   text-align: center;
   flex: 0 0 180px;
 
-  // Mobile: 2 cards per row
   @include respond-below('sm') {
-    flex: 0 0 calc(50% - #{$spacing-lg});
+    flex: none;  // grid controls sizing on mobile
+    width: 100%;
   }
 
   &__avatar {
